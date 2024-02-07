@@ -1,0 +1,10 @@
+org.jsoup.Jsoup@118
+org.jsoup.helper.DataUtil@65
+org.jsoup.helper.DataUtil@125
+org.jsoup.helper.DataUtil@148
+org.jsoup.helper.DataUtil@149
+org.jsoup.helper.DataUtil@150
+org.jsoup.nodes.Document@256
+org.jsoup.parser.HtmlTreeBuilderState.7@690
+org.jsoup.helper.DataUtil@122
+org.jsoup.helper.DataUtil@124

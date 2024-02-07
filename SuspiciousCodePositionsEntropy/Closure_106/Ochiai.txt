@@ -1,0 +1,10 @@
+com.google.javascript.rhino.JSDocInfoBuilder@116
+com.google.javascript.rhino.JSDocInfoBuilder@189
+com.google.javascript.rhino.JSDocInfoBuilder@192
+com.google.javascript.rhino.JSDocInfoBuilder@68
+com.google.javascript.rhino.JSDocInfoBuilder@60
+com.google.javascript.rhino.JSDocInfoBuilder@63
+com.google.javascript.rhino.JSDocInfoBuilder@66
+com.google.javascript.rhino.JSDocInfoBuilder@69
+com.google.javascript.rhino.JSDocInfoBuilder@70
+com.google.javascript.rhino.JSDocInfoBuilder@71

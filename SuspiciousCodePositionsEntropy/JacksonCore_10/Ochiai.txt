@@ -1,0 +1,10 @@
+com.fasterxml.jackson.core.sym.ByteQuadsCanonicalizer@1124
+com.fasterxml.jackson.core.sym.ByteQuadsCanonicalizer@1128
+com.fasterxml.jackson.core.sym.ByteQuadsCanonicalizer@1129
+com.fasterxml.jackson.core.sym.ByteQuadsCanonicalizer@1130
+com.fasterxml.jackson.core.sym.ByteQuadsCanonicalizer@1109
+com.fasterxml.jackson.core.sym.ByteQuadsCanonicalizer@1110
+com.fasterxml.jackson.core.sym.ByteQuadsCanonicalizer@1111
+com.fasterxml.jackson.core.sym.ByteQuadsCanonicalizer@373
+com.fasterxml.jackson.core.sym.ByteQuadsCanonicalizer@914
+com.fasterxml.jackson.core.sym.ByteQuadsCanonicalizer@915

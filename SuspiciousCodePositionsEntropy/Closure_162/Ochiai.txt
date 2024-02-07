@@ -1,0 +1,10 @@
+com.google.javascript.rhino.JSDocInfo@1358
+com.google.javascript.rhino.JSDocInfo@1356
+com.google.javascript.rhino.JSDocInfo@1357
+com.google.javascript.rhino.JSDocInfo@1360
+com.google.javascript.rhino.JSDocInfo@1339
+com.google.javascript.rhino.JSDocInfo@1343
+com.google.javascript.rhino.JSDocInfo@1349
+com.google.javascript.rhino.JSDocInfo@1355
+com.google.javascript.rhino.JSDocInfo@1363
+com.google.javascript.rhino.JSTypeExpression@115

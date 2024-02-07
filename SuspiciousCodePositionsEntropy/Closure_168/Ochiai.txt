@@ -1,0 +1,10 @@
+com.google.javascript.jscomp.NodeUtil@1919
+com.google.javascript.jscomp.TypedScopeCreator.FirstOrderFunctionAnalyzer@2012
+com.google.javascript.jscomp.TypedScopeCreator.FirstOrderFunctionAnalyzer@2013
+com.google.javascript.jscomp.TypedScopeCreator.FirstOrderFunctionAnalyzer@2014
+com.google.javascript.jscomp.TypedScopeCreator.FirstOrderFunctionAnalyzer@2015
+com.google.javascript.jscomp.TypeInference@636
+com.google.javascript.jscomp.TypeCheck@1649
+com.google.javascript.rhino.jstype.UnknownType@85
+com.google.javascript.jscomp.TypedScopeCreator.FirstOrderFunctionAnalyzer@2008
+com.google.javascript.jscomp.TypedScopeCreator.FirstOrderFunctionAnalyzer@2025

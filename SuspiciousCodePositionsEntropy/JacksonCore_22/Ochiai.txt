@@ -1,0 +1,10 @@
+com.fasterxml.jackson.core.JsonParser.Feature@305
+com.fasterxml.jackson.core.JsonParser.Feature@306
+com.fasterxml.jackson.core.JsonParser.Feature@307
+com.fasterxml.jackson.core.JsonParser.Feature@308
+com.fasterxml.jackson.core.JsonParser.Feature@61
+com.fasterxml.jackson.core.JsonParser.Feature@77
+com.fasterxml.jackson.core.JsonParser.Feature@91
+com.fasterxml.jackson.core.JsonParser.Feature@102
+com.fasterxml.jackson.core.JsonParser.Feature@115
+com.fasterxml.jackson.core.JsonParser.Feature@128

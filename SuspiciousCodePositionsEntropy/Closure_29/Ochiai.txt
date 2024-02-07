@@ -1,0 +1,10 @@
+com.google.javascript.rhino.Token@230
+com.google.javascript.rhino.Token@231
+com.google.javascript.jscomp.InlineObjectLiterals.InliningBehavior@288
+com.google.javascript.jscomp.InlineObjectLiterals.InliningBehavior@289
+com.google.javascript.rhino.Token@219
+com.google.javascript.rhino.Token@278
+com.google.javascript.rhino.Token@227
+com.google.javascript.jscomp.InlineObjectLiterals.InliningBehavior@337
+com.google.javascript.jscomp.InlineObjectLiterals.InliningBehavior@341
+com.google.javascript.rhino.Node@1430

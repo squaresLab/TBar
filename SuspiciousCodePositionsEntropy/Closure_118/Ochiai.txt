@@ -1,0 +1,10 @@
+com.google.javascript.jscomp.DisambiguateProperties.FindRenameableProperties@497
+com.google.javascript.jscomp.DisambiguateProperties.FindRenameableProperties@498
+com.google.javascript.jscomp.DisambiguateProperties.FindRenameableProperties@500
+com.google.javascript.jscomp.DisambiguateProperties.FindRenameableProperties@501
+com.google.javascript.jscomp.DisambiguateProperties.FindRenameableProperties@493
+com.google.javascript.rhino.jstype.UnionType@171
+com.google.javascript.rhino.jstype.UnionType@172
+com.google.javascript.rhino.jstype.UnionType@173
+com.google.javascript.jscomp.DisambiguateProperties.FindRenameableProperties@442
+com.google.javascript.jscomp.DisambiguateProperties.FindRenameableProperties@491

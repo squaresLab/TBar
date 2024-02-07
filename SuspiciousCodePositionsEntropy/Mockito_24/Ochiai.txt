@@ -1,0 +1,10 @@
+org.mockito.internal.stubbing.defaultanswers.ReturnsEmptyValues@76
+org.mockito.internal.stubbing.defaultanswers.ReturnsEmptyValues@72
+org.mockito.internal.stubbing.defaultanswers.ReturnsEmptyValues@64
+org.mockito.internal.stubbing.defaultanswers.ReturnsEmptyValues@85
+org.mockito.internal.stubbing.defaultanswers.ReturnsEmptyValues@54
+org.mockito.internal.stubbing.defaultanswers.ReturnsEmptyValues@57
+org.mockito.internal.stubbing.defaultanswers.ReturnsEmptyValues@58
+org.mockito.internal.stubbing.defaultanswers.ReturnsEmptyValues@79
+org.mockito.internal.stubbing.defaultanswers.ReturnsEmptyValues@80
+org.mockito.internal.stubbing.defaultanswers.ReturnsEmptyValues@84

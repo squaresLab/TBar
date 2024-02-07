@@ -1,0 +1,10 @@
+org.apache.commons.jxpath.ri.compiler.TreeCompiler@26
+org.apache.commons.jxpath.ri.compiler.TreeCompiler@28
+org.apache.commons.jxpath.ri.QName@43
+org.apache.commons.jxpath.ri.QName@44
+org.apache.commons.jxpath.ri.QName@45
+org.apache.commons.jxpath.ri.QName@46
+org.apache.commons.jxpath.JXPathContext@432
+org.apache.commons.jxpath.JXPathContext@387
+org.apache.commons.jxpath.JXPathContext@388
+org.apache.commons.jxpath.JXPathContext@433

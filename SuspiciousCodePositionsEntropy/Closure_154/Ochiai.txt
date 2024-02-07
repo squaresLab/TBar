@@ -1,0 +1,10 @@
+com.google.javascript.rhino.jstype.PrototypeObjectType@448
+com.google.javascript.rhino.jstype.PrototypeObjectType@449
+com.google.javascript.jscomp.TypedScopeCreator.AbstractScopeBuilder.CollectProperties@1474
+com.google.javascript.rhino.jstype.InstanceObjectType@177
+com.google.javascript.jscomp.TypeValidator@566
+com.google.javascript.jscomp.TypeValidator@567
+com.google.javascript.jscomp.TypeValidator@578
+com.google.javascript.jscomp.TypeValidator@590
+com.google.javascript.jscomp.TypedScopeCreator.AbstractScopeBuilder@1110
+com.google.javascript.rhino.jstype.PrototypeObjectType@446

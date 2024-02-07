@@ -1,0 +1,10 @@
+com.google.gson.stream.JsonReader.1@1607
+com.google.gson.stream.JsonReader.1@1608
+com.google.gson.stream.JsonReader@1193
+com.google.gson.stream.JsonReader@965
+com.google.gson.internal.ConstructorConstructor.12@201
+com.google.gson.internal.ConstructorConstructor@199
+com.google.gson.stream.JsonReader@1182
+com.google.gson.stream.JsonReader.1@1605
+com.google.gson.stream.JsonReader@1179
+com.google.gson.Gson@891

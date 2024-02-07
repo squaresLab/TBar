@@ -1,0 +1,10 @@
+org.jfree.data.time.TimePeriodValues@552
+org.jfree.data.time.TimePeriodValues@267
+org.jfree.data.time.TimePeriodValues@292
+org.jfree.data.time.TimePeriodValues@317
+org.jfree.data.time.TimePeriodValues@363
+org.jfree.data.time.TimePeriodValues@364
+org.jfree.data.time.TimePeriodValues@365
+org.jfree.data.time.TimePeriodValues@375
+org.jfree.data.time.TimePeriodValues@376
+org.jfree.data.time.TimePeriodValues@377

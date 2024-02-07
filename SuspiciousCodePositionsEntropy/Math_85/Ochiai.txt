@@ -1,0 +1,10 @@
+org.apache.commons.math.analysis.solvers.UnivariateRealSolverUtils@199
+org.apache.commons.math.analysis.solvers.UnivariateRealSolverUtils@182
+org.apache.commons.math.analysis.solvers.UnivariateRealSolverUtils@183
+org.apache.commons.math.analysis.solvers.UnivariateRealSolverUtils@186
+org.apache.commons.math.analysis.solvers.UnivariateRealSolverUtils@189
+org.apache.commons.math.analysis.solvers.UnivariateRealSolverUtils@190
+org.apache.commons.math.analysis.solvers.UnivariateRealSolverUtils@191
+org.apache.commons.math.analysis.solvers.UnivariateRealSolverUtils@193
+org.apache.commons.math.analysis.solvers.UnivariateRealSolverUtils@194
+org.apache.commons.math.analysis.solvers.UnivariateRealSolverUtils@195

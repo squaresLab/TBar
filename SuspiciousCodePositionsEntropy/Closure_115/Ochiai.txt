@@ -1,0 +1,10 @@
+com.google.javascript.jscomp.FunctionInjector@731
+com.google.javascript.jscomp.FunctionInjector@730
+com.google.javascript.jscomp.FunctionInjector@729
+com.google.javascript.jscomp.FunctionInjector@728
+com.google.javascript.jscomp.FunctionInjector@866
+com.google.javascript.jscomp.FunctionInjector@699
+com.google.javascript.jscomp.FunctionInjector@700
+com.google.javascript.jscomp.FunctionInjector@701
+com.google.javascript.jscomp.FunctionInjector@702
+com.google.javascript.jscomp.FunctionInjector@725

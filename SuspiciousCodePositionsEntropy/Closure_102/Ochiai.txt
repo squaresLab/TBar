@@ -1,0 +1,10 @@
+com.google.javascript.jscomp.Normalize@393
+com.google.javascript.jscomp.Normalize@394
+com.google.javascript.jscomp.Normalize@405
+com.google.javascript.jscomp.Normalize@407
+com.google.javascript.jscomp.Normalize@408
+com.google.javascript.jscomp.Normalize@358
+com.google.javascript.jscomp.Normalize@362
+com.google.javascript.jscomp.Normalize@269
+com.google.javascript.jscomp.Normalize@378
+com.google.javascript.jscomp.Normalize@380

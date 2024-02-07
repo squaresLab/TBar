@@ -1,0 +1,10 @@
+com.fasterxml.jackson.dataformat.xml.util.TypeUtil@25
+com.fasterxml.jackson.dataformat.xml.ser.XmlSerializerProvider@93
+com.fasterxml.jackson.dataformat.xml.ser.XmlSerializerProvider@94
+com.fasterxml.jackson.dataformat.xml.ser.XmlBeanSerializerBase@221
+com.fasterxml.jackson.dataformat.xml.ser.XmlBeanSerializerBase@222
+com.fasterxml.jackson.dataformat.xml.ser.XmlBeanSerializerBase@224
+com.fasterxml.jackson.dataformat.xml.ser.XmlBeanSerializerBase@225
+com.fasterxml.jackson.dataformat.xml.ser.XmlBeanSerializerBase@226
+com.fasterxml.jackson.dataformat.xml.ser.ToXmlGenerator@458
+com.fasterxml.jackson.dataformat.xml.ser.ToXmlGenerator@459

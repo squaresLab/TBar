@@ -1,0 +1,10 @@
+org.jsoup.select.QueryParser@204
+org.jsoup.select.QueryParser@201
+org.jsoup.select.QueryParser@199
+org.jsoup.select.Selector.SelectorParseException@164
+org.jsoup.select.Selector.SelectorParseException@165
+org.jsoup.select.QueryParser@197
+org.jsoup.select.QueryParser@195
+org.jsoup.select.QueryParser@193
+org.jsoup.select.QueryParser@191
+org.jsoup.select.QueryParser@189

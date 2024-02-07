@@ -1,0 +1,10 @@
+org.jsoup.nodes.Entities@112
+org.jsoup.nodes.Entities@113
+org.jsoup.nodes.Entities@115
+org.jsoup.nodes.Entities@116
+org.jsoup.nodes.Entities@117
+org.jsoup.parser.TokeniserState.42@882
+org.jsoup.parser.TokeniserState.42@883
+org.jsoup.parser.TokeniserState.41@850
+org.jsoup.parser.TokeniserState.41@851
+org.jsoup.select.Evaluator.Attribute@132

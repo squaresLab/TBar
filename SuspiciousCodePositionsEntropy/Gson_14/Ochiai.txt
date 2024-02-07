@@ -1,0 +1,10 @@
+com.google.gson.Gson@521
+com.google.gson.internal.bind.ReflectiveTypeAdapterFactory@145
+com.google.gson.internal.ConstructorConstructor@158
+com.google.gson.Gson@415
+com.google.gson.internal.bind.ObjectTypeAdapter@50
+com.google.gson.internal.bind.ObjectTypeAdapter@51
+com.google.gson.internal.bind.ObjectTypeAdapter@52
+com.google.gson.internal.bind.ObjectTypeAdapter.1@42
+com.google.gson.internal.Excluder@151
+com.google.gson.internal.ConstructorConstructor@94

@@ -1,0 +1,10 @@
+org.joda.time.chrono.GJChronology@339
+org.joda.time.chrono.GJChronology@340
+org.joda.time.chrono.GJChronology@341
+org.joda.time.chrono.GJChronology@96
+org.joda.time.chrono.GJChronology@596
+org.joda.time.chrono.GJChronology@330
+org.joda.time.chrono.GJChronology@335
+org.joda.time.chrono.GJChronology@336
+org.joda.time.chrono.GJChronology@337
+org.joda.time.chrono.GJChronology@346

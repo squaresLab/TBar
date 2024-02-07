@@ -1,0 +1,10 @@
+org.apache.commons.math3.geometry.euclidean.threed.Line@87
+org.apache.commons.math3.geometry.euclidean.threed.Line@88
+org.apache.commons.math3.geometry.euclidean.threed.Line@95
+org.apache.commons.math3.geometry.euclidean.threed.Line@54
+org.apache.commons.math3.geometry.euclidean.threed.Line@55
+org.apache.commons.math3.geometry.euclidean.threed.Line@56
+org.apache.commons.math3.geometry.euclidean.threed.Line@74
+org.apache.commons.math3.geometry.euclidean.threed.Line@75
+org.apache.commons.math3.geometry.euclidean.threed.Line@76
+org.apache.commons.math3.geometry.euclidean.threed.Line@79

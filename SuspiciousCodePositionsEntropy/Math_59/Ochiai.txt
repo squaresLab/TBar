@@ -1,0 +1,3 @@
+org.apache.commons.math.util.FastMath@3446
+org.apache.commons.math.util.FastMath@3482
+org.apache.commons.math.util.FastMath@3464

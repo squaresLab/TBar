@@ -1,0 +1,10 @@
+com.google.javascript.jscomp.Compiler@1705
+com.google.javascript.jscomp.Compiler@1706
+com.google.javascript.jscomp.Compiler@1239
+com.google.javascript.jscomp.Compiler@1241
+com.google.javascript.jscomp.Compiler@1242
+com.google.javascript.jscomp.Compiler@1851
+com.google.javascript.jscomp.Compiler@1855
+com.google.javascript.jscomp.Compiler@1858
+com.google.javascript.jscomp.Compiler@1859
+com.google.javascript.jscomp.Compiler@1860

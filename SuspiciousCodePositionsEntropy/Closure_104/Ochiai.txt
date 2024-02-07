@@ -1,0 +1,10 @@
+com.google.javascript.rhino.jstype.UnionType@287
+com.google.javascript.rhino.jstype.UnionType@274
+com.google.javascript.rhino.jstype.UnionType@275
+com.google.javascript.rhino.jstype.UnionType@276
+com.google.javascript.rhino.jstype.UnionType@279
+com.google.javascript.rhino.jstype.UnionType@281
+com.google.javascript.rhino.jstype.UnionType@290
+com.google.javascript.rhino.jstype.UnionType@291
+com.google.javascript.rhino.jstype.UnionType@292
+com.google.javascript.rhino.jstype.UnionType@394

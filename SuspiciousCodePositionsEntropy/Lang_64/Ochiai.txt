@@ -1,0 +1,4 @@
+org.apache.commons.lang.enums.ValuedEnum@126
+org.apache.commons.lang.enums.ValuedEnum@127
+org.apache.commons.lang.enums.ValuedEnum@128
+org.apache.commons.lang.enums.ValuedEnum@183

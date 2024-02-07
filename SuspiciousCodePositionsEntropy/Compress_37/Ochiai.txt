@@ -1,0 +1,10 @@
+org.apache.commons.compress.archivers.zip.FallbackZipEncoding@70
+org.apache.commons.compress.archivers.zip.FallbackZipEncoding@79
+org.apache.commons.compress.archivers.zip.FallbackZipEncoding@82
+org.apache.commons.compress.archivers.zip.ZipEncodingHelper@253
+org.apache.commons.compress.archivers.zip.ZipEncodingHelper@214
+org.apache.commons.compress.archivers.zip.ZipEncodingHelper@251
+org.apache.commons.compress.archivers.zip.ZipEncodingHelper@252
+org.apache.commons.compress.archivers.zip.ZipEncodingHelper@255
+org.apache.commons.compress.archivers.zip.ZipEncodingHelper@71
+org.apache.commons.compress.archivers.zip.ZipEncodingHelper@74

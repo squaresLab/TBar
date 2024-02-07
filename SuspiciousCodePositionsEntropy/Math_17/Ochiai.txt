@@ -1,0 +1,10 @@
+org.apache.commons.math3.dfp.Dfp@1524
+org.apache.commons.math3.dfp.Dfp@1525
+org.apache.commons.math3.dfp.Dfp@1526
+org.apache.commons.math3.dfp.Dfp@1527
+org.apache.commons.math3.dfp.Dfp@1530
+org.apache.commons.math3.dfp.Dfp@1531
+org.apache.commons.math3.dfp.Dfp@1532
+org.apache.commons.math3.dfp.Dfp@1533
+org.apache.commons.math3.dfp.Dfp@1536
+org.apache.commons.math3.dfp.Dfp@1538

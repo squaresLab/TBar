@@ -1,0 +1,10 @@
+org.apache.commons.codec.net.QuotedPrintableCodec@405
+org.apache.commons.codec.net.QuotedPrintableCodec@91
+org.apache.commons.codec.net.QuotedPrintableCodec@92
+org.apache.commons.codec.net.QuotedPrintableCodec@101
+org.apache.commons.codec.net.QuotedPrintableCodec@102
+org.apache.commons.codec.net.QuotedPrintableCodec@103
+org.apache.commons.codec.net.Utils@44
+org.apache.commons.codec.net.QuotedPrintableCodec@300
+org.apache.commons.codec.net.QuotedPrintableCodec@62
+org.apache.commons.codec.net.QuotedPrintableCodec@77

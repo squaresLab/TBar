@@ -1,0 +1,10 @@
+org.jsoup.parser.CharacterReader@296
+org.jsoup.parser.CharacterReader@297
+org.jsoup.parser.CharacterReader@298
+org.jsoup.parser.CharacterReader@299
+org.jsoup.parser.CharacterReader@300
+org.jsoup.parser.CharacterReader@301
+org.jsoup.parser.CharacterReader@304
+org.jsoup.parser.CharacterReader@305
+org.jsoup.parser.Tokeniser@131
+org.jsoup.parser.Tokeniser@132

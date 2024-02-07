@@ -1,0 +1,10 @@
+org.apache.commons.lang3.math.Fraction@216
+org.apache.commons.lang3.math.Fraction@223
+org.apache.commons.lang3.math.Fraction@226
+org.apache.commons.lang3.math.Fraction@228
+org.apache.commons.lang3.math.Fraction@230
+org.apache.commons.lang3.math.Fraction@231
+org.apache.commons.lang3.math.Fraction@475
+org.apache.commons.lang3.math.Fraction@476
+org.apache.commons.lang3.math.Fraction@478
+org.apache.commons.lang3.math.Fraction@479

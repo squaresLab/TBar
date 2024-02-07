@@ -1,0 +1,10 @@
+org.jfree.chart.renderer.category.AbstractCategoryItemRenderer@1793
+org.jfree.chart.renderer.category.AbstractCategoryItemRenderer@1791
+org.jfree.chart.renderer.category.AbstractCategoryItemRenderer@1792
+org.jfree.chart.renderer.category.AbstractCategoryItemRenderer@1795
+org.jfree.chart.renderer.category.AbstractCategoryItemRenderer@1796
+org.jfree.chart.renderer.category.AbstractCategoryItemRenderer@1797
+org.jfree.chart.renderer.category.AbstractCategoryItemRenderer@1798
+org.jfree.chart.renderer.category.AbstractCategoryItemRenderer@293
+org.jfree.chart.renderer.category.AbstractCategoryItemRenderer@296
+org.jfree.chart.renderer.category.AbstractCategoryItemRenderer@297

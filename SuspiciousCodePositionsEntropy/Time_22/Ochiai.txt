@@ -1,0 +1,10 @@
+org.joda.time.base.BasePeriod@222
+org.joda.time.base.BasePeriod@224
+org.joda.time.base.BasePeriod@244
+org.joda.time.base.BasePeriod@239
+org.joda.time.base.BasePeriod@240
+org.joda.time.base.BasePeriod@241
+org.joda.time.base.BasePeriod@242
+org.joda.time.base.BasePeriod@243
+org.joda.time.base.BasePeriod@324
+org.joda.time.base.BasePeriod@293

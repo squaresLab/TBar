@@ -1,0 +1,10 @@
+com.google.javascript.jscomp.ExploitAssigns@155
+com.google.javascript.jscomp.ExploitAssigns@211
+com.google.javascript.jscomp.ExploitAssigns@213
+com.google.javascript.jscomp.ExploitAssigns@214
+com.google.javascript.jscomp.ExploitAssigns@219
+com.google.javascript.jscomp.ExploitAssigns@55
+com.google.javascript.jscomp.ExploitAssigns@136
+com.google.javascript.jscomp.ExploitAssigns@137
+com.google.javascript.jscomp.ExploitAssigns@138
+com.google.javascript.jscomp.ExploitAssigns@145

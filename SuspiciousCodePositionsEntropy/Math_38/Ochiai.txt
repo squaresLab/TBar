@@ -1,0 +1,10 @@
+org.apache.commons.math.optimization.direct.BOBYQAOptimizer@1653
+org.apache.commons.math.optimization.direct.BOBYQAOptimizer@1654
+org.apache.commons.math.optimization.direct.BOBYQAOptimizer@1655
+org.apache.commons.math.optimization.direct.BOBYQAOptimizer@1656
+org.apache.commons.math.optimization.direct.BOBYQAOptimizer@1662
+org.apache.commons.math.optimization.direct.BOBYQAOptimizer@1663
+org.apache.commons.math.optimization.direct.BOBYQAOptimizer@1664
+org.apache.commons.math.optimization.direct.BOBYQAOptimizer@1665
+org.apache.commons.math.optimization.direct.BOBYQAOptimizer@1744
+org.apache.commons.math.optimization.direct.BOBYQAOptimizer@1745

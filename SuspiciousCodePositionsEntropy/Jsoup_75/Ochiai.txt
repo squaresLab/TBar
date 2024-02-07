@@ -1,0 +1,10 @@
+org.jsoup.nodes.Attribute@179
+org.jsoup.parser.TokeniserState.39@770
+org.jsoup.select.Collector.FirstFinder@85
+org.jsoup.select.NodeTraversor@118
+org.jsoup.select.NodeTraversor@119
+org.jsoup.select.NodeTraversor@120
+org.jsoup.select.NodeTraversor@122
+org.jsoup.nodes.Element@374
+org.jsoup.parser.TokeniserState.36@676
+org.jsoup.parser.TokeniserState.36@677

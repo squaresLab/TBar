@@ -1,0 +1,10 @@
+org.mockito.internal.creation.bytebuddy.ByteBuddyMockMaker@25
+org.mockito.internal.creation.bytebuddy.ByteBuddyMockMaker@28
+org.mockito.internal.creation.bytebuddy.ByteBuddyMockMaker@29
+org.mockito.internal.creation.bytebuddy.ByteBuddyMockMaker@30
+org.mockito.internal.creation.bytebuddy.ByteBuddyMockMaker@32
+org.mockito.internal.creation.bytebuddy.ByteBuddyMockMaker@34
+org.mockito.internal.creation.bytebuddy.ByteBuddyMockMaker@35
+org.mockito.internal.creation.bytebuddy.ByteBuddyMockMaker@36
+org.mockito.internal.creation.bytebuddy.ByteBuddyMockMaker@38
+org.mockito.internal.creation.bytebuddy.ByteBuddyMockMaker@59

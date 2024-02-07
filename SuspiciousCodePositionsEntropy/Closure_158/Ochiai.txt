@@ -1,0 +1,10 @@
+com.google.javascript.jscomp.ComposeWarningsGuard@132
+com.google.javascript.jscomp.CollapseVariableDeclarations.GatherCollapses@196
+com.google.javascript.jscomp.RemoveUnusedVars.Assign@937
+com.google.javascript.jscomp.DiagnosticGroups@189
+com.google.javascript.jscomp.DiagnosticGroups@190
+com.google.javascript.jscomp.DiagnosticGroups@191
+com.google.javascript.jscomp.DiagnosticGroups@192
+com.google.javascript.jscomp.DiagnosticGroups@64
+com.google.javascript.jscomp.ExploitAssigns@198
+com.google.javascript.jscomp.MustBeReachingVariableDef@283

@@ -1,0 +1,10 @@
+com.google.javascript.rhino.Node@1411
+com.google.javascript.rhino.Node@1440
+com.google.javascript.rhino.Node@1427
+com.google.javascript.rhino.Node.NodeMismatch@2126
+com.google.javascript.rhino.Node.NodeMismatch@2127
+com.google.javascript.rhino.Node.NodeMismatch@2128
+com.google.javascript.rhino.Node.NodeMismatch@2129
+com.google.javascript.jscomp.InlineObjectLiterals.InliningBehavior@319
+com.google.javascript.jscomp.InlineObjectLiterals.InliningBehavior@318
+com.google.javascript.jscomp.InlineObjectLiterals.InliningBehavior@426

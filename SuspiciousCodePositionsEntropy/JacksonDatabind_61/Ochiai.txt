@@ -1,0 +1,10 @@
+com.fasterxml.jackson.databind.ObjectMapper@275
+com.fasterxml.jackson.databind.ObjectMapper@280
+com.fasterxml.jackson.databind.type.SimpleType@82
+com.fasterxml.jackson.databind.JavaType@78
+com.fasterxml.jackson.databind.JavaType@79
+com.fasterxml.jackson.databind.JavaType@80
+com.fasterxml.jackson.databind.JavaType@81
+com.fasterxml.jackson.databind.JavaType@82
+com.fasterxml.jackson.databind.JavaType@83
+com.fasterxml.jackson.databind.JavaType@84

@@ -1,0 +1,10 @@
+org.jsoup.nodes.Entities@125
+org.jsoup.nodes.Entities@126
+org.jsoup.nodes.Entities@131
+org.jsoup.nodes.Entities@132
+org.jsoup.nodes.Document.OutputSettings@402
+org.jsoup.nodes.Document.OutputSettings@403
+org.jsoup.nodes.Entities@122
+org.jsoup.nodes.Entities@128
+org.jsoup.nodes.Node@536
+org.jsoup.nodes.Node@537

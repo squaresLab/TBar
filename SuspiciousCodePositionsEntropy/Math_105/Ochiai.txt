@@ -1,0 +1,10 @@
+org.apache.commons.math.stat.regression.SimpleRegression@89
+org.apache.commons.math.stat.regression.SimpleRegression@60
+org.apache.commons.math.stat.regression.SimpleRegression@63
+org.apache.commons.math.stat.regression.SimpleRegression@66
+org.apache.commons.math.stat.regression.SimpleRegression@69
+org.apache.commons.math.stat.regression.SimpleRegression@72
+org.apache.commons.math.stat.regression.SimpleRegression@75
+org.apache.commons.math.stat.regression.SimpleRegression@78
+org.apache.commons.math.stat.regression.SimpleRegression@81
+org.apache.commons.math.stat.regression.SimpleRegression@90

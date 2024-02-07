@@ -1,0 +1,10 @@
+com.google.gson.internal.bind.TypeAdapters.31@833
+com.google.gson.stream.JsonReader@575
+com.google.gson.internal.bind.TypeAdapters.25@647
+com.google.gson.internal.bind.TypeAdapters.25@645
+com.google.gson.internal.bind.TypeAdapters.32@98
+com.google.gson.stream.JsonReader@827
+com.google.gson.JsonPrimitive@64
+com.google.gson.JsonPrimitive@65
+com.google.gson.JsonPrimitive@66
+com.google.gson.stream.JsonReader@577

@@ -1,0 +1,10 @@
+com.fasterxml.jackson.core.io.IOContext@284
+com.fasterxml.jackson.core.JsonFactory@1099
+com.fasterxml.jackson.core.io.IOContext@269
+com.fasterxml.jackson.core.io.IOContext@270
+com.fasterxml.jackson.core.io.IOContext@245
+com.fasterxml.jackson.core.io.IOContext@247
+com.fasterxml.jackson.core.io.IOContext@248
+com.fasterxml.jackson.core.io.IOContext@249
+com.fasterxml.jackson.core.io.IOContext@251
+com.fasterxml.jackson.core.JsonGenerator.Feature@243

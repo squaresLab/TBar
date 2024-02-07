@@ -1,0 +1,10 @@
+org.apache.commons.math.estimation.EstimatedParameter@59
+org.apache.commons.math.estimation.EstimatedParameter@60
+org.apache.commons.math.estimation.EstimatedParameter@61
+org.apache.commons.math.estimation.EstimatedParameter@62
+org.apache.commons.math.estimation.EstimatedParameter@63
+org.apache.commons.math.estimation.SimpleEstimationProblem@58
+org.apache.commons.math.estimation.AbstractEstimator@162
+org.apache.commons.math.estimation.AbstractEstimator@165
+org.apache.commons.math.estimation.AbstractEstimator@166
+org.apache.commons.math.estimation.AbstractEstimator@167

@@ -1,0 +1,10 @@
+com.fasterxml.jackson.core.JsonFactory@817
+com.fasterxml.jackson.core.JsonFactory@819
+com.fasterxml.jackson.core.JsonFactory@825
+com.fasterxml.jackson.core.json.ByteSourceJsonBootstrapper@501
+com.fasterxml.jackson.core.JsonLocation@89
+com.fasterxml.jackson.core.base.ParserBase@422
+com.fasterxml.jackson.core.base.ParserBase@423
+com.fasterxml.jackson.core.base.ParserBase@426
+com.fasterxml.jackson.core.base.ParserBase@427
+com.fasterxml.jackson.core.json.UTF8StreamJsonParser@606

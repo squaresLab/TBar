@@ -1,0 +1,10 @@
+org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream@384
+org.apache.commons.compress.compressors.bzip2.BZip2CompressorOutputStream@772
+org.apache.commons.compress.compressors.bzip2.BlockSort@371
+org.apache.commons.compress.compressors.bzip2.BZip2CompressorOutputStream@227
+org.apache.commons.compress.compressors.bzip2.BZip2CompressorOutputStream@440
+org.apache.commons.compress.compressors.bzip2.BZip2CompressorOutputStream@441
+org.apache.commons.compress.compressors.bzip2.BZip2CompressorOutputStream@442
+org.apache.commons.compress.compressors.bzip2.BZip2CompressorOutputStream@443
+org.apache.commons.compress.compressors.bzip2.BZip2CompressorOutputStream@444
+org.apache.commons.compress.compressors.bzip2.BZip2CompressorOutputStream@446

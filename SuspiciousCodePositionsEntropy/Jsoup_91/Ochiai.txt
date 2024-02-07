@@ -1,0 +1,10 @@
+org.jsoup.helper.HttpConnection@182
+org.jsoup.helper.HttpConnection@183
+org.jsoup.helper.HttpConnection.Request@626
+org.jsoup.helper.HttpConnection.Request@627
+org.jsoup.helper.DataUtil@141
+org.jsoup.helper.DataUtil@217
+org.jsoup.helper.HttpConnection.Response@1114
+org.jsoup.helper.DataUtil@137
+org.jsoup.helper.DataUtil@138
+org.jsoup.helper.DataUtil@139

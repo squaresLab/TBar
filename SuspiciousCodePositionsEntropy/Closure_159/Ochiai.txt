@@ -1,0 +1,10 @@
+com.google.javascript.rhino.Token@318
+com.google.javascript.rhino.Node@1383
+com.google.javascript.rhino.Node@1425
+com.google.javascript.jscomp.Normalize.NormalizeStatements@620
+com.google.javascript.rhino.Token@362
+com.google.javascript.jscomp.FunctionInjector@798
+com.google.javascript.jscomp.InlineFunctions@444
+com.google.javascript.jscomp.InlineFunctions@445
+com.google.javascript.jscomp.InlineFunctions@448
+com.google.javascript.jscomp.InlineFunctions.CallVisitor@396

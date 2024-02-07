@@ -1,0 +1,10 @@
+com.google.javascript.rhino.TokenStream@128
+com.google.javascript.rhino.jstype.JSTypeRegistry@1453
+com.google.javascript.rhino.jstype.JSTypeRegistry@1454
+com.google.javascript.rhino.jstype.JSTypeRegistry@1455
+com.google.javascript.rhino.jstype.JSTypeRegistry@1456
+com.google.javascript.rhino.jstype.JSTypeRegistry@1457
+com.google.javascript.jscomp.TypedScopeCreator.AbstractScopeBuilder@1571
+com.google.javascript.rhino.jstype.FunctionType@1137
+com.google.javascript.rhino.jstype.FunctionType@1138
+com.google.javascript.rhino.jstype.FunctionType@1139

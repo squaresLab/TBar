@@ -1,0 +1,10 @@
+org.apache.commons.math.geometry.euclidean.threed.Rotation@313
+org.apache.commons.math.geometry.euclidean.threed.Rotation@316
+org.apache.commons.math.geometry.euclidean.threed.Rotation@317
+org.apache.commons.math.geometry.euclidean.threed.Rotation@318
+org.apache.commons.math.geometry.euclidean.threed.Rotation@319
+org.apache.commons.math.geometry.euclidean.threed.Rotation@320
+org.apache.commons.math.geometry.euclidean.threed.Rotation@325
+org.apache.commons.math.geometry.euclidean.threed.Rotation@328
+org.apache.commons.math.geometry.euclidean.threed.Rotation@329
+org.apache.commons.math.geometry.euclidean.threed.Rotation@330

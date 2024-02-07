@@ -1,0 +1,10 @@
+com.fasterxml.jackson.core.JsonPointer@204
+com.fasterxml.jackson.core.JsonPointer@198
+com.fasterxml.jackson.core.JsonPointer@225
+com.fasterxml.jackson.core.JsonPointer@55
+com.fasterxml.jackson.core.JsonPointer@56
+com.fasterxml.jackson.core.JsonPointer@57
+com.fasterxml.jackson.core.JsonPointer@58
+com.fasterxml.jackson.core.JsonPointer@59
+com.fasterxml.jackson.core.JsonPointer@60
+com.fasterxml.jackson.core.JsonPointer@65
