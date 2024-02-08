@@ -1,0 +1,10 @@
+com.google.gson.internal.bind.TypeAdapters.15@373
+com.google.gson.internal.bind.TypeAdapters.15@365
+com.google.gson.internal.bind.TypeAdapters.15@366
+com.google.gson.JsonParseException@42
+com.google.gson.JsonParseException@43
+com.google.gson.JsonSyntaxException@30
+com.google.gson.JsonSyntaxException@31
+com.google.gson.stream.JsonReader@1571
+com.google.gson.internal.bind.TypeAdapters.36@105
+com.google.gson.stream.JsonReader@1279

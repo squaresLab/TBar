@@ -1,0 +1,10 @@
+com.google.javascript.rhino.Node@1404
+com.google.javascript.rhino.Node@1433
+com.google.javascript.jscomp.AnalyzePrototypeProperties.LiteralProperty@642
+com.google.javascript.jscomp.AnalyzePrototypeProperties.LiteralProperty@647
+com.google.javascript.jscomp.AnalyzePrototypeProperties.LiteralProperty@652
+com.google.javascript.rhino.Node@141
+com.google.javascript.rhino.Node@125
+com.google.javascript.rhino.Node@1420
+com.google.javascript.rhino.Node.NodeMismatch@2117
+com.google.javascript.rhino.Node.NodeMismatch@2118

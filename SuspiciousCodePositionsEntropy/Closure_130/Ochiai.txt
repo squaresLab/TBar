@@ -1,0 +1,10 @@
+com.google.javascript.jscomp.CollapseProperties@223
+com.google.javascript.jscomp.CollapseProperties@226
+com.google.javascript.jscomp.CollapseProperties@227
+com.google.javascript.jscomp.CollapseProperties@228
+com.google.javascript.jscomp.CollapseProperties@181
+com.google.javascript.jscomp.CollapseProperties@220
+com.google.javascript.jscomp.CollapseProperties@221
+com.google.javascript.jscomp.CollapseProperties@222
+com.google.javascript.jscomp.CollapseProperties@232
+com.google.javascript.jscomp.CollapseProperties@233

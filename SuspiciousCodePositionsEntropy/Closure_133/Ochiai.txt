@@ -1,0 +1,10 @@
+com.google.javascript.jscomp.parsing.JsDocInfoParser@1838
+com.google.javascript.jscomp.parsing.JsDocInfoParser@1839
+com.google.javascript.jscomp.parsing.JsDocInfoParser@2303
+com.google.javascript.jscomp.parsing.JsDocInfoParser@947
+com.google.javascript.jscomp.parsing.JsDocInfoParser@2341
+com.google.javascript.jscomp.parsing.JsDocInfoParser@2342
+com.google.javascript.jscomp.parsing.JsDocInfoParser@2298
+com.google.javascript.jscomp.parsing.JsDocInfoParser@2299
+com.google.javascript.jscomp.parsing.JsDocInfoParser@958
+com.google.javascript.jscomp.parsing.JsDocInfoParser@1483

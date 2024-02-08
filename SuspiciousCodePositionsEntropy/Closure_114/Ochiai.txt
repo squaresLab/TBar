@@ -1,0 +1,10 @@
+com.google.javascript.jscomp.NameAnalyzer@1722
+com.google.javascript.jscomp.NameAnalyzer@1723
+com.google.javascript.jscomp.NameAnalyzer@1724
+com.google.javascript.jscomp.NameAnalyzer@1725
+com.google.javascript.jscomp.NameAnalyzer@1611
+com.google.javascript.jscomp.NameAnalyzer@1864
+com.google.javascript.jscomp.NameAnalyzer@1610
+com.google.javascript.jscomp.NameAnalyzer@1498
+com.google.javascript.jscomp.NameAnalyzer@1598
+com.google.javascript.jscomp.NameAnalyzer@1599

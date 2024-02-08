@@ -1,0 +1,10 @@
+com.google.javascript.jscomp.ShowByPathWarningsGuard@73
+com.google.javascript.jscomp.WarningLevel@36
+com.google.javascript.jscomp.WarningLevel@37
+com.google.javascript.jscomp.WarningLevel@55
+com.google.javascript.jscomp.WarningLevel@58
+com.google.javascript.jscomp.ShowByPathWarningsGuard@43
+com.google.javascript.jscomp.ShowByPathWarningsGuard@44
+com.google.javascript.jscomp.ShowByPathWarningsGuard@51
+com.google.javascript.jscomp.ShowByPathWarningsGuard@52
+com.google.javascript.jscomp.ShowByPathWarningsGuard@54

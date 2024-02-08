@@ -1,0 +1,10 @@
+org.jfree.chart.plot.XYPlot@4479
+org.jfree.chart.plot.XYPlot@1749
+org.jfree.chart.plot.XYPlot@1576
+org.jfree.chart.plot.XYPlot@1591
+org.jfree.chart.plot.XYPlot@1589
+org.jfree.chart.plot.XYPlot@1590
+org.jfree.chart.plot.XYPlot@1593
+org.jfree.chart.plot.XYPlot@648
+org.jfree.chart.plot.XYPlot@4473
+org.jfree.chart.plot.XYPlot@4474

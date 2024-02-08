@@ -1,0 +1,10 @@
+com.google.javascript.rhino.Node@887
+com.google.javascript.rhino.Node@891
+com.google.javascript.rhino.Token@340
+com.google.javascript.jscomp.parsing.IRFactory.TransformDispatcher@348
+com.google.javascript.jscomp.parsing.IRFactory.TransformDispatcher@349
+com.google.javascript.jscomp.parsing.IRFactory.TransformDispatcher@351
+com.google.javascript.rhino.Node@216
+com.google.javascript.rhino.Token@320
+com.google.javascript.rhino.Token@422
+com.google.javascript.rhino.Token@423

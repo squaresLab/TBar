@@ -1,0 +1,10 @@
+com.google.javascript.jscomp.FunctionTypeBuilder@281
+com.google.javascript.rhino.jstype.FunctionType@718
+com.google.javascript.jscomp.FunctionTypeBuilder@461
+com.google.javascript.jscomp.FunctionTypeBuilder@462
+com.google.javascript.jscomp.FunctionTypeBuilder@463
+com.google.javascript.rhino.jstype.FunctionType@677
+com.google.javascript.rhino.jstype.FunctionType@678
+com.google.javascript.rhino.jstype.FunctionType@712
+com.google.javascript.rhino.jstype.FunctionType@713
+com.google.javascript.rhino.jstype.ArrowType@261

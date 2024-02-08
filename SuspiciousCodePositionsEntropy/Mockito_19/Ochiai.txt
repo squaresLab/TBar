@@ -1,0 +1,10 @@
+org.mockito.internal.configuration.injection.PropertyAndSetterInjection@60
+org.mockito.internal.configuration.injection.PropertyAndSetterInjection@62
+org.mockito.internal.configuration.injection.PropertyAndSetterInjection@64
+org.mockito.internal.configuration.injection.PropertyAndSetterInjection@116
+org.mockito.internal.configuration.injection.PropertyAndSetterInjection@117
+org.mockito.internal.configuration.injection.PropertyAndSetterInjection@118
+org.mockito.internal.configuration.injection.PropertyAndSetterInjection@113
+org.mockito.internal.configuration.injection.PropertyAndSetterInjection@114
+org.mockito.internal.configuration.injection.PropertyAndSetterInjection@115
+org.mockito.internal.configuration.injection.PropertyAndSetterInjection@120

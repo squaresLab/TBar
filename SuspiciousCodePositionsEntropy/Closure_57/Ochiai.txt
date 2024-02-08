@@ -1,0 +1,10 @@
+com.google.javascript.jscomp.ClosureCodingConvention@185
+com.google.javascript.jscomp.ClosureCodingConvention@192
+com.google.javascript.jscomp.ClosureCodingConvention@193
+com.google.javascript.jscomp.ClosureCodingConvention@194
+com.google.javascript.jscomp.ClosureCodingConvention@195
+com.google.javascript.jscomp.ClosureCodingConvention@196
+com.google.javascript.jscomp.ClosureCodingConvention@197
+com.google.javascript.jscomp.ClosureCodingConvention@198
+com.google.javascript.jscomp.ClosureCodingConvention@190
+com.google.javascript.jscomp.ClosureCodingConvention@191

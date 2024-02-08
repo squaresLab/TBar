@@ -1,0 +1,10 @@
+com.fasterxml.jackson.core.base.GeneratorBase@162
+com.fasterxml.jackson.core.base.GeneratorBase@163
+com.fasterxml.jackson.core.base.GeneratorBase@164
+com.fasterxml.jackson.core.base.GeneratorBase@173
+com.fasterxml.jackson.core.json.JsonGeneratorImpl@122
+com.fasterxml.jackson.core.json.UTF8JsonGenerator@1927
+com.fasterxml.jackson.core.json.UTF8JsonGenerator@1928
+com.fasterxml.jackson.core.json.UTF8JsonGenerator@1930
+com.fasterxml.jackson.core.json.UTF8JsonGenerator@1931
+com.fasterxml.jackson.core.json.UTF8JsonGenerator@1932

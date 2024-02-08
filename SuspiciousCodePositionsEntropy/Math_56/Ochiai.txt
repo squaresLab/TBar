@@ -1,0 +1,10 @@
+org.apache.commons.math.util.MultidimensionalCounter@222
+org.apache.commons.math.util.MultidimensionalCounter@224
+org.apache.commons.math.util.MultidimensionalCounter@225
+org.apache.commons.math.util.MultidimensionalCounter@226
+org.apache.commons.math.util.MultidimensionalCounter@227
+org.apache.commons.math.util.MultidimensionalCounter@228
+org.apache.commons.math.util.MultidimensionalCounter@229
+org.apache.commons.math.util.MultidimensionalCounter@230
+org.apache.commons.math.util.MultidimensionalCounter@232
+org.apache.commons.math.util.MultidimensionalCounter@233

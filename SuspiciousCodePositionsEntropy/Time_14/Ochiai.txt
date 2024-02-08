@@ -1,0 +1,10 @@
+org.joda.time.chrono.BasicMonthOfYearDateTimeField@206
+org.joda.time.chrono.BasicMonthOfYearDateTimeField@210
+org.joda.time.chrono.BasicMonthOfYearDateTimeField@211
+org.joda.time.chrono.BasicMonthOfYearDateTimeField@212
+org.joda.time.chrono.BasicMonthOfYearDateTimeField@213
+org.joda.time.chrono.BasicMonthOfYearDateTimeField@295
+org.joda.time.chrono.BasicMonthOfYearDateTimeField@297
+org.joda.time.chrono.BasicMonthOfYearDateTimeField@298
+org.joda.time.chrono.BasicMonthOfYearDateTimeField@299
+org.joda.time.chrono.BasicMonthOfYearDateTimeField@304

@@ -1,0 +1,10 @@
+org.apache.commons.codec.language.bm.PhoneticEngine@409
+org.apache.commons.codec.language.bm.PhoneticEngine@410
+org.apache.commons.codec.language.bm.PhoneticEngine@411
+org.apache.commons.codec.language.bm.Rule@595
+org.apache.commons.codec.language.bm.PhoneticEngine@400
+org.apache.commons.codec.language.bm.PhoneticEngine@405
+org.apache.commons.codec.language.bm.PhoneticEngine@407
+org.apache.commons.codec.language.bm.PhoneticEngine@413
+org.apache.commons.codec.language.bm.PhoneticEngine@434
+org.apache.commons.codec.language.bm.PhoneticEngine@435

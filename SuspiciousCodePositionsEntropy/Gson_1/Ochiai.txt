@@ -1,0 +1,10 @@
+com.google.gson.TypeInfoFactory@97
+com.google.gson.TypeInfoFactory@80
+com.google.gson.TypeInfoFactory@79
+com.google.gson.TypeInfoFactory@69
+com.google.gson.TypeInfoFactory@62
+com.google.gson.JsonSerializationVisitor@68
+com.google.gson.JsonSerializationVisitor@69
+com.google.gson.JsonSerializationVisitor@165
+com.google.gson.JsonSerializationVisitor@178
+com.google.gson.ObjectNavigator@156

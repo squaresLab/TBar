@@ -1,0 +1,10 @@
+com.google.javascript.rhino.jstype.PrototypeObjectType@384
+com.google.javascript.rhino.jstype.PrototypeObjectType@385
+com.google.javascript.rhino.jstype.PrototypeObjectType@375
+com.google.javascript.rhino.jstype.PrototypeObjectType@394
+com.google.javascript.rhino.jstype.PrototypeObjectType@374
+com.google.javascript.rhino.jstype.PrototypeObjectType@378
+com.google.javascript.rhino.jstype.PrototypeObjectType@379
+com.google.javascript.rhino.jstype.PrototypeObjectType@380
+com.google.javascript.rhino.jstype.PrototypeObjectType@382
+com.google.javascript.rhino.jstype.PrototypeObjectType@383

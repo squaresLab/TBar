@@ -1,0 +1,10 @@
+org.jfree.chart.plot.PiePlot@2613
+org.jfree.chart.plot.PiePlot@670
+org.jfree.chart.plot.PiePlot@1398
+org.jfree.chart.plot.PiePlot@1423
+org.jfree.chart.plot.PiePlot@1448
+org.jfree.chart.plot.PiePlot@706
+org.jfree.chart.plot.PiePlot@2049
+org.jfree.chart.plot.PiePlot@2050
+org.jfree.chart.plot.PiePlot@2051
+org.jfree.chart.plot.PiePlot@2611

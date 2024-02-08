@@ -1,0 +1,10 @@
+com.google.javascript.jscomp.MakeDeclaredNamesUnique@161
+com.google.javascript.jscomp.MakeDeclaredNamesUnique@162
+com.google.javascript.jscomp.MakeDeclaredNamesUnique@166
+com.google.javascript.jscomp.MakeDeclaredNamesUnique@167
+com.google.javascript.jscomp.MakeDeclaredNamesUnique@168
+com.google.javascript.jscomp.MakeDeclaredNamesUnique@196
+com.google.javascript.jscomp.MakeDeclaredNamesUnique@93
+com.google.javascript.jscomp.MakeDeclaredNamesUnique@94
+com.google.javascript.jscomp.MakeDeclaredNamesUnique@88
+com.google.javascript.jscomp.MakeDeclaredNamesUnique@92

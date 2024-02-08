@@ -1,0 +1,10 @@
+org.apache.commons.codec.binary.StringUtils@339
+org.apache.commons.codec.binary.StringUtils@419
+org.apache.commons.codec.binary.StringUtils@293
+org.apache.commons.codec.Charsets@101
+org.apache.commons.codec.Charsets@114
+org.apache.commons.codec.Charsets@128
+org.apache.commons.codec.Charsets@141
+org.apache.commons.codec.Charsets@154
+org.apache.commons.codec.Charsets@167
+org.apache.commons.codec.binary.StringUtils@39

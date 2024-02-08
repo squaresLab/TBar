@@ -1,0 +1,10 @@
+org.apache.commons.math.dfp.Dfp@1915
+org.apache.commons.math.dfp.Dfp@711
+org.apache.commons.math.dfp.Dfp@712
+org.apache.commons.math.dfp.Dfp@714
+org.apache.commons.math.dfp.Dfp@715
+org.apache.commons.math.dfp.Dfp@717
+org.apache.commons.math.dfp.Dfp@1906
+org.apache.commons.math.dfp.Dfp@1907
+org.apache.commons.math.dfp.Dfp@1860
+org.apache.commons.math.dfp.Dfp@1865

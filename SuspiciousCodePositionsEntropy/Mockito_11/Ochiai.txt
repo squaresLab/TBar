@@ -1,0 +1,10 @@
+org.mockito.internal.creation.DelegatingMethod@55
+org.mockito.internal.util.collections.Sets@28
+org.mockito.internal.util.collections.Sets@31
+org.mockito.internal.progress.ThreadSafeMockingProgress@15
+org.mockito.internal.progress.ThreadSafeMockingProgress@18
+org.mockito.internal.configuration.ClassPathLoader@97
+org.mockito.internal.util.MockUtil@21
+org.mockito.internal.util.MockUtil@23
+org.mockito.exceptions.Reporter@49
+org.mockito.internal.configuration.GlobalConfiguration@32

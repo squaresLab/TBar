@@ -1,0 +1,10 @@
+com.google.javascript.rhino.Node@1434
+com.google.javascript.rhino.Node@1463
+com.google.javascript.rhino.Node@1450
+com.google.javascript.rhino.Node.NodeMismatch@2198
+com.google.javascript.rhino.Node.NodeMismatch@2199
+com.google.javascript.rhino.Node.NodeMismatch@2200
+com.google.javascript.rhino.Node.NodeMismatch@2201
+com.google.javascript.jscomp.FunctionInjector@732
+com.google.javascript.jscomp.FunctionInjector@725
+com.google.javascript.jscomp.FunctionInjector@719

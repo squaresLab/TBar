@@ -1,0 +1,10 @@
+org.apache.commons.math3.optim.nonlinear.scalar.noderiv.PowellOptimizer@168
+org.apache.commons.math3.optim.nonlinear.scalar.noderiv.PowellOptimizer@169
+org.apache.commons.math3.optim.nonlinear.scalar.noderiv.PowellOptimizer@249
+org.apache.commons.math3.optim.nonlinear.scalar.noderiv.PowellOptimizer@250
+org.apache.commons.math3.optim.nonlinear.scalar.noderiv.PowellOptimizer@251
+org.apache.commons.math3.optim.nonlinear.scalar.noderiv.PowellOptimizer@252
+org.apache.commons.math3.optim.nonlinear.scalar.noderiv.PowellOptimizer@253
+org.apache.commons.math3.optim.nonlinear.scalar.noderiv.PowellOptimizer@255
+org.apache.commons.math3.optim.nonlinear.scalar.noderiv.PowellOptimizer@213
+org.apache.commons.math3.optim.nonlinear.scalar.noderiv.PowellOptimizer@214

@@ -1,0 +1,10 @@
+org.mockito.exceptions.Reporter@667
+org.mockito.exceptions.Reporter@668
+org.mockito.exceptions.Reporter@670
+org.mockito.exceptions.Reporter@671
+org.mockito.exceptions.Reporter@677
+org.mockito.exceptions.Reporter@431
+org.mockito.exceptions.Reporter@434
+org.mockito.exceptions.Reporter@418
+org.mockito.exceptions.Reporter@419
+org.mockito.exceptions.Reporter@421

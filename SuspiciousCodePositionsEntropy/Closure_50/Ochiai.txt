@@ -1,0 +1,10 @@
+com.google.javascript.jscomp.PeepholeReplaceKnownMethods@435
+com.google.javascript.jscomp.PeepholeReplaceKnownMethods@436
+com.google.javascript.jscomp.PeepholeReplaceKnownMethods@437
+com.google.javascript.jscomp.PeepholeReplaceKnownMethods@438
+com.google.javascript.jscomp.PeepholeReplaceKnownMethods@408
+com.google.javascript.jscomp.PeepholeReplaceKnownMethods@410
+com.google.javascript.jscomp.PeepholeReplaceKnownMethods@411
+com.google.javascript.jscomp.PeepholeReplaceKnownMethods@413
+com.google.javascript.jscomp.PeepholeReplaceKnownMethods@467
+com.google.javascript.jscomp.PeepholeReplaceKnownMethods@468

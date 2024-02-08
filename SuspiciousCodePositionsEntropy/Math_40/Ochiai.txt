@@ -1,0 +1,10 @@
+org.apache.commons.math.analysis.solvers.BracketingNthOrderBrentSolver@393
+org.apache.commons.math.analysis.solvers.BracketingNthOrderBrentSolver@394
+org.apache.commons.math.analysis.solvers.BracketingNthOrderBrentSolver@128
+org.apache.commons.math.analysis.solvers.BracketingNthOrderBrentSolver@129
+org.apache.commons.math.analysis.solvers.BracketingNthOrderBrentSolver@130
+org.apache.commons.math.analysis.solvers.BracketingNthOrderBrentSolver@124
+org.apache.commons.math.analysis.solvers.BracketingNthOrderBrentSolver@125
+org.apache.commons.math.analysis.solvers.BracketingNthOrderBrentSolver@265
+org.apache.commons.math.analysis.solvers.BracketingNthOrderBrentSolver@235
+org.apache.commons.math.analysis.solvers.BracketingNthOrderBrentSolver@294

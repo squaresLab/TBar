@@ -1,0 +1,10 @@
+com.google.javascript.jscomp.TypedScopeCreator@228
+com.google.javascript.jscomp.TypedScopeCreator@223
+com.google.javascript.jscomp.TypedScopeCreator@224
+com.google.javascript.jscomp.TypedScopeCreator@225
+com.google.javascript.jscomp.TypedScopeCreator@226
+com.google.javascript.jscomp.TypedScopeCreator@227
+com.google.javascript.jscomp.TypedScopeCreator@232
+com.google.javascript.jscomp.TypedScopeCreator@210
+com.google.javascript.jscomp.TypedScopeCreator@211
+com.google.javascript.jscomp.TypedScopeCreator@212

@@ -1,0 +1,10 @@
+com.google.javascript.jscomp.PeepholeFoldConstants@1220
+com.google.javascript.jscomp.PeepholeFoldConstants@1279
+com.google.javascript.jscomp.PeepholeFoldConstants@1284
+com.google.javascript.jscomp.PeepholeFoldConstants@1290
+com.google.javascript.jscomp.PeepholeFoldConstants@1291
+com.google.javascript.jscomp.PeepholeFoldConstants@1292
+com.google.javascript.jscomp.PeepholeFoldConstants@1297
+com.google.javascript.jscomp.PeepholeFoldConstants@1302
+com.google.javascript.jscomp.PeepholeFoldConstants@1303
+com.google.javascript.jscomp.PeepholeFoldConstants@1307

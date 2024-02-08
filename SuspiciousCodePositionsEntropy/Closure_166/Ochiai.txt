@@ -1,0 +1,10 @@
+com.google.javascript.jscomp.TypedScopeCreator.FirstOrderFunctionAnalyzer@1997
+com.google.javascript.jscomp.TypedScopeCreator.FirstOrderFunctionAnalyzer@1998
+com.google.javascript.rhino.jstype.PrototypeObjectType@571
+com.google.javascript.rhino.jstype.PrototypeObjectType@574
+com.google.javascript.rhino.jstype.RecordType@132
+com.google.javascript.rhino.jstype.RecordType@248
+com.google.javascript.rhino.jstype.PrototypeObjectType@358
+com.google.javascript.rhino.jstype.PrototypeObjectType@361
+com.google.javascript.rhino.jstype.PrototypeObjectType@362
+com.google.javascript.rhino.jstype.PrototypeObjectType@363

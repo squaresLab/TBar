@@ -1,0 +1,10 @@
+org.jfree.data.KeyedObjects2D@370
+org.jfree.data.KeyedObjects2D@371
+org.jfree.data.KeyedObjects2D@375
+org.jfree.data.KeyedObjects2D@376
+org.jfree.data.KeyedObjects2D@377
+org.jfree.data.KeyedObjects2D@378
+org.jfree.data.KeyedObjects2D@262
+org.jfree.data.KeyedObjects2D@265
+org.jfree.data.KeyedObjects2D@269
+org.jfree.data.KeyedObjects2D@270

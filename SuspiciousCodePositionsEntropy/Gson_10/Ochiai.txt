@@ -1,0 +1,10 @@
+com.google.gson.internal.bind.JsonAdapterAnnotationTypeAdapterFactory@59
+com.google.gson.internal.bind.JsonAdapterAnnotationTypeAdapterFactory@60
+com.google.gson.internal.bind.JsonAdapterAnnotationTypeAdapterFactory@63
+com.google.gson.internal.bind.ReflectiveTypeAdapterFactory@111
+com.google.gson.internal.bind.JsonAdapterAnnotationTypeAdapterFactory@53
+com.google.gson.internal.bind.JsonAdapterAnnotationTypeAdapterFactory@55
+com.google.gson.internal.bind.JsonAdapterAnnotationTypeAdapterFactory@58
+com.google.gson.internal.bind.JsonAdapterAnnotationTypeAdapterFactory@67
+com.google.gson.internal.bind.JsonAdapterAnnotationTypeAdapterFactory@68
+com.google.gson.internal.bind.JsonAdapterAnnotationTypeAdapterFactory@70

@@ -1,0 +1,10 @@
+com.google.javascript.jscomp.CodeGenerator@212
+com.google.javascript.jscomp.CodeGenerator@213
+com.google.javascript.jscomp.CodeGenerator@214
+com.google.javascript.jscomp.CodeGenerator@215
+com.google.javascript.jscomp.CodeGenerator@925
+com.google.javascript.jscomp.CodeGenerator@926
+com.google.javascript.jscomp.CodeGenerator@934
+com.google.javascript.jscomp.CodeGenerator@937
+com.google.javascript.jscomp.CodeGenerator@467
+com.google.javascript.jscomp.CodeGenerator@470

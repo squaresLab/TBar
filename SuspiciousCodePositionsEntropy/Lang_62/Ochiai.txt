@@ -1,0 +1,10 @@
+org.apache.commons.lang.Entities@814
+org.apache.commons.lang.Entities@815
+org.apache.commons.lang.Entities@816
+org.apache.commons.lang.Entities@39
+org.apache.commons.lang.Entities@693
+org.apache.commons.lang.Entities@41
+org.apache.commons.lang.Entities@48
+org.apache.commons.lang.Entities@53
+org.apache.commons.lang.Entities@154
+org.apache.commons.lang.Entities@366

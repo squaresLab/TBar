@@ -1,0 +1,10 @@
+org.apache.commons.codec.language.Metaphone@88
+org.apache.commons.codec.language.Metaphone@378
+org.apache.commons.codec.language.Caverphone@168
+org.apache.commons.codec.language.Soundex@214
+org.apache.commons.codec.language.Caverphone@59
+org.apache.commons.codec.language.Caverphone@62
+org.apache.commons.codec.language.Caverphone@65
+org.apache.commons.codec.language.Caverphone@68
+org.apache.commons.codec.language.Caverphone@69
+org.apache.commons.codec.language.Caverphone@70

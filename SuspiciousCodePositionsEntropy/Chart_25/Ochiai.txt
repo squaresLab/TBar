@@ -1,0 +1,10 @@
+org.jfree.chart.renderer.category.StatisticalBarRenderer@200
+org.jfree.chart.renderer.category.StatisticalBarRenderer@204
+org.jfree.chart.renderer.category.StatisticalBarRenderer@206
+org.jfree.chart.renderer.category.StatisticalBarRenderer@207
+org.jfree.chart.renderer.category.StatisticalBarRenderer@215
+org.jfree.chart.renderer.category.StatisticalBarRenderer@208
+org.jfree.chart.renderer.category.StatisticalBarRenderer@240
+org.jfree.chart.renderer.category.StatisticalBarRenderer@243
+org.jfree.chart.renderer.category.StatisticalBarRenderer@246
+org.jfree.chart.renderer.category.StatisticalBarRenderer@247

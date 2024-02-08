@@ -1,0 +1,10 @@
+com.google.javascript.rhino.Node@1369
+com.google.javascript.jscomp.Normalize@110
+com.google.javascript.jscomp.Normalize@114
+com.google.javascript.jscomp.Normalize@115
+com.google.javascript.jscomp.Normalize.DuplicateDeclarationHandler@671
+com.google.javascript.jscomp.Normalize.DuplicateDeclarationHandler@678
+com.google.javascript.jscomp.Normalize.DuplicateDeclarationHandler@679
+com.google.javascript.jscomp.Normalize.DuplicateDeclarationHandler@681
+com.google.javascript.jscomp.Normalize.DuplicateDeclarationHandler@702
+com.google.javascript.jscomp.Normalize.DuplicateDeclarationHandler@728

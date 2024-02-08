@@ -1,0 +1,10 @@
+org.apache.commons.math3.stat.inference.MannWhitneyUTest@82
+org.apache.commons.math3.stat.inference.MannWhitneyUTest@90
+org.apache.commons.math3.stat.inference.MannWhitneyUTest@92
+org.apache.commons.math3.stat.inference.MannWhitneyUTest@93
+org.apache.commons.math3.stat.inference.MannWhitneyUTest@95
+org.apache.commons.math3.stat.inference.MannWhitneyUTest@129
+org.apache.commons.math3.stat.inference.MannWhitneyUTest@131
+org.apache.commons.math3.stat.inference.MannWhitneyUTest@132
+org.apache.commons.math3.stat.inference.MannWhitneyUTest@134
+org.apache.commons.math3.stat.inference.MannWhitneyUTest@140

@@ -1,0 +1,10 @@
+org.jsoup.nodes.Document.OutputSettings@305
+org.jsoup.nodes.Document.OutputSettings@306
+org.jsoup.nodes.TextNode@100
+org.jsoup.parser.HtmlTreeBuilderState.7@256
+org.jsoup.parser.HtmlTreeBuilderState.7@257
+org.jsoup.parser.HtmlTreeBuilderState@1459
+org.jsoup.parser.Tag@127
+org.jsoup.select.Elements@473
+org.jsoup.nodes.Attributes@144
+org.jsoup.nodes.Element@1078

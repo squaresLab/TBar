@@ -1,0 +1,10 @@
+com.google.gson.internal.bind.ObjectTypeAdapter@67
+com.google.gson.internal.bind.ObjectTypeAdapter@68
+com.google.gson.internal.bind.ObjectTypeAdapter@69
+com.google.gson.internal.bind.ObjectTypeAdapter@70
+com.google.gson.internal.bind.ObjectTypeAdapter@72
+com.google.gson.internal.bind.ObjectTypeAdapter@73
+com.google.gson.internal.bind.ObjectTypeAdapter@76
+com.google.gson.internal.Excluder@160
+com.google.gson.internal.bind.ObjectTypeAdapter@55
+com.google.gson.internal.bind.ObjectTypeAdapter@56

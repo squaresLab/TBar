@@ -1,0 +1,10 @@
+org.jfree.chart.block.BorderArrangement@147
+org.jfree.chart.block.BorderArrangement@148
+org.jfree.chart.block.BorderArrangement@149
+org.jfree.chart.block.BorderArrangement@151
+org.jfree.chart.block.BorderArrangement@152
+org.jfree.chart.block.BorderArrangement@277
+org.jfree.chart.block.BorderArrangement@278
+org.jfree.chart.block.BorderArrangement@279
+org.jfree.chart.block.BorderArrangement@282
+org.jfree.chart.block.BorderArrangement@287

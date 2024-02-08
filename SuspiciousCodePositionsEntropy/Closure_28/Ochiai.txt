@@ -1,0 +1,10 @@
+com.google.javascript.rhino.Node@141
+com.google.javascript.rhino.Node@1430
+com.google.javascript.rhino.Node@1459
+com.google.javascript.jscomp.InlineFunctions@699
+com.google.javascript.jscomp.InlineFunctions.FunctionState@906
+com.google.javascript.jscomp.InlineFunctions.FunctionState@905
+com.google.javascript.jscomp.InlineFunctions@674
+com.google.javascript.rhino.Node@1446
+com.google.javascript.rhino.Node.NodeMismatch@2145
+com.google.javascript.rhino.Node.NodeMismatch@2146

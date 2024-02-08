@@ -1,0 +1,10 @@
+org.jsoup.safety.Cleaner@74
+org.jsoup.safety.Cleaner@76
+org.jsoup.safety.Cleaner@77
+org.jsoup.safety.Cleaner@78
+org.jsoup.parser.HtmlTreeBuilderState.7@334
+org.jsoup.parser.HtmlTreeBuilderState.18@1324
+org.jsoup.nodes.Entities@121
+org.jsoup.nodes.Entities@122
+org.jsoup.nodes.Entities@124
+org.jsoup.nodes.Entities@125

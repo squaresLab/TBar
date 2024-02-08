@@ -1,0 +1,10 @@
+com.google.javascript.jscomp.CollapseVariableDeclarations@228
+com.google.javascript.jscomp.CollapseVariableDeclarations@229
+com.google.javascript.jscomp.CollapseVariableDeclarations@230
+com.google.javascript.jscomp.CollapseVariableDeclarations@231
+com.google.javascript.jscomp.CollapseVariableDeclarations@232
+com.google.javascript.jscomp.CollapseVariableDeclarations@233
+com.google.javascript.jscomp.CollapseVariableDeclarations@234
+com.google.javascript.jscomp.CollapseVariableDeclarations@240
+com.google.javascript.jscomp.CollapseVariableDeclarations@241
+com.google.javascript.jscomp.CollapseVariableDeclarations@242

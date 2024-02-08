@@ -1,0 +1,10 @@
+com.google.gson.internal.LinkedTreeMap@382
+com.google.gson.JsonObject@101
+com.google.gson.JsonObject@102
+com.google.gson.internal.bind.JsonTreeReader@261
+com.google.gson.internal.bind.JsonTreeReader@262
+com.google.gson.internal.bind.JsonTreeReader@257
+com.google.gson.internal.LinkedTreeMap@326
+com.google.gson.JsonArray@67
+com.google.gson.JsonArray@68
+com.google.gson.JsonArray@85

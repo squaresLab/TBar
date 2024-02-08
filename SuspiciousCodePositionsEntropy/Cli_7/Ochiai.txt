@@ -1,0 +1,10 @@
+org.apache.commons.cli2.option.OptionImpl@61
+org.apache.commons.cli2.option.OptionImpl@62
+org.apache.commons.cli2.option.OptionImpl@64
+org.apache.commons.cli2.builder.PatternBuilder@46
+org.apache.commons.cli2.builder.PatternBuilder@50
+org.apache.commons.cli2.builder.PatternBuilder@61
+org.apache.commons.cli2.builder.PatternBuilder@67
+org.apache.commons.cli2.builder.PatternBuilder@62
+org.apache.commons.cli2.builder.PatternBuilder@63
+org.apache.commons.cli2.builder.PatternBuilder@64

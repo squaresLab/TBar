@@ -1,0 +1,10 @@
+org.apache.commons.jxpath.ri.Parser@34
+org.apache.commons.jxpath.ri.JXPathContextReferenceImpl@218
+org.apache.commons.jxpath.ri.JXPathContextReferenceImpl@233
+org.apache.commons.jxpath.ri.JXPathContextReferenceImpl@235
+org.apache.commons.jxpath.ri.JXPathContextReferenceImpl@236
+org.apache.commons.jxpath.ri.JXPathContextReferenceImpl@237
+org.apache.commons.jxpath.ri.JXPathContextReferenceImpl@244
+org.apache.commons.jxpath.ri.JXPathContextReferenceImpl@246
+org.apache.commons.jxpath.ri.JXPathContextReferenceImpl@250
+org.apache.commons.jxpath.ri.compiler.TreeCompiler@26

@@ -1,0 +1,10 @@
+org.apache.commons.compress.archivers.zip.ZipFile@321
+org.apache.commons.compress.archivers.zip.ZipFile@838
+org.apache.commons.compress.archivers.zip.ZipFile@839
+org.apache.commons.compress.archivers.zip.ZipFile.BoundedInputStream@885
+org.apache.commons.compress.archivers.zip.ZipFile.BoundedInputStream@886
+org.apache.commons.compress.archivers.zip.ZipFile.BoundedInputStream@887
+org.apache.commons.compress.archivers.zip.ZipEncodingHelper@244
+org.apache.commons.compress.archivers.zip.ZipFile@324
+org.apache.commons.compress.archivers.zip.ZipFile@325
+org.apache.commons.compress.archivers.zip.ZipFile@327

@@ -1,0 +1,10 @@
+org.apache.commons.codec.language.DoubleMetaphone@893
+org.apache.commons.codec.language.DoubleMetaphone@88
+org.apache.commons.codec.language.DoubleMetaphone@244
+org.apache.commons.codec.language.DoubleMetaphone@891
+org.apache.commons.codec.language.DoubleMetaphone@892
+org.apache.commons.codec.language.DoubleMetaphone@86
+org.apache.commons.codec.language.DoubleMetaphone@87
+org.apache.commons.codec.language.DoubleMetaphone@888
+org.apache.commons.codec.language.DoubleMetaphone@65
+org.apache.commons.codec.language.DoubleMetaphone@59

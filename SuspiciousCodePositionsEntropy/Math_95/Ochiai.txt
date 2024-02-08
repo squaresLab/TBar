@@ -1,0 +1,10 @@
+org.apache.commons.math.distribution.FDistributionImpl@119
+org.apache.commons.math.distribution.FDistributionImpl@132
+org.apache.commons.math.distribution.FDistributionImpl@145
+org.apache.commons.math.distribution.FDistributionImpl@147
+org.apache.commons.math.distribution.FDistributionImpl@148
+org.apache.commons.math.distribution.FDistributionImpl@106
+org.apache.commons.math.distribution.FDistributionImpl@100
+org.apache.commons.math.distribution.FDistributionImpl@103
+org.apache.commons.math.distribution.FDistributionImpl@75
+org.apache.commons.math.distribution.FDistributionImpl@76

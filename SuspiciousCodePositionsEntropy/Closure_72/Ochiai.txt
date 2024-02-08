@@ -1,0 +1,10 @@
+com.google.javascript.rhino.Node@1382
+com.google.javascript.rhino.Node@1424
+com.google.javascript.jscomp.CodeGenerator@844
+com.google.javascript.jscomp.CodeGenerator@849
+com.google.javascript.jscomp.CodeGenerator@1107
+com.google.javascript.jscomp.CodeGenerator@1108
+com.google.javascript.jscomp.CodeGenerator@1109
+com.google.javascript.rhino.Node@1411
+com.google.javascript.rhino.Node.NodeMismatch@2258
+com.google.javascript.rhino.Node.NodeMismatch@2259

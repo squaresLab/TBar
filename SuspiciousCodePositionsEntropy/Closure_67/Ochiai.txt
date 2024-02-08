@@ -1,0 +1,10 @@
+com.google.javascript.jscomp.AnalyzePrototypeProperties@123
+com.google.javascript.jscomp.AnalyzePrototypeProperties@138
+com.google.javascript.jscomp.AnalyzePrototypeProperties@139
+com.google.javascript.jscomp.AnalyzePrototypeProperties@140
+com.google.javascript.jscomp.AnalyzePrototypeProperties@147
+com.google.javascript.jscomp.AnalyzePrototypeProperties@179
+com.google.javascript.jscomp.AnalyzePrototypeProperties@116
+com.google.javascript.jscomp.AnalyzePrototypeProperties@55
+com.google.javascript.jscomp.AnalyzePrototypeProperties@56
+com.google.javascript.jscomp.AnalyzePrototypeProperties@84

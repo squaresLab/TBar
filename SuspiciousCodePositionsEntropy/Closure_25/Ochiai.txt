@@ -1,0 +1,10 @@
+com.google.javascript.jscomp.TypeInference@1060
+com.google.javascript.jscomp.TypeInference@1054
+com.google.javascript.jscomp.TypeInference@1046
+com.google.javascript.jscomp.TypeInference@1047
+com.google.javascript.jscomp.TypeInference@1053
+com.google.javascript.jscomp.TypeInference@1042
+com.google.javascript.jscomp.TypeInference@1043
+com.google.javascript.jscomp.TypeInference@288
+com.google.javascript.jscomp.TypeInference@289
+com.google.javascript.jscomp.TypeInference@1037

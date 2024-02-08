@@ -1,0 +1,10 @@
+com.fasterxml.jackson.dataformat.xml.ser.ToXmlGenerator@472
+com.fasterxml.jackson.dataformat.xml.ser.ToXmlGenerator@473
+com.fasterxml.jackson.dataformat.xml.ser.ToXmlGenerator@474
+com.fasterxml.jackson.dataformat.xml.ser.ToXmlGenerator@479
+com.fasterxml.jackson.dataformat.xml.XmlMapper@49
+com.fasterxml.jackson.dataformat.xml.XmlMapper@50
+com.fasterxml.jackson.dataformat.xml.XmlMapper@67
+com.fasterxml.jackson.dataformat.xml.XmlMapper@68
+com.fasterxml.jackson.dataformat.xml.XmlFactory@84
+com.fasterxml.jackson.dataformat.xml.XmlFactory@100

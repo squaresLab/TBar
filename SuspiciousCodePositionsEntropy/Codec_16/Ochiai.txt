@@ -1,0 +1,10 @@
+org.apache.commons.codec.binary.Base32@309
+org.apache.commons.codec.binary.Base32@193
+org.apache.commons.codec.binary.Base32@284
+org.apache.commons.codec.binary.Base32@285
+org.apache.commons.codec.binary.Base32@303
+org.apache.commons.codec.binary.Base32@304
+org.apache.commons.codec.binary.Base32@281
+org.apache.commons.codec.binary.Base32@283
+org.apache.commons.codec.binary.Base32@290
+org.apache.commons.codec.binary.Base32@306

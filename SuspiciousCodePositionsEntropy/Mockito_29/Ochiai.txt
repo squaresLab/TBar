@@ -1,0 +1,10 @@
+org.mockito.internal.matchers.Same@37
+org.mockito.internal.matchers.Same@23
+org.mockito.internal.matchers.Same@27
+org.mockito.internal.matchers.Same@28
+org.mockito.internal.matchers.Same@29
+org.mockito.internal.matchers.Same@35
+org.mockito.internal.matchers.Same@40
+org.mockito.internal.matchers.Same@18
+org.mockito.internal.matchers.Same@19
+org.mockito.internal.matchers.Same@20

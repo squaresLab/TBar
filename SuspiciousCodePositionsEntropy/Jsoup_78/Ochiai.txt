@@ -1,0 +1,10 @@
+org.jsoup.parser.CharacterReader@62
+org.jsoup.parser.CharacterReader@63
+org.jsoup.internal.ConstrainableInputStream@67
+org.jsoup.internal.ConstrainableInputStream@68
+org.jsoup.UncheckedIOException@7
+org.jsoup.UncheckedIOException@8
+org.jsoup.helper.HttpConnection@158
+org.jsoup.helper.HttpConnection@159
+org.jsoup.helper.HttpConnection.Request@583
+org.jsoup.helper.HttpConnection.Request@584

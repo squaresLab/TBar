@@ -1,0 +1,10 @@
+org.apache.commons.codec.language.Caverphone@170
+org.apache.commons.codec.language.Caverphone@59
+org.apache.commons.codec.language.Caverphone@62
+org.apache.commons.codec.language.Caverphone@65
+org.apache.commons.codec.language.Caverphone@68
+org.apache.commons.codec.language.Caverphone@69
+org.apache.commons.codec.language.Caverphone@70
+org.apache.commons.codec.language.Caverphone@71
+org.apache.commons.codec.language.Caverphone@72
+org.apache.commons.codec.language.Caverphone@73

@@ -1,0 +1,10 @@
+org.jfree.chart.axis.Axis@1191
+org.jfree.chart.axis.Axis@1192
+org.jfree.chart.axis.Axis@314
+org.jfree.chart.axis.Axis@381
+org.jfree.chart.axis.Axis@410
+org.jfree.chart.axis.Axis@438
+org.jfree.chart.axis.Axis@467
+org.jfree.chart.axis.Axis@549
+org.jfree.chart.axis.Axis@631
+org.jfree.chart.axis.Axis@662

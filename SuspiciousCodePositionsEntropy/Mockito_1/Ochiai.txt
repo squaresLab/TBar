@@ -1,0 +1,10 @@
+org.mockito.internal.invocation.InvocationMatcher@122
+org.mockito.internal.invocation.InvocationMatcher@123
+org.mockito.internal.invocation.InvocationMatcher@35
+org.mockito.internal.invocation.InvocationMatcher@107
+org.mockito.internal.invocation.InvocationMatcher@121
+org.mockito.internal.invocation.InvocationMatcher@52
+org.mockito.internal.invocation.InvocationMatcher@62
+org.mockito.internal.invocation.InvocationMatcher@110
+org.mockito.internal.invocation.InvocationMatcher@106
+org.mockito.internal.invocation.InvocationMatcher@103
