@@ -56,7 +56,7 @@ public abstract class AbstractFixer {
 	private List<String> fakeFailedTestCasesList = new ArrayList<>();
 	
 	// 0: failed to fix the bug, 1: succeeded to fix the bug. 2: partially succeeded to fix the bug.
-	public int fixedStatus = 0;
+	public FixStatus fixedStatus = FixStatus.FAILURE;
 	public String dataType = "";
 	protected int patchId = 0;
 	protected int comparablePatches = 0;
@@ -221,7 +221,7 @@ public abstract class AbstractFixer {
 			
 			// Output the generated patch.
 			if (errorTestAfterFix == 0 || failedTestsAfterFix.isEmpty()) {
-				fixedStatus = 1;
+				fixedStatus = FixStatus.SUCCESS;
 				log.info("Succeeded to fix the bug " + buggyProject + "====================");
 				String patchStr = TestUtils.readPatch(this.fullBuggyProjectPath);
 				System.out.println(patchStr);
@@ -241,10 +241,10 @@ public abstract class AbstractFixer {
 			} else {
 				if (minErrorTestAfterFix == 0 || errorTestAfterFix <= minErrorTestAfterFix) {
 					minErrorTestAfterFix = errorTestAfterFix;
-					fixedStatus = 2;
+					fixedStatus = FixStatus.PARTIAL;
 					minErrorTest_ = minErrorTest_ - (minErrorTest - errorTestAfterFix);
 					if (minErrorTest_ <= 0) {
-						fixedStatus = 1;
+						fixedStatus = FixStatus.SUCCESS;
 						minErrorTest = 0;
 					}
 					log.info("Partially Succeeded to fix the bug " + buggyProject + "====================");

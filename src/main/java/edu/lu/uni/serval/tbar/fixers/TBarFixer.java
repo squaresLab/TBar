@@ -108,12 +108,12 @@ public class TBarFixer extends AbstractFixer {
 				if (Checker.isCastExpression(contextInfo)) {
 					ft = new ClassCastChecker();
 					if (isTestFixPatterns) dataType = readDirectory() + "/ClassCastChecker";
-	
+
 					if (!typeChanged) {
 						generateAndValidatePatches(ft, scn);
 						if (!isTestFixPatterns && this.minErrorTest == 0) return;
-						if (this.fixedStatus == 2) {
-							fixedStatus = 0;
+						if (this.fixedStatus == FixStatus.PARTIAL) {
+							fixedStatus = FixStatus.FAILURE;
 							return;
 						}
 						typeChanged = true;
@@ -137,8 +137,9 @@ public class TBarFixer extends AbstractFixer {
 						if (isTestFixPatterns) dataType = readDirectory() + "/OperatorMutator";
 						generateAndValidatePatches(ft, scn);
 						if (!isTestFixPatterns && this.minErrorTest == 0) return;
-						if (this.fixedStatus == 2) {
-							fixedStatus = 0;
+
+						if (this.fixedStatus == FixStatus.PARTIAL) {
+							fixedStatus = FixStatus.FAILURE;
 							return;
 						}
 					}
@@ -158,8 +159,9 @@ public class TBarFixer extends AbstractFixer {
 					if (isTestFixPatterns) dataType = readDirectory() + "/ICASTIdivCastToDouble";
 					generateAndValidatePatches(ft, scn);
 					if (!isTestFixPatterns && this.minErrorTest == 0) return;
-					if (this.fixedStatus == 2) {
-						fixedStatus = 0;
+
+					if (this.fixedStatus == FixStatus.PARTIAL) {
+						fixedStatus = FixStatus.FAILURE;
 						return;
 					}
 					
@@ -169,8 +171,9 @@ public class TBarFixer extends AbstractFixer {
 						if (isTestFixPatterns) dataType = readDirectory() + "/OperatorMutator";
 						generateAndValidatePatches(ft, scn);
 						if (!isTestFixPatterns && this.minErrorTest == 0) return;
-						if (this.fixedStatus == 2) {
-							fixedStatus = 0;
+
+						if (this.fixedStatus == FixStatus.PARTIAL) {
+							fixedStatus = FixStatus.FAILURE;
 							return;
 						}
 					}
@@ -179,8 +182,8 @@ public class TBarFixer extends AbstractFixer {
 					if (isTestFixPatterns) dataType = readDirectory() + "/ConditionalExpressionMutator";
 					generateAndValidatePatches(ft, scn);
 					if (!isTestFixPatterns && this.minErrorTest == 0) return;
-					if (this.fixedStatus == 2) {
-						fixedStatus = 0;
+					if (this.fixedStatus == FixStatus.PARTIAL) {
+						fixedStatus = FixStatus.FAILURE;
 						return;
 					}
 					
@@ -200,8 +203,8 @@ public class TBarFixer extends AbstractFixer {
 						if (ft != null) {
 							generateAndValidatePatches(ft, scn);
 							if (!isTestFixPatterns && this.minErrorTest == 0) return;
-							if (this.fixedStatus == 2) {
-								fixedStatus = 0;
+							if (this.fixedStatus == FixStatus.PARTIAL) {
+								fixedStatus = FixStatus.FAILURE;
 								return;
 							}
 						}
@@ -209,8 +212,8 @@ public class TBarFixer extends AbstractFixer {
 						if (isTestFixPatterns) dataType = readDirectory() + "/NPEqualsShouldHandleNullArgument";
 						generateAndValidatePatches(ft, scn);
 						if (!isTestFixPatterns && this.minErrorTest == 0) return;
-						if (this.fixedStatus == 2) {
-							fixedStatus = 0;
+						if (this.fixedStatus == FixStatus.PARTIAL) {
+							fixedStatus = FixStatus.FAILURE;
 							return;
 						}
 						
@@ -242,8 +245,8 @@ public class TBarFixer extends AbstractFixer {
 					if (!nullChecked) {
 						generateAndValidatePatches(ft, scn);
 						if (!isTestFixPatterns && this.minErrorTest == 0) return;
-						if (this.fixedStatus == 2) {
-							fixedStatus = 0;
+						if (this.fixedStatus == FixStatus.PARTIAL) {
+							fixedStatus = FixStatus.FAILURE;
 							return;
 						}
 						nullChecked = true;
@@ -254,8 +257,8 @@ public class TBarFixer extends AbstractFixer {
 				if (ft != null) {
 					generateAndValidatePatches(ft, scn);
 					if (!isTestFixPatterns && this.minErrorTest == 0) return;
-					if (this.fixedStatus == 2) {
-						fixedStatus = 0;
+					if (this.fixedStatus == FixStatus.PARTIAL) {
+						fixedStatus = FixStatus.FAILURE;
 						return;
 					}
 				}
@@ -269,8 +272,8 @@ public class TBarFixer extends AbstractFixer {
 				if (isTestFixPatterns) dataType = readDirectory() + "/NullPointerChecker";
 				generateAndValidatePatches(ft, scn);
 				if (!isTestFixPatterns && this.minErrorTest == 0) return;
-				if (this.fixedStatus == 2) {
-					fixedStatus = 0;
+				if (this.fixedStatus == FixStatus.PARTIAL) {
+					fixedStatus = FixStatus.FAILURE;
 					return;
 				}
 			}
@@ -279,8 +282,8 @@ public class TBarFixer extends AbstractFixer {
 			if (isTestFixPatterns) dataType = readDirectory() + "/StatementMover";
 			generateAndValidatePatches(ft, scn);
 			if (!isTestFixPatterns && this.minErrorTest == 0) return;
-			if (this.fixedStatus == 2) {
-				fixedStatus = 0;
+			if (this.fixedStatus == FixStatus.PARTIAL) {
+				fixedStatus = FixStatus.FAILURE;
 				return;
 			}
 			
@@ -288,8 +291,8 @@ public class TBarFixer extends AbstractFixer {
 			if (isTestFixPatterns) dataType = readDirectory() + "/StatementRemover";
 			generateAndValidatePatches(ft, scn);
 			if (!isTestFixPatterns && this.minErrorTest == 0) return;
-			if (this.fixedStatus == 2) {
-				fixedStatus = 0;
+			if (this.fixedStatus == FixStatus.PARTIAL) {
+				fixedStatus = FixStatus.FAILURE;
 				return;
 			}
 			
@@ -297,8 +300,8 @@ public class TBarFixer extends AbstractFixer {
 			if (isTestFixPatterns) dataType = readDirectory() + "/StatementInserter";
 			generateAndValidatePatches(ft, scn);
 			if (!isTestFixPatterns && this.minErrorTest == 0) return;
-			if (this.fixedStatus == 2) {
-				fixedStatus = 0;
+			if (this.fixedStatus == FixStatus.PARTIAL) {
+				fixedStatus = FixStatus.FAILURE;
 				return;
 			}
 		} else {
@@ -306,8 +309,8 @@ public class TBarFixer extends AbstractFixer {
 			if (isTestFixPatterns) dataType = readDirectory() + "/StatementRemover";
 			generateAndValidatePatches(ft, scn);
 			if (!isTestFixPatterns && this.minErrorTest == 0) return;
-			if (this.fixedStatus == 2) {
-				fixedStatus = 0;
+			if (this.fixedStatus == FixStatus.PARTIAL) {
+				fixedStatus = FixStatus.FAILURE;
 				return;
 			}
 		}

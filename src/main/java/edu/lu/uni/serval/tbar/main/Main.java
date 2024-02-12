@@ -14,6 +14,8 @@ import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
+import edu.lu.uni.serval.tbar.fixers.FixStatus;
+
 /**
  * Fix bugs with Fault Localization results.
  * 
@@ -152,15 +154,14 @@ public class Main {
 		if(fixer != null) {
 		fixer.fixProcess();
 		
-		int fixedStatus = fixer.fixedStatus;
-		switch (fixedStatus) {
-		case 0:
+		switch (fixer.fixedStatus) {
+		case FAILURE:
 			System.out.println("Failed to fix bug " + bugId);
 			break;
-		case 1:
+		case SUCCESS:
 			System.out.println("Succeeded to fix bug " + bugId);
 			break;
-		case 2:
+		case PARTIAL:
 			System.out.println("Partial succeeded to fix bug " + bugId);
 			break;
 		}
