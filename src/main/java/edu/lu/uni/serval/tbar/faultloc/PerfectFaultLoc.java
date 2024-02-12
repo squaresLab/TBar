@@ -1,9 +1,5 @@
 package edu.lu.uni.serval.tbar.faultloc;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import edu.lu.uni.serval.tbar.config.Configuration;
 import edu.lu.uni.serval.tbar.utils.FileHelper;
 import edu.lu.uni.serval.tbar.utils.SuspiciousPosition;
 import edu.lu.uni.serval.tbar.dataprepare.DataPreparer;
