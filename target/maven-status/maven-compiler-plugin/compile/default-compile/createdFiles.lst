@@ -1,7 +1,12 @@
 edu/lu/uni/serval/tbar/faultloc/NormalFaultLoc.class
+edu/lu/uni/serval/tbar/fixpatterns/OperatorMutator$1.class
+edu/lu/uni/serval/AST/ASTGenerator$1.class
 edu/lu/uni/serval/tbar/fixers/TBarFixer.class
+edu/lu/uni/serval/tbar/fixpatterns/RangeChecker$1.class
 edu/lu/uni/serval/tbar/faultloc/AbstractFaultLoc.class
+edu/lu/uni/serval/entity/EntityType$1.class
 edu/lu/uni/serval/tbar/faultloc/SuspCodeNode.class
 edu/lu/uni/serval/tbar/faultloc/PerfectFaultLoc.class
 edu/lu/uni/serval/tbar/fixers/AbstractFixer.class
+edu/lu/uni/serval/tbar/utils/SuspiciousCodeParser$1.class
 edu/lu/uni/serval/tbar/faultloc/AbstractFaultLoc$Granularity.class

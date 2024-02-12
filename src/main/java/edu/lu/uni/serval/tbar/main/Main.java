@@ -78,6 +78,16 @@ public class Main {
 		.desc("Not sure what this is but it exists.")
 		.build());
 
+		options.addOption(Option.builder("useTests")
+		.argName("useTests")
+		.desc("Use tests or not.")
+		.build());
+
+		options.addOption(Option.builder("recordAllPatches")
+		.argName("recordAllPatches")
+		.desc("Does it output all patches.")
+		.build());
+
         // --help
         options.addOption("help", false, "Prints this help message.");
 		return options;
@@ -145,12 +155,28 @@ public class Main {
 			}
 			fixer.setFaultLoc(faultloc);
 
+		String useTests = line.getOptionValue("faultLocFile");
+		String recordAllPatches = line.getOptionValue("recordAllPatches");
+
+		if (useTests == "true") {
+			fixer.useTests = true;
+		}
+		else{
+			fixer.useTests = false;
+		}
+		if (recordAllPatches == "true") {
+			fixer.recordAllPatches = true;
+		} else {
+			fixer.recordAllPatches = false;
+		}
+
 
 		} catch (ParseException exp) {
             System.out.println("Unexpected parser exception:" + exp.getMessage());
         }
 		if(fixer != null) {
-		fixer.fixProcess();
+
+		fixer.fixProcess(fixer.useTests, fixer.recordAllPatches);
 		
 		int fixedStatus = fixer.fixedStatus;
 		switch (fixedStatus) {

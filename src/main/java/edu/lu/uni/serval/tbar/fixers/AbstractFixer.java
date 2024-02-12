@@ -3,11 +3,14 @@ package edu.lu.uni.serval.tbar.fixers;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.nio.file.Paths;
+import org.json.simple.JSONObject;
 
 import org.apache.commons.lang3.math.NumberUtils;
 import org.slf4j.Logger;
@@ -35,7 +38,7 @@ public abstract class AbstractFixer {
 	
 	private static Logger log = LoggerFactory.getLogger(AbstractFixer.class);
 	
-	public abstract void fixProcess();
+	public abstract void fixProcess(boolean useTests, boolean recordAllPatches);
 	protected String path = "";
 	protected String buggyProject = "";     // The buggy project name.
 	protected String defects4jPath;         // The path of local installed defects4j.
@@ -46,6 +49,8 @@ public abstract class AbstractFixer {
 	public String outputPath = "";          // Output path for the generated patches.
 	protected DataPreparer dp;              // The needed data of buggy program for compiling and testing.
 	protected AbstractFaultLoc faultloc = null;
+	public boolean useTests = true;
+	public boolean recordAllPatches = true;
 
 	private String failedTestCaseClasses = ""; // Classes of the failed test cases before fixing.
 	// All specific failed test cases after testing the buggy project with defects4j command in Java code before fixing.
@@ -140,16 +145,21 @@ public abstract class AbstractFixer {
 
 	protected List<Patch> triedPatchCandidates = new ArrayList<>();
 	
-	protected void testGeneratedPatches(List<Patch> patchCandidates, SuspCodeNode scn) {
+	protected void testGeneratedPatches(List<Patch> patchCandidates, SuspCodeNode scn, boolean useTests, boolean recordAllPatches) {
 		// Testing generated patches.
+		// print patchCandidates size
+		log.debug("Patch Candidates Size: " + patchCandidates.size());
 		for (Patch patch : patchCandidates) {
+			// print patch
+			// log.debug("tbar+ print out patch: " + patch);
 			patch.buggyFileName = scn.suspiciousJavaFile;
-			addPatchCodeToFile(scn, patch);// Insert the patch.
+			addPatchCodeToFile(scn, patch, patchId, buggyProject, false);// Insert the patch.
 			if (this.triedPatchCandidates.contains(patch)) continue;
 			patchId++;
 			if (patchId > 10000) return;
 			this.triedPatchCandidates.add(patch);
-			
+			// print patchId
+			log.debug("Patch Id: " + patchId);
 			String buggyCode = patch.getBuggyCodeStr();
 			if ("===StringIndexOutOfBoundsException===".equals(buggyCode)) continue;
 			String patchCode = patch.getFixedCodeStr1();
@@ -171,15 +181,20 @@ public abstract class AbstractFixer {
 					continue;
 				}
 			}
+			addPatchCodeToFile(scn, patch, patchId, buggyProject, true);
 			log.debug("Finish of compiling.");
 			comparablePatches++;
 			
 			log.debug("Test previously failed test cases.");
-			try {
-				String results = ShellUtils.shellRun(Arrays.asList("java -cp "
-						+ PathUtils.buildTestClassPath(dp.classPath, dp.testClassPath)
-						+ " org.junit.runner.JUnitCore " + this.failedTestCaseClasses), buggyProject, 2);
 
+			// tbar+: this is where patch is tested
+			try {
+				String results = "";
+				if(useTests){
+					results = ShellUtils.shellRun(Arrays.asList("java -cp "
+							+ PathUtils.buildTestClassPath(dp.classPath, dp.testClassPath)
+							+ " org.junit.runner.JUnitCore " + this.failedTestCaseClasses), buggyProject, 2);
+				}
 				if (results.isEmpty()) {
 //					System.err.println(scn.suspiciousJavaFile + "@" + scn.buggyLine);
 //					System.err.println("Bug: " + buggyCode);
@@ -204,19 +219,21 @@ public abstract class AbstractFixer {
 					continue;
 				}
 			}
+			// tbar+: patch testing ends
 
 			List<String> failedTestsAfterFix = new ArrayList<>();
 			int errorTestAfterFix = TestUtils.getFailTestNumInProject(fullBuggyProjectPath, this.defects4jPath,
 					failedTestsAfterFix);
 			failedTestsAfterFix.removeAll(this.fakeFailedTestCasesList);
 			
-			// if (errorTestAfterFix < minErrorTest) {
-			List<String> tmpFailedTestsAfterFix = new ArrayList<>();
-			tmpFailedTestsAfterFix.addAll(failedTestsAfterFix);
-			tmpFailedTestsAfterFix.removeAll(this.failedTestStrList);
-			if (tmpFailedTestsAfterFix.size() > 0) { // Generate new bugs.
-				log.debug(buggyProject + " ---Generated new bugs: " + tmpFailedTestsAfterFix.size());
-				continue;
+			if (errorTestAfterFix < minErrorTest | recordAllPatches) {
+				List<String> tmpFailedTestsAfterFix = new ArrayList<>();
+				tmpFailedTestsAfterFix.addAll(failedTestsAfterFix);
+				tmpFailedTestsAfterFix.removeAll(this.failedTestStrList);
+				if (tmpFailedTestsAfterFix.size() > 0) { // Generate new bugs.
+					log.debug(buggyProject + " ---Generated new bugs: " + tmpFailedTestsAfterFix.size());
+					continue;
+				}
 			}
 			
 			// Output the generated patch.
@@ -298,9 +315,8 @@ public abstract class AbstractFixer {
 		return failedTeatCases;
 	}
 
-	private void addPatchCodeToFile(SuspCodeNode scn, Patch patch) {
+	private void addPatchCodeToFile(SuspCodeNode scn, Patch patch, int patchId, String buggyProject, boolean patchCompiles) {
         String javaCode = FileHelper.readFile(scn.javaBackup);
-        
 		String fixedCodeStr1 = patch.getFixedCodeStr1();
 		String fixedCodeStr2 = patch.getFixedCodeStr2();
 		int exactBuggyCodeStartPos = patch.getBuggyCodeStartPos();
@@ -352,11 +368,34 @@ public abstract class AbstractFixer {
 	        		patchCode += fixedCodeStr2;
 	        	}
 	        }
+			String patchedJavaFile = javaCode.substring(0, exactBuggyCodeStartPos) + patchCode + javaCode.substring(exactBuggyCodeEndPos);
 			
-			File newFile = new File(scn.targetJavaFile.getAbsolutePath() + ".temp");
-	        String patchedJavaFile = javaCode.substring(0, exactBuggyCodeStartPos) + patchCode + javaCode.substring(exactBuggyCodeEndPos);
-	        FileHelper.outputToFile(newFile, patchedJavaFile, false);
-	        newFile.renameTo(scn.targetJavaFile);
+		
+			if (patchCompiles){
+				String patchDir = Paths.get("").toAbsolutePath().toString() + "/stored_patches/" + buggyProject;
+				String patchPath = patchDir + "/" + patchId + ".json";
+				File toEntropyDir = new File(patchDir);
+				toEntropyDir.mkdir();
+				// FileHelper.outputToFile(patchPath, patchedJavaFile, false);
+				JSONObject jsonObject = new JSONObject();
+				jsonObject.put("patchID", patchId);
+				jsonObject.put("exactBuggyCodeStartPos", exactBuggyCodeStartPos);
+				jsonObject.put("exactBuggyCodeEndPos", exactBuggyCodeEndPos);
+				jsonObject.put("patchCode", patchCode);
+				jsonObject.put("patchedJavaFile", patchedJavaFile);
+				try {
+					FileWriter file = new FileWriter(patchDir + "/" + patchId + ".json");
+					file.write(jsonObject.toJSONString());
+					file.close();
+				 } catch (IOException e) {
+					e.printStackTrace();
+				 }
+			}
+			else{
+				File newFile = new File(scn.targetJavaFile.getAbsolutePath() + ".temp");
+				FileHelper.outputToFile(newFile, patchedJavaFile, false);
+				newFile.renameTo(scn.targetJavaFile);
+			}
 		} catch (StringIndexOutOfBoundsException e) {
 			log.debug(exactBuggyCodeStartPos + " ==> " + exactBuggyCodeEndPos + " : " + javaCode.length());
 			e.printStackTrace();
