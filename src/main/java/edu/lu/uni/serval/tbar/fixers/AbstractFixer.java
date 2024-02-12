@@ -210,59 +210,59 @@ public abstract class AbstractFixer {
 					failedTestsAfterFix);
 			failedTestsAfterFix.removeAll(this.fakeFailedTestCasesList);
 			
-			if (errorTestAfterFix < minErrorTest) {
-				List<String> tmpFailedTestsAfterFix = new ArrayList<>();
-				tmpFailedTestsAfterFix.addAll(failedTestsAfterFix);
-				tmpFailedTestsAfterFix.removeAll(this.failedTestStrList);
-				if (tmpFailedTestsAfterFix.size() > 0) { // Generate new bugs.
-					log.debug(buggyProject + " ---Generated new bugs: " + tmpFailedTestsAfterFix.size());
-					continue;
+			// if (errorTestAfterFix < minErrorTest) {
+			List<String> tmpFailedTestsAfterFix = new ArrayList<>();
+			tmpFailedTestsAfterFix.addAll(failedTestsAfterFix);
+			tmpFailedTestsAfterFix.removeAll(this.failedTestStrList);
+			if (tmpFailedTestsAfterFix.size() > 0) { // Generate new bugs.
+				log.debug(buggyProject + " ---Generated new bugs: " + tmpFailedTestsAfterFix.size());
+				continue;
+			}
+			
+			// Output the generated patch.
+			if (errorTestAfterFix == 0 || failedTestsAfterFix.isEmpty()) {
+				fixedStatus = 1;
+				log.info("Succeeded to fix the bug " + buggyProject + "====================");
+				String patchStr = TestUtils.readPatch(this.fullBuggyProjectPath);
+				System.out.println(patchStr);
+				if (patchStr == null || !patchStr.startsWith("diff")) {
+					FileHelper.outputToFile(Configuration.outputPath + this.dataType + "/FixedBugs/" + buggyProject + "/Patch_" + patchId + "_" + comparablePatches + ".txt",
+							"//**********************************************************\n//" + scn.suspiciousJavaFile + " ------ " + scn.buggyLine
+							+ "\n//**********************************************************\n"
+							+ "===Buggy Code===\n" + buggyCode + "\n\n===Patch Code===\n" + patchCode, false);
+				} else {
+					FileHelper.outputToFile(Configuration.outputPath + this.dataType + "/FixedBugs/" + buggyProject + "/Patch_" + patchId + "_" + comparablePatches + ".txt", patchStr, false);
 				}
 				
-				// Output the generated patch.
-				if (errorTestAfterFix == 0 || failedTestsAfterFix.isEmpty()) {
-					fixedStatus = 1;
-					log.info("Succeeded to fix the bug " + buggyProject + "====================");
+				if (!isTestFixPatterns) {
+					this.minErrorTest = 0;
+					break;
+				}
+			} else {
+				if (minErrorTestAfterFix == 0 || errorTestAfterFix <= minErrorTestAfterFix) {
+					minErrorTestAfterFix = errorTestAfterFix;
+					fixedStatus = 2;
+					minErrorTest_ = minErrorTest_ - (minErrorTest - errorTestAfterFix);
+					if (minErrorTest_ <= 0) {
+						fixedStatus = 1;
+						minErrorTest = 0;
+					}
+					log.info("Partially Succeeded to fix the bug " + buggyProject + "====================");
 					String patchStr = TestUtils.readPatch(this.fullBuggyProjectPath);
-					System.out.println(patchStr);
 					if (patchStr == null || !patchStr.startsWith("diff")) {
-						FileHelper.outputToFile(Configuration.outputPath + this.dataType + "/FixedBugs/" + buggyProject + "/Patch_" + patchId + "_" + comparablePatches + ".txt",
+						FileHelper.outputToFile(Configuration.outputPath + this.dataType + "/PartiallyFixedBugs/" + buggyProject + "/Patch_" + patchId + "_" + comparablePatches + ".txt",
 								"//**********************************************************\n//" + scn.suspiciousJavaFile + " ------ " + scn.buggyLine
 								+ "\n//**********************************************************\n"
 								+ "===Buggy Code===\n" + buggyCode + "\n\n===Patch Code===\n" + patchCode, false);
 					} else {
-						FileHelper.outputToFile(Configuration.outputPath + this.dataType + "/FixedBugs/" + buggyProject + "/Patch_" + patchId + "_" + comparablePatches + ".txt", patchStr, false);
+						FileHelper.outputToFile(Configuration.outputPath + this.dataType + "/PartiallyFixedBugs/" + buggyProject + "/Patch_" + patchId + "_" + comparablePatches + ".txt", patchStr, false);
 					}
-					
-					if (!isTestFixPatterns) {
-						this.minErrorTest = 0;
-						break;
-					}
-				} else {
-					if (minErrorTestAfterFix == 0 || errorTestAfterFix <= minErrorTestAfterFix) {
-						minErrorTestAfterFix = errorTestAfterFix;
-						fixedStatus = 2;
-						minErrorTest_ = minErrorTest_ - (minErrorTest - errorTestAfterFix);
-						if (minErrorTest_ <= 0) {
-							fixedStatus = 1;
-							minErrorTest = 0;
-						}
-						log.info("Partially Succeeded to fix the bug " + buggyProject + "====================");
-						String patchStr = TestUtils.readPatch(this.fullBuggyProjectPath);
-						if (patchStr == null || !patchStr.startsWith("diff")) {
-							FileHelper.outputToFile(Configuration.outputPath + this.dataType + "/PartiallyFixedBugs/" + buggyProject + "/Patch_" + patchId + "_" + comparablePatches + ".txt",
-									"//**********************************************************\n//" + scn.suspiciousJavaFile + " ------ " + scn.buggyLine
-									+ "\n//**********************************************************\n"
-									+ "===Buggy Code===\n" + buggyCode + "\n\n===Patch Code===\n" + patchCode, false);
-						} else {
-							FileHelper.outputToFile(Configuration.outputPath + this.dataType + "/PartiallyFixedBugs/" + buggyProject + "/Patch_" + patchId + "_" + comparablePatches + ".txt", patchStr, false);
-						}
-						break;
-					}
+					break;
 				}
-			} else {
-				log.debug("Failed Tests after fixing: " + errorTestAfterFix + " " + buggyProject);
 			}
+			// } else {
+			// 	log.debug("Failed Tests after fixing: " + errorTestAfterFix + " " + buggyProject);
+			// }
 		}
 		
 		try {
