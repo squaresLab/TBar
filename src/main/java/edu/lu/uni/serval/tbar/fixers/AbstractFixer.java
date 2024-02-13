@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.HashMap;
 
 import org.apache.commons.lang3.math.NumberUtils;
 import org.slf4j.Logger;
@@ -139,13 +140,39 @@ public abstract class AbstractFixer {
 	}
 
 	protected List<Patch> triedPatchCandidates = new ArrayList<>();
-	
+	protected HashMap<String,FixStatus> attemptedPatches = new HashMap<>();
+
+	protected boolean compile(SuspCodeNode scn) {
+
+		try {// Compile patched file.
+			ShellUtils.shellRun(Arrays.asList("javac -Xlint:unchecked -source 1.7 -target 1.7 -cp "
+					+ PathUtils.buildCompileClassPath(Arrays.asList(PathUtils.getJunitPath()), dp.classPath, dp.testClassPath)
+					+ " -d " + dp.classPath + " " + scn.targetJavaFile.getAbsolutePath()), buggyProject, 1);
+		} catch (IOException e) {
+			log.debug(buggyProject + " ---Fixer: fix fail because of javac exception! ");
+			return false;
+		}
+		if (!scn.targetClassFile.exists()) { // fail to compile
+			int results = (this.buggyProject.startsWith("Mockito") || this.buggyProject.startsWith("Closure") || this.buggyProject.startsWith("Time")) ? TestUtils.compileProjectWithDefects4j(fullBuggyProjectPath, defects4jPath) : 1;
+			if (results == 1) {
+				log.debug(buggyProject + " ---Fixer: fix fail because of failed compiling! ");
+				return false;
+			}
+		}
+		return true;
+	}
+
 	protected FixStatus testGeneratedPatches(List<Patch> patchCandidates, SuspCodeNode scn) {
 		// Testing generated patches.
 		this.fixedStatus = FixStatus.FAILURE;
 		for (Patch patch : patchCandidates) {
 			patch.buggyFileName = scn.suspiciousJavaFile;
-			addPatchCodeToFile(scn, patch);// Insert the patch.
+			String patchedCode = addPatchCodeToFile(scn, patch);// Insert the patch.
+			if(attemptedPatches.containsKey(patchedCode)) {
+				this.fixedStatus = attemptedPatches.get(patchedCode);
+				if(this.fixedStatus == FixStatus.SUCCESS) return FixStatus.SUCCESS;
+				continue;
+			} 
 			if (this.triedPatchCandidates.contains(patch)) continue;
 			patchId++;
 			if (patchId > 10000) return FixStatus.FAILURE;
@@ -157,22 +184,12 @@ public abstract class AbstractFixer {
 			scn.targetClassFile.delete();
 
 			log.debug("Compiling");
-			try {// Compile patched file.
-				ShellUtils.shellRun(Arrays.asList("javac -Xlint:unchecked -source 1.7 -target 1.7 -cp "
-						+ PathUtils.buildCompileClassPath(Arrays.asList(PathUtils.getJunitPath()), dp.classPath, dp.testClassPath)
-						+ " -d " + dp.classPath + " " + scn.targetJavaFile.getAbsolutePath()), buggyProject, 1);
-			} catch (IOException e) {
-				log.debug(buggyProject + " ---Fixer: fix fail because of javac exception! ");
+			if(!this.compile(scn)) {
+				log.debug(buggyProject + " ---Fixer: fix fail because of failed compiling! ");
+				attemptedPatches.put(patchedCode,FixStatus.FAILURE);
 				continue;
-			}
-			if (!scn.targetClassFile.exists()) { // fail to compile
-				int results = (this.buggyProject.startsWith("Mockito") || this.buggyProject.startsWith("Closure") || this.buggyProject.startsWith("Time")) ? TestUtils.compileProjectWithDefects4j(fullBuggyProjectPath, defects4jPath) : 1;
-				if (results == 1) {
-					log.debug(buggyProject + " ---Fixer: fix fail because of failed compiling! ");
-					continue;
-				}
-			}
-			log.debug("Finish of compiling.");
+			} 
+			log.debug("Finished compiling.");
 			comparablePatches++;
 			
 			log.debug("Test previously failed test cases.");
@@ -300,7 +317,7 @@ public abstract class AbstractFixer {
 		return failedTeatCases;
 	}
 
-	private void addPatchCodeToFile(SuspCodeNode scn, Patch patch) {
+	private String addPatchCodeToFile(SuspCodeNode scn, Patch patch) {
         String javaCode = FileHelper.readFile(scn.javaBackup);
         
 		String fixedCodeStr1 = patch.getFixedCodeStr1();
@@ -309,6 +326,7 @@ public abstract class AbstractFixer {
 		int exactBuggyCodeEndPos = patch.getBuggyCodeEndPos();
 		String patchCode = fixedCodeStr1;
 		boolean needBuggyCode = false;
+		String patchedJavaFile = "";
 		if (exactBuggyCodeEndPos > exactBuggyCodeStartPos) {
 			if ("MOVE-BUGGY-STATEMENT".equals(fixedCodeStr2)) {
 				// move statement position.
@@ -356,7 +374,7 @@ public abstract class AbstractFixer {
 	        }
 			
 			File newFile = new File(scn.targetJavaFile.getAbsolutePath() + ".temp");
-	        String patchedJavaFile = javaCode.substring(0, exactBuggyCodeStartPos) + patchCode + javaCode.substring(exactBuggyCodeEndPos);
+	        patchedJavaFile = javaCode.substring(0, exactBuggyCodeStartPos) + patchCode + javaCode.substring(exactBuggyCodeEndPos);
 	        FileHelper.outputToFile(newFile, patchedJavaFile, false);
 	        newFile.renameTo(scn.targetJavaFile);
 		} catch (StringIndexOutOfBoundsException e) {
@@ -367,6 +385,7 @@ public abstract class AbstractFixer {
         
         patch.setBuggyCodeStr(buggyCode);
         patch.setFixedCodeStr1(patchCode);
+		return patchedJavaFile;
 	}
 	
 }
