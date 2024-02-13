@@ -1,11 +1,36 @@
 package edu.lu.uni.serval.tbar.utils;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang3.math.NumberUtils;
+
 public class TestUtils {
 
+	public static List<String> readTestResults(String results) {
+		List<String> failedTeatCases = new ArrayList<>();
+		String[] testResults = results.split("\n");
+		for (String testResult : testResults) {
+			if (testResult.isEmpty()) continue;
+			
+			if (NumberUtils.isDigits(testResult.substring(0, 1))) {
+				int index = testResult.indexOf(") ");
+				if (index <= 0) continue;
+				testResult = testResult.substring(index + 1, testResult.length() - 1).trim();
+				int indexOfLeftParenthesis = testResult.indexOf("(");
+				if (indexOfLeftParenthesis < 0) {
+					System.err.println(testResult);
+					continue;
+				}
+				String testCase = testResult.substring(0, indexOfLeftParenthesis);
+				String testClass = testResult.substring(indexOfLeftParenthesis + 1);
+				failedTeatCases.add(testClass + "::" + testCase);
+			}
+		}
+		return failedTeatCases;
+	}
 
 	public static int getFailTestNumInProject(String projectName, String defects4jPath, List<String> failedTests){
         String testResult = getDefects4jResult(projectName, defects4jPath, "test");

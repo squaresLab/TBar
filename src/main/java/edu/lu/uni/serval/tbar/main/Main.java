@@ -15,6 +15,9 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import edu.lu.uni.serval.tbar.fixers.FixStatus;
+import edu.lu.uni.serval.tbar.dataprepare.Project;
+import edu.lu.uni.serval.tbar.dataprepare.GenProject;
+import edu.lu.uni.serval.tbar.dataprepare.MCTProject;
 
 /**
  * Fix bugs with Fault Localization results.
@@ -75,11 +78,6 @@ public class Main {
 		.desc("File path to failed Test Cases. Dunno if we need this.")
 		.build());
 
-		options.addOption(Option.builder("isTestFixPatterns")
-		.argName("isTestFixPatterns")
-		.desc("Not sure what this is but it exists.")
-		.build());
-
         // --help
         options.addOption("help", false, "Prints this help message.");
 		return options;
@@ -120,20 +118,29 @@ public class Main {
 				Configuration.failedTestCasesFilePath = line.getOptionValue("failedTests"); //"/Users/kui.liu/eclipse-fault-localization/FL-VS-APR/data/FailedTestCases/";//
 			}
 	
+			Project project = null;
 			Configuration.defects4j_home = line.getOptionValue("d4jHome");
-			fixer = new TBarFixer(Configuration.bugDataPath, projectName, bugNum, Configuration.defects4j_home);
+			if ((projectName.startsWith("Mockito") || projectName.startsWith("Closure") || projectName.startsWith("Time"))) {
+				project = new MCTProject(projectName, bugNum, Configuration.bugDataPath);
+			} else {
+				project = new GenProject(projectName, bugNum, Configuration.bugDataPath);
+
+			}
+			if(!project.isValid()) {
+				System.out.println("failure on valid paths in project, giving up.");
+				return;
+			}
+			fixer = new TBarFixer(project);
 			fixer.dataType = "TBar";
-			fixer.isTestFixPatterns = line.hasOption("isTestFixPatterns");
 			if (Integer.MAX_VALUE == fixer.minErrorTest) {
 				System.out.println("Failed to defects4j compile bug " + bugId);
 				return;
 			}
 
-			// FIXME: fix the design here because the data preparer thing is shared weirdly 
 
 			if(line.hasOption("faultLocStrategy") && line.getOptionValue("faultLocStrategy").equals("perfect")) {
 				// claire cut configuration of granularity since it looks like they only use Line
-				 faultloc =  new PerfectFaultLoc(fixer.getDataPreparer(), fixer.dataType, projectName, bugNum, faultLocFilePath); 
+				 faultloc =  new PerfectFaultLoc(project.getDataPreparer(), fixer.dataType, projectName, bugNum, faultLocFilePath); 
 		
 				if (line.hasOption("isTestFixPatterns")) {
 					Configuration.outputPath += "FixPatterns/";
@@ -142,7 +149,7 @@ public class Main {
 				}
 			} else {
 				// fixme: there is code to do line-level vs. file-level localization for some reason 
-				faultloc = new NormalFaultLoc(fixer.getDataPreparer(), fixer.dataType, projectName, faultLocFilePath, bugNum, Configuration.faultLocalizationMetric);
+				faultloc = new NormalFaultLoc(project.getDataPreparer(), fixer.dataType, projectName, faultLocFilePath, bugNum, Configuration.faultLocalizationMetric);
 				Configuration.outputPath += "NormalFL/";
 			}
 			fixer.setFaultLoc(faultloc);
@@ -152,10 +159,8 @@ public class Main {
             System.out.println("Unexpected parser exception:" + exp.getMessage());
         }
 		if(fixer != null) {
-		fixer.fixProcess();
-		
-		switch (fixer.fixedStatus) {
-		case FAILURE:
+			switch(fixer.fixProcess()) {
+				case FAILURE:
 			System.out.println("Failed to fix bug " + bugId);
 			break;
 		case SUCCESS:
