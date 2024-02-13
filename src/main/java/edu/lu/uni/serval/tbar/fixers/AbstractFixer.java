@@ -162,6 +162,39 @@ public abstract class AbstractFixer {
 		return true;
 	}
 
+	// returns false in case of obvious failures, true otherwise, yes this needs additional refactoring.
+	private boolean runtests() {
+		try {
+			String results = ShellUtils.shellRun(Arrays.asList("java -cp "
+					+ PathUtils.buildTestClassPath(dp.classPath, dp.testClassPath)
+					+ " org.junit.runner.JUnitCore " + this.failedTestCaseClasses), buggyProject, 2);
+			if (results.isEmpty()) {
+//					System.err.println(scn.suspiciousJavaFile + "@" + scn.buggyLine);
+//					System.err.println("Bug: " + buggyCode);
+//					System.err.println("Patch: " + patchCode);
+				return false;
+			} else {
+				if (!results.contains("java.lang.NoClassDefFoundError")) {
+					List<String> tempFailedTestCases = readTestResults(results);
+					tempFailedTestCases.retainAll(this.fakeFailedTestCasesList);
+					if (!tempFailedTestCases.isEmpty()) {
+						if (this.failedTestCasesStrList.size() == 1) return false;
+
+						// Might be partially fixed.
+						tempFailedTestCases.removeAll(this.failedTestCasesStrList);
+						if (!tempFailedTestCases.isEmpty()) return false; // Generate new bugs.
+					}
+				}
+			}
+		} catch (IOException e) {
+			if (!(this.buggyProject.startsWith("Mockito") || this.buggyProject.startsWith("Closure") || this.buggyProject.startsWith("Time"))) {
+				log.debug(buggyProject + " ---Fixer: fix fail because of faile passing previously failed test cases! ");
+				return false;
+			}
+		}
+		return true;
+	}
+
 	protected FixStatus testGeneratedPatches(List<Patch> patchCandidates, SuspCodeNode scn) {
 		// Testing generated patches.
 		this.fixedStatus = FixStatus.FAILURE;
@@ -193,53 +226,28 @@ public abstract class AbstractFixer {
 			comparablePatches++;
 			
 			log.debug("Test previously failed test cases.");
-			try {
-				String results = ShellUtils.shellRun(Arrays.asList("java -cp "
-						+ PathUtils.buildTestClassPath(dp.classPath, dp.testClassPath)
-						+ " org.junit.runner.JUnitCore " + this.failedTestCaseClasses), buggyProject, 2);
-
-				if (results.isEmpty()) {
-//					System.err.println(scn.suspiciousJavaFile + "@" + scn.buggyLine);
-//					System.err.println("Bug: " + buggyCode);
-//					System.err.println("Patch: " + patchCode);
-					continue;
-				} else {
-					if (!results.contains("java.lang.NoClassDefFoundError")) {
-						List<String> tempFailedTestCases = readTestResults(results);
-						tempFailedTestCases.retainAll(this.fakeFailedTestCasesList);
-						if (!tempFailedTestCases.isEmpty()) {
-							if (this.failedTestCasesStrList.size() == 1) continue;
-
-							// Might be partially fixed.
-							tempFailedTestCases.removeAll(this.failedTestCasesStrList);
-							if (!tempFailedTestCases.isEmpty()) continue; // Generate new bugs.
-						}
-					}
-				}
-			} catch (IOException e) {
-				if (!(this.buggyProject.startsWith("Mockito") || this.buggyProject.startsWith("Closure") || this.buggyProject.startsWith("Time"))) {
-					log.debug(buggyProject + " ---Fixer: fix fail because of faile passing previously failed test cases! ");
-					continue;
-				}
+			if(!runtests()) {
+				attemptedPatches.put(patchedCode,FixStatus.FAILURE);
+				continue;
 			}
-
 			List<String> failedTestsAfterFix = new ArrayList<>();
 			int errorTestAfterFix = TestUtils.getFailTestNumInProject(fullBuggyProjectPath, this.defects4jPath,
 					failedTestsAfterFix);
 			failedTestsAfterFix.removeAll(this.fakeFailedTestCasesList);
 			
-			// if (errorTestAfterFix < minErrorTest) {
 			List<String> tmpFailedTestsAfterFix = new ArrayList<>();
 			tmpFailedTestsAfterFix.addAll(failedTestsAfterFix);
 			tmpFailedTestsAfterFix.removeAll(this.failedTestStrList);
 			if (tmpFailedTestsAfterFix.size() > 0) { // Generate new bugs.
 				log.debug(buggyProject + " ---Generated new bugs: " + tmpFailedTestsAfterFix.size());
+				attemptedPatches.put(patchedCode,FixStatus.FAILURE);
 				continue;
 			}
 			
 			// Output the generated patch.
 			if (errorTestAfterFix == 0 || failedTestsAfterFix.isEmpty()) {
 				fixedStatus = FixStatus.SUCCESS;
+				attemptedPatches.put(patchedCode,FixStatus.SUCCESS);
 				log.info("Succeeded to fix the bug " + buggyProject + "====================");
 				String patchStr = TestUtils.readPatch(this.fullBuggyProjectPath);
 				System.out.println(patchStr);
@@ -260,9 +268,11 @@ public abstract class AbstractFixer {
 				if (minErrorTestAfterFix == 0 || errorTestAfterFix <= minErrorTestAfterFix) {
 					minErrorTestAfterFix = errorTestAfterFix;
 					fixedStatus = FixStatus.PARTIAL;
+					attemptedPatches.put(patchedCode,FixStatus.PARTIAL);
 					minErrorTest_ = minErrorTest_ - (minErrorTest - errorTestAfterFix);
 					if (minErrorTest_ <= 0) {
 						fixedStatus = FixStatus.SUCCESS;
+						attemptedPatches.put(patchedCode,FixStatus.PARTIAL);
 						minErrorTest = 0;
 					}
 					log.info("Partially Succeeded to fix the bug " + buggyProject + "====================");
