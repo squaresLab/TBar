@@ -140,14 +140,15 @@ public abstract class AbstractFixer {
 
 	protected List<Patch> triedPatchCandidates = new ArrayList<>();
 	
-	protected void testGeneratedPatches(List<Patch> patchCandidates, SuspCodeNode scn) {
+	protected FixStatus testGeneratedPatches(List<Patch> patchCandidates, SuspCodeNode scn) {
 		// Testing generated patches.
+		this.fixedStatus = FixStatus.FAILURE;
 		for (Patch patch : patchCandidates) {
 			patch.buggyFileName = scn.suspiciousJavaFile;
 			addPatchCodeToFile(scn, patch);// Insert the patch.
 			if (this.triedPatchCandidates.contains(patch)) continue;
 			patchId++;
-			if (patchId > 10000) return;
+			if (patchId > 10000) return FixStatus.FAILURE;
 			this.triedPatchCandidates.add(patch);
 			
 			String buggyCode = patch.getBuggyCodeStr();
@@ -273,6 +274,7 @@ public abstract class AbstractFixer {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
+		return this.fixedStatus;
 	}
 	
 	private List<String> readTestResults(String results) {

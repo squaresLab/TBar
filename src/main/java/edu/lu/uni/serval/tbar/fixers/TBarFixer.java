@@ -96,8 +96,8 @@ public class TBarFixer extends AbstractFixer {
 
 	public void fixWithMatchedFixTemplates(SuspCodeNode scn, List<Integer> distinctContextInfo) {
 		// generate patches with fix templates of TBar.
-		FixTemplate ft = null;
-		
+		List<FixTemplate> fts = new ArrayList<FixTemplate>();
+
 		if (!Checker.isMethodDeclaration(scn.suspCodeAstNode.getType())) {
 			boolean nullChecked = false;
 			boolean typeChanged = false;
@@ -106,213 +106,85 @@ public class TBarFixer extends AbstractFixer {
 				
 			for (Integer contextInfo : distinctContextInfo) {
 				if (Checker.isCastExpression(contextInfo)) {
-					ft = new ClassCastChecker();
-					if (isTestFixPatterns) dataType = readDirectory() + "/ClassCastChecker";
-
+					fts.add(new ClassCastChecker()); 
 					if (!typeChanged) {
-						generateAndValidatePatches(ft, scn);
-						if (!isTestFixPatterns && this.minErrorTest == 0) return;
-						if (this.fixedStatus == FixStatus.PARTIAL) {
-							fixedStatus = FixStatus.FAILURE;
-							return;
-						}
 						typeChanged = true;
-						ft = new DataTypeReplacer();
-						if (isTestFixPatterns) dataType = readDirectory() + "/DataTypeReplacer";
+						fts.add(new DataTypeReplacer());
 					}
 				} else if (Checker.isClassInstanceCreation(contextInfo)) {
-//					ft = new CNIdiomNoSuperCall();
-//					if (isTestFixPatterns) dataType = readDirectory() + "/CNIdiomNoSuperCall";
 					if (!methodChanged) {
-//						generateAndValidatePatches(ft, scn);
-//						if (!isTestFixPatterns && this.minErrorTest == 0) return;
 						methodChanged = true;
-						ft = new MethodInvocationMutator();
-						if (isTestFixPatterns) dataType = readDirectory() + "/MethodInvocationMutator";
+						fts.add(new MethodInvocationMutator());
 					}
 				} else if (Checker.isIfStatement(contextInfo) || Checker.isDoStatement(contextInfo) || Checker.isWhileStatement(contextInfo)) {
 					if (Checker.isInfixExpression(scn.suspCodeAstNode.getChild(0).getType()) && !operator) {
 						operator = true;
-						ft = new OperatorMutator(0);
-						if (isTestFixPatterns) dataType = readDirectory() + "/OperatorMutator";
-						generateAndValidatePatches(ft, scn);
-						if (!isTestFixPatterns && this.minErrorTest == 0) return;
-
-						if (this.fixedStatus == FixStatus.PARTIAL) {
-							fixedStatus = FixStatus.FAILURE;
-							return;
-						}
+						fts.add(new OperatorMutator(0));
 					}
-					ft = new ConditionalExpressionMutator(2);
-					if (isTestFixPatterns) dataType = readDirectory() + "/ConditionalExpressionMutator";
+					fts.add(new ConditionalExpressionMutator(2));
 				} else if (Checker.isConditionalExpression(contextInfo)) {
-					ft = new ConditionalExpressionMutator(0);
-					if (isTestFixPatterns) dataType = readDirectory() + "/ConditionalExpressionMutator";
+					fts.add(new ConditionalExpressionMutator(0));
 				} else if (Checker.isCatchClause(contextInfo) || Checker.isVariableDeclarationStatement(contextInfo)) {
 					if (!typeChanged) {
-						ft = new DataTypeReplacer();
-						if (isTestFixPatterns) dataType = readDirectory() + "/DataTypeReplacer";
+						fts.add(new DataTypeReplacer());
 						typeChanged = true;
 					}
 				} else if (Checker.isInfixExpression(contextInfo)) {
-					ft = new ICASTIdivCastToDouble();
-					if (isTestFixPatterns) dataType = readDirectory() + "/ICASTIdivCastToDouble";
-					generateAndValidatePatches(ft, scn);
-					if (!isTestFixPatterns && this.minErrorTest == 0) return;
-
-					if (this.fixedStatus == FixStatus.PARTIAL) {
-						fixedStatus = FixStatus.FAILURE;
-						return;
-					}
-					
+					fts.add(new ICASTIdivCastToDouble());
 					if (!operator) {
 						operator = true;
-						ft = new OperatorMutator(0);
-						if (isTestFixPatterns) dataType = readDirectory() + "/OperatorMutator";
-						generateAndValidatePatches(ft, scn);
-						if (!isTestFixPatterns && this.minErrorTest == 0) return;
-
-						if (this.fixedStatus == FixStatus.PARTIAL) {
-							fixedStatus = FixStatus.FAILURE;
-							return;
-						}
+						fts.add(new OperatorMutator(0));
 					}
 					
-					ft = new ConditionalExpressionMutator(1);
-					if (isTestFixPatterns) dataType = readDirectory() + "/ConditionalExpressionMutator";
-					generateAndValidatePatches(ft, scn);
-					if (!isTestFixPatterns && this.minErrorTest == 0) return;
-					if (this.fixedStatus == FixStatus.PARTIAL) {
-						fixedStatus = FixStatus.FAILURE;
-						return;
-					}
-					
-					ft = new OperatorMutator(4);
-					if (isTestFixPatterns) dataType = readDirectory() + "/OperatorMutator";
+					fts.add(new ConditionalExpressionMutator(1));
+					fts.add(new OperatorMutator(4));
 				} else if (Checker.isBooleanLiteral(contextInfo) || Checker.isNumberLiteral(contextInfo) || Checker.isCharacterLiteral(contextInfo)|| Checker.isStringLiteral(contextInfo)) {
-					ft = new LiteralExpressionMutator();
-					if (isTestFixPatterns) dataType = readDirectory() + "/LiteralExpressionMutator";
+					fts.add(new LiteralExpressionMutator());
 				} else if (Checker.isMethodInvocation(contextInfo) || Checker.isConstructorInvocation(contextInfo) || Checker.isSuperConstructorInvocation(contextInfo)) {
 					if (!methodChanged) {
-						ft = new MethodInvocationMutator();
-						if (isTestFixPatterns) dataType = readDirectory() + "/MethodInvocationMutator";
+						fts.add(new MethodInvocationMutator());
 						methodChanged = true;
-					}
-					
+					}					
 					if (Checker.isMethodInvocation(contextInfo)) {
-						if (ft != null) {
-							generateAndValidatePatches(ft, scn);
-							if (!isTestFixPatterns && this.minErrorTest == 0) return;
-							if (this.fixedStatus == FixStatus.PARTIAL) {
-								fixedStatus = FixStatus.FAILURE;
-								return;
-							}
-						}
-						ft = new NPEqualsShouldHandleNullArgument();
-						if (isTestFixPatterns) dataType = readDirectory() + "/NPEqualsShouldHandleNullArgument";
-						generateAndValidatePatches(ft, scn);
-						if (!isTestFixPatterns && this.minErrorTest == 0) return;
-						if (this.fixedStatus == FixStatus.PARTIAL) {
-							fixedStatus = FixStatus.FAILURE;
-							return;
-						}
-						
-						ft = new RangeChecker(false);
-						if (isTestFixPatterns) dataType = readDirectory() + "/RangeChecker";
+						fts.add(new NPEqualsShouldHandleNullArgument());
+						fts.add(new RangeChecker(false));
 					}
 				} else if (Checker.isAssignment(contextInfo)) {
-					ft = new OperatorMutator(2);
-					if (isTestFixPatterns) dataType = readDirectory() + "/OperatorMutator";
+					fts.add(new OperatorMutator(2));
 				} else if (Checker.isInstanceofExpression(contextInfo)) {
-					ft = new OperatorMutator(5);
-					if (isTestFixPatterns) dataType = readDirectory() + "/OperatorMutator";
+					fts.add(new OperatorMutator(5));
 				} else if (Checker.isArrayAccess(contextInfo)) {
-					ft = new RangeChecker(true);
-					if (isTestFixPatterns) dataType = readDirectory() + "/RangeChecker";
+					fts.add(new RangeChecker(true));
 				} else if (Checker.isReturnStatement(contextInfo)) {
 					String returnType = ContextReader.readMethodReturnType(scn.suspCodeAstNode);
 					if ("boolean".equalsIgnoreCase(returnType)) {
-						ft = new ConditionalExpressionMutator(2);
-						if (isTestFixPatterns) dataType = readDirectory() + "/ConditionalExpressionMutator";
+						fts.add(new ConditionalExpressionMutator(2));
 					} else {
-						ft = new ReturnStatementMutator(returnType);
-						if (isTestFixPatterns) dataType = readDirectory() + "/ReturnStatementMutator";
+						fts.add(new ReturnStatementMutator(returnType));
 					}
 				} else if (Checker.isSimpleName(contextInfo) || Checker.isQualifiedName(contextInfo)) {
-					ft = new VariableReplacer();
-					if (isTestFixPatterns) dataType = readDirectory() + "/VariableReplacer";
-					
+					fts.add(new VariableReplacer());
 					if (!nullChecked) {
-						generateAndValidatePatches(ft, scn);
-						if (!isTestFixPatterns && this.minErrorTest == 0) return;
-						if (this.fixedStatus == FixStatus.PARTIAL) {
-							fixedStatus = FixStatus.FAILURE;
-							return;
-						}
 						nullChecked = true;
-						ft = new NullPointerChecker();
-						if (isTestFixPatterns) dataType = readDirectory() + "/NullPointerChecker";
+						fts.add(new NullPointerChecker());
 					}
 				} 
-				if (ft != null) {
-					generateAndValidatePatches(ft, scn);
-					if (!isTestFixPatterns && this.minErrorTest == 0) return;
-					if (this.fixedStatus == FixStatus.PARTIAL) {
-						fixedStatus = FixStatus.FAILURE;
-						return;
-					}
-				}
-				ft = null;
-				if (this.patchId >= 10000) break;
 			}
 			
 			if (!nullChecked) {
 				nullChecked = true;
-				ft = new NullPointerChecker();
-				if (isTestFixPatterns) dataType = readDirectory() + "/NullPointerChecker";
-				generateAndValidatePatches(ft, scn);
-				if (!isTestFixPatterns && this.minErrorTest == 0) return;
-				if (this.fixedStatus == FixStatus.PARTIAL) {
-					fixedStatus = FixStatus.FAILURE;
-					return;
-				}
+				fts.add(new NullPointerChecker());
 			}
 
-			ft = new StatementMover();
-			if (isTestFixPatterns) dataType = readDirectory() + "/StatementMover";
-			generateAndValidatePatches(ft, scn);
-			if (!isTestFixPatterns && this.minErrorTest == 0) return;
-			if (this.fixedStatus == FixStatus.PARTIAL) {
-				fixedStatus = FixStatus.FAILURE;
-				return;
-			}
-			
-			ft = new StatementRemover();
-			if (isTestFixPatterns) dataType = readDirectory() + "/StatementRemover";
-			generateAndValidatePatches(ft, scn);
-			if (!isTestFixPatterns && this.minErrorTest == 0) return;
-			if (this.fixedStatus == FixStatus.PARTIAL) {
-				fixedStatus = FixStatus.FAILURE;
-				return;
-			}
-			
-			ft = new StatementInserter();
-			if (isTestFixPatterns) dataType = readDirectory() + "/StatementInserter";
-			generateAndValidatePatches(ft, scn);
-			if (!isTestFixPatterns && this.minErrorTest == 0) return;
-			if (this.fixedStatus == FixStatus.PARTIAL) {
-				fixedStatus = FixStatus.FAILURE;
-				return;
-			}
+			fts.add(new StatementMover());
+			fts.add(new StatementRemover());
+			fts.add(new StatementInserter());
 		} else {
-			ft = new StatementRemover();
-			if (isTestFixPatterns) dataType = readDirectory() + "/StatementRemover";
-			generateAndValidatePatches(ft, scn);
-			if (!isTestFixPatterns && this.minErrorTest == 0) return;
-			if (this.fixedStatus == FixStatus.PARTIAL) {
-				fixedStatus = FixStatus.FAILURE;
-				return;
-			}
+			fts.add(new StatementRemover());
+		}
+		for(FixTemplate ft : fts) {
+			FixStatus status = generateAndValidatePatches(ft, scn);
+			if(status == FixStatus.SUCCESS) return;
 		}
 	}
 	
@@ -322,7 +194,7 @@ public class TBarFixer extends AbstractFixer {
 		return dataType;
 	}
 	
-	protected void generateAndValidatePatches(FixTemplate ft, SuspCodeNode scn) {
+	protected FixStatus generateAndValidatePatches(FixTemplate ft, SuspCodeNode scn) {
 		ft.setSuspiciousCodeStr(scn.suspCodeStr);
 		ft.setSuspiciousCodeTree(scn.suspCodeAstNode);
 		if (scn.javaBackup == null) ft.setSourceCodePath(dp.srcPath);
@@ -333,8 +205,8 @@ public class TBarFixer extends AbstractFixer {
 //		System.out.println(dataType + " ====== " + patchCandidates.size());
 		
 		// Test generated patches.
-		if (patchCandidates.isEmpty()) return;
-		testGeneratedPatches(patchCandidates, scn);
+		if (patchCandidates.isEmpty()) return FixStatus.FAILURE;
+		return testGeneratedPatches(patchCandidates, scn);
 	}
 	
 	public List<Integer> readAllNodeTypes(ITree suspCodeAstNode) {
