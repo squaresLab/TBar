@@ -84,11 +84,13 @@ public abstract class AbstractFixer {
 			TestUtils.compileProjectWithDefects4j(fullBuggyProjectPath);
 //		}
 		List<String> failedTestsFromD4J = TestUtils.getFailedTestsFromD4J(fullBuggyProjectPath);
-		if (numberFailingTests == Integer.MAX_VALUE) {
+	
+		numberFailingTests = failedTestsFromD4J.size();
+		if (numberFailingTests == 0) {
 			TestUtils.compileProjectWithDefects4j(fullBuggyProjectPath);
 			failedTestsFromD4J = TestUtils.getFailedTestsFromD4J(fullBuggyProjectPath);
+			numberFailingTests = failedTestsFromD4J.size();
 		}
-		numberFailingTests = failedTestsFromD4J.size();
 		minErrorTest_ = numberFailingTests;
 		log.info(buggyProject + " Failed Tests: " + this.numberFailingTests);
 		
