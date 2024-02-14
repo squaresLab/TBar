@@ -146,7 +146,6 @@ public abstract class AbstractFixer {
 	}
 
 	protected List<Patch> triedPatchCandidates = new ArrayList<>();
-	// bigold FIXME: add bug being fixed to the cache.
 	protected static HashMap<String,FixStatus> patchCache = new HashMap<>();
 
 	// FIXME: add some kind of runtime hook to serialize if the process gets killed prematurely.
@@ -217,9 +216,6 @@ public abstract class AbstractFixer {
 					+ PathUtils.buildTestClassPath(dp.classPath, dp.testClassPath)
 					+ " org.junit.runner.JUnitCore " + this.failedTestCaseClasses), buggyProject, 2);
 			if (results.isEmpty()) {
-//					System.err.println(scn.suspiciousJavaFile + "@" + scn.buggyLine);
-//					System.err.println("Bug: " + buggyCode);
-//					System.err.println("Patch: " + patchCode);
 				return false;
 			} else {
 				if (!results.contains("java.lang.NoClassDefFoundError")) {
