@@ -3,12 +3,13 @@ package edu.lu.uni.serval.tbar.utils;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import edu.lu.uni.serval.tbar.config.Configuration;
 
 public class TestUtils {
 
 
-	public static int getFailTestNumInProject(String projectName, String defects4jPath, List<String> failedTests){
-        String testResult = getDefects4jResult(projectName, defects4jPath, "test");
+	public static int getFailTestNumInProject(String projectName, List<String> failedTests){
+        String testResult = getDefects4jResult(projectName, "test");
         if (testResult.equals("")){//error occurs in run
             return Integer.MAX_VALUE;
         }
@@ -67,8 +68,8 @@ public class TestUtils {
 //        return errorNum;
 //	}
 	
-	public static int compileProjectWithDefects4j(String projectName, String defects4jPath) {
-		String compileResults = getDefects4jResult(projectName, defects4jPath, "compile");
+	public static int compileProjectWithDefects4j(String projectName) {
+		String compileResults = getDefects4jResult(projectName, "compile");
 		String[] lines = compileResults.split("\n");
 		if (lines.length != 2) return 1;
         for (String lineString: lines){
@@ -77,11 +78,11 @@ public class TestUtils {
 		return 0;
 	}
 
-	private static String getDefects4jResult(String projectName, String defects4jPath, String cmdType) {
+	private static String getDefects4jResult(String projectName, String cmdType) {
 		try {
 			String buggyProject = projectName.substring(projectName.lastIndexOf("/") + 1);
 			//which java\njava -version\n
-            String result = ShellUtils.shellRun(Arrays.asList("cd " + projectName + "\n", defects4jPath + "framework/bin/defects4j " + cmdType + "\n"), buggyProject, cmdType.equals("test") ? 2 : 1);//"defects4j " + cmdType + "\n"));//
+            String result = ShellUtils.shellRun(Arrays.asList("cd " + projectName + "\n", Configuration.defects4j_home + "framework/bin/defects4j " + cmdType + "\n"), buggyProject, cmdType.equals("test") ? 2 : 1);//"defects4j " + cmdType + "\n"));//
             return result.trim();
         } catch (IOException e){
         	e.printStackTrace();

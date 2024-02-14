@@ -14,6 +14,8 @@ import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
+import edu.lu.uni.serval.tbar.fixers.FixStatus;
+
 /**
  * Fix bugs with Fault Localization results.
  * 
@@ -71,6 +73,11 @@ public class Main {
 		.hasArg()
 		.required()
 		.desc("File path to failed Test Cases. Dunno if we need this.")
+		.build());
+
+		options.addOption(Option.builder("clearTestCache")
+		.argName("clearTestCache")
+		.desc("clear the cache even if the file exists.  Default: false")
 		.build());
 
 		options.addOption(Option.builder("isTestFixPatterns")
@@ -133,15 +140,18 @@ public class Main {
 				Configuration.failedTestCasesFilePath = line.getOptionValue("failedTests"); //"/Users/kui.liu/eclipse-fault-localization/FL-VS-APR/data/FailedTestCases/";//
 			}
 	
+			if(line.hasOption("clearTestCache")) {
+				Configuration.clearTestCache = true;
+			}
 			Configuration.defects4j_home = line.getOptionValue("d4jHome");
-			fixer = new TBarFixer(Configuration.bugDataPath, projectName, bugNum, Configuration.defects4j_home);
+			fixer = new TBarFixer(Configuration.bugDataPath, projectName, bugNum);
 			fixer.dataType = "TBar";
 			fixer.isTestFixPatterns = line.hasOption("isTestFixPatterns");
 			if (Integer.MAX_VALUE == fixer.minErrorTest) {
 				System.out.println("Failed to defects4j compile bug " + bugId);
 				return;
 			}
-
+			
 			// FIXME: fix the design here because the data preparer thing is shared weirdly 
 
 			if(line.hasOption("faultLocStrategy") && line.getOptionValue("faultLocStrategy").equals("perfect")) {
@@ -161,43 +171,40 @@ public class Main {
 			fixer.setFaultLoc(faultloc);
 
 			if (line.hasOption("compileOnly")) {
-				fixer.compileOnly = true;
+				Configuration.compileOnly = true;
 			} else{
-				fixer.compileOnly = false;
+				Configuration.compileOnly = false;
 			}
 			if (line.hasOption("recordAllPatches")) {
-				fixer.recordAllPatches = true;
+				Configuration.recordAllPatches = true;
 			} else {
 				fixer.recordAllPatches = false;
 			}
 			if (line.hasOption("storePatchJson")) {
-				fixer.storePatchJson = true;
+				Configuration.storePatchJson = true;
 			} else {
-				fixer.storePatchJson = false;
+				Configuration.storePatchJson = false;
 			}
-			System.out.println("compileOnly: " + fixer.compileOnly);
-			System.out.println("recordAllPatches: " + fixer.recordAllPatches);
-			System.out.println("storePatchJson: " + fixer.storePatchJson);
 		
 		} catch (ParseException exp) {
             System.out.println("Unexpected parser exception:" + exp.getMessage());
         }
 		if(fixer != null) {
 
-		fixer.fixProcess(fixer.compileOnly, fixer.recordAllPatches, fixer.storePatchJson);
+		fixer.fixProcess();
 		
-		int fixedStatus = fixer.fixedStatus;
-		switch (fixedStatus) {
-		case 0:
+		switch (fixer.fixedStatus) {
+		case FAILURE:
 			System.out.println("Failed to fix bug " + bugId);
 			break;
-		case 1:
+		case SUCCESS:
 			System.out.println("Succeeded to fix bug " + bugId);
 			break;
-		case 2:
+		case PARTIAL:
 			System.out.println("Partial succeeded to fix bug " + bugId);
 			break;
 		}
+		AbstractFixer.serializeTestCache();
 	}
 }
 
