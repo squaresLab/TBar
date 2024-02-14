@@ -54,13 +54,13 @@ public abstract class AbstractFixer {
 	protected DataPreparer dp;              // The needed data of buggy program for compiling and testing.
 	protected AbstractFaultLoc faultloc = null;
 
-	private List<String> failedTestCaseClasses = new ArrayList<>(); // Classes of the failed test cases before fixing.
+	private List<String> failedTestCaseClasses = new ArrayList<>(); // Classes of the failed test cases before fixing. This is the class path, no hyphen
 	// All specific failed test cases after testing the buggy project with defects4j command in Java code before fixing.
-	protected List<String> failedTestStrList = new ArrayList<>();
+	protected List<String> failedTestStrList = new ArrayList<>(); // this is "- test name"
 	// All specific failed test cases after testing the buggy project with defects4j command in terminal before fixing.
-	protected List<String> failedTestCasesStrList = new ArrayList<>();
+	protected List<String> failedTestCasesStrList = new ArrayList<>(); // this is no - 
 	// The failed test cases after running defects4j command in Java code but not in terminal.
-	private List<String> fakeFailedTestCasesList = new ArrayList<>();
+	private List<String> fakeFailedTestCasesList = new ArrayList<>(); // also no hyphen
 	
 	public String dataType = "";
 	protected int patchId = 0;
@@ -97,10 +97,11 @@ public abstract class AbstractFixer {
 		this.dp = new DataPreparer(path);
 		dp.prepareData(buggyProject);
 		
+		System.out.println("failedTestStrList --> " + failedTestStrList);
 		readPreviouslyFailedTestCases();
 		AbstractFixer.deserializeTestCache();
-		
-//		createDictionary();
+
+		//		createDictionary();
 	}
 
 	private void readPreviouslyFailedTestCases() {
@@ -109,9 +110,8 @@ public abstract class AbstractFixer {
 		List<String> failed = new ArrayList<>();
 		for (int index = 1, length = failedTestCases.length; index < length; index ++) {
 			// - org.jfree.data.general.junit.DatasetUtilitiesTests::testBug2849731_2
-			String failedTestCase = failedTestCases[index].trim(); // actual failed test case, - class::name
+			String failedTestCase = TestUtils.cleanTestName(failedTestCases[index]);
 			failed.add(failedTestCase);
-			failedTestCase = failedTestCase.substring(failedTestCase.indexOf("-") + 1).trim(); // now that without the leading hyphen
 			failedTestCasesStrList.add(failedTestCase);
 			int colonIndex = failedTestCase.indexOf("::");
 			if (colonIndex > 0) {
@@ -129,6 +129,11 @@ public abstract class AbstractFixer {
 		// FIXME: Using defects4j command in Java code may generate some new failed-passing test cases.
 		// We call them as fake failed-passing test cases.
 		this.fakeFailedTestCasesList.addAll(tempFailed);
+		System.out.println("failedTestCaseClasses --> " + failedTestCaseClasses);
+		System.out.println("failedTestStrList --> " + failedTestStrList);
+		System.out.println("failedTestCasesStrList --> " + failedTestCasesStrList);
+		System.out.println("fakeFailedTestCasesList --> " + fakeFailedTestCasesList);
+	
 	}
 
 	@SuppressWarnings("unused")
@@ -221,6 +226,7 @@ public abstract class AbstractFixer {
 			} else {
 				if (!results.contains("java.lang.NoClassDefFoundError")) {
 					List<String> tempFailedTestCases = readTestResults(results);
+					System.out.println("tempfailedtestcases: " + tempFailedTestCases);
 					tempFailedTestCases.retainAll(this.fakeFailedTestCasesList);
 					if (!tempFailedTestCases.isEmpty()) {
 						if (this.failedTestCasesStrList.size() == 1) return false;

@@ -8,6 +8,11 @@ import edu.lu.uni.serval.tbar.config.Configuration;
 public class TestUtils {
 
 
+    public static String cleanTestName(String testName) {
+        return testName.trim().substring(testName.indexOf("-"));
+
+    }
+    // this adds tests with the "- " at the beginning
 	public static int getFailTestNumInProject(String projectName, List<String> failedTests){
         String testResult = getDefects4jResult(projectName, "test -r");
         if (testResult.equals("")){//error occurs in run
@@ -25,7 +30,7 @@ public class TestUtils {
             } else if (lineString.startsWith("Running ")) {
             	break;
             } else {
-            	failedTests.add(lineString.trim());
+            	failedTests.add(TestUtils.cleanTestName(lineString));
             }
         }
         return errorNum;
