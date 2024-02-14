@@ -370,6 +370,8 @@ public abstract class AbstractFixer {
 	        newFile.renameTo(scn.targetJavaFile);
 			
 			if (storePatchJson){
+				File patch_storage = new File(Paths.get("").toAbsolutePath().toString() + "/stored_patches");
+				patch_storage.mkdir();
 				String patchDir = Paths.get("").toAbsolutePath().toString() + "/stored_patches/" + buggyProject;
 				File toEntropyDir = new File(patchDir);
 				toEntropyDir.mkdir();
