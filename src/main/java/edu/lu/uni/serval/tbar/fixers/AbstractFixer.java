@@ -2,8 +2,12 @@ package edu.lu.uni.serval.tbar.fixers;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,6 +29,7 @@ import edu.lu.uni.serval.tbar.utils.FileHelper;
 import edu.lu.uni.serval.tbar.utils.PathUtils;
 import edu.lu.uni.serval.tbar.utils.ShellUtils;
 import edu.lu.uni.serval.tbar.utils.TestUtils;
+import junit.framework.TestCase;
 
 /**
  * Abstract Fixer.
@@ -94,6 +99,7 @@ public abstract class AbstractFixer {
 		dp.prepareData(buggyProject);
 		
 		readPreviouslyFailedTestCases();
+		AbstractFixer.deserializeTestCache();
 		
 //		createDictionary();
 	}
@@ -140,8 +146,49 @@ public abstract class AbstractFixer {
 	}
 
 	protected List<Patch> triedPatchCandidates = new ArrayList<>();
-	protected HashMap<String,FixStatus> attemptedPatches = new HashMap<>();
+	protected static HashMap<String,FixStatus> patchCache = new HashMap<>();
 
+	// FIXME: add some kind of runtime hook to serialize if the process gets killed prematurely.
+	public static void serializeTestCache() {
+		try {
+			FileOutputStream fos = new FileOutputStream("testcache.ser");
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			oos.writeObject(AbstractFixer.patchCache);
+			oos.close();
+			fos.close();
+			log.info("Serialized test cache to file testcache.ser");
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		}
+	}
+
+	public static void deserializeTestCache(){
+		File fl = new File("testcache.ser");
+		HashMap<String, FixStatus> cache = null; 
+		if(fl.isFile() && !Configuration.clearTestCache){
+			try
+			{
+				FileInputStream fis = new FileInputStream("testcache.ser");
+				ObjectInputStream ois = new ObjectInputStream(fis);
+				cache = (HashMap) ois.readObject();
+				ois.close();
+				fis.close();
+			}catch(IOException ioe)
+			{
+				ioe.printStackTrace();
+			}catch(ClassNotFoundException c)
+			{
+				System.out.println("Class not found");
+				c.printStackTrace();
+			}
+			System.out.println("Deserialized fitnessCache HashMap");
+		} else {
+			cache = new HashMap<String, FixStatus>();
+		}
+		//System.out.println("hashmap is = " + testCache.entrySet().size() + "  " + testCache.toString());
+		patchCache.putAll(cache);
+	}
+	
 	protected boolean compile(SuspCodeNode scn) {
 
 		try {// Compile patched file.
@@ -201,8 +248,8 @@ public abstract class AbstractFixer {
 		for (Patch patch : patchCandidates) {
 			patch.buggyFileName = scn.suspiciousJavaFile;
 			String patchedCode = addPatchCodeToFile(scn, patch);// Insert the patch.
-			if(attemptedPatches.containsKey(patchedCode)) {
-				this.fixedStatus = attemptedPatches.get(patchedCode);
+			if(patchCache.containsKey(patchedCode)) {
+				this.fixedStatus = patchCache.get(patchedCode);
 				if(this.fixedStatus == FixStatus.SUCCESS) return FixStatus.SUCCESS;
 				continue;
 			} 
@@ -219,7 +266,7 @@ public abstract class AbstractFixer {
 			log.debug("Compiling");
 			if(!this.compile(scn)) {
 				log.debug(buggyProject + " ---Fixer: fix fail because of failed compiling! ");
-				attemptedPatches.put(patchedCode,FixStatus.FAILURE);
+				patchCache.put(patchedCode,FixStatus.FAILURE);
 				continue;
 			} 
 			log.debug("Finished compiling.");
@@ -227,7 +274,7 @@ public abstract class AbstractFixer {
 			
 			log.debug("Test previously failed test cases.");
 			if(!runtests()) {
-				attemptedPatches.put(patchedCode,FixStatus.FAILURE);
+				patchCache.put(patchedCode,FixStatus.FAILURE);
 				continue;
 			}
 			List<String> failedTestsAfterFix = new ArrayList<>();
@@ -240,14 +287,14 @@ public abstract class AbstractFixer {
 			tmpFailedTestsAfterFix.removeAll(this.failedTestStrList);
 			if (tmpFailedTestsAfterFix.size() > 0) { // Generate new bugs.
 				log.debug(buggyProject + " ---Generated new bugs: " + tmpFailedTestsAfterFix.size());
-				attemptedPatches.put(patchedCode,FixStatus.FAILURE);
+				patchCache.put(patchedCode,FixStatus.FAILURE);
 				continue;
 			}
 			
 			// Output the generated patch.
 			if (errorTestAfterFix == 0 || failedTestsAfterFix.isEmpty()) {
 				fixedStatus = FixStatus.SUCCESS;
-				attemptedPatches.put(patchedCode,FixStatus.SUCCESS);
+				patchCache.put(patchedCode,FixStatus.SUCCESS);
 				log.info("Succeeded to fix the bug " + buggyProject + "====================");
 				String patchStr = TestUtils.readPatch(this.fullBuggyProjectPath);
 				System.out.println(patchStr);
@@ -268,11 +315,11 @@ public abstract class AbstractFixer {
 				if (minErrorTestAfterFix == 0 || errorTestAfterFix <= minErrorTestAfterFix) {
 					minErrorTestAfterFix = errorTestAfterFix;
 					fixedStatus = FixStatus.PARTIAL;
-					attemptedPatches.put(patchedCode,FixStatus.PARTIAL);
+					patchCache.put(patchedCode,FixStatus.PARTIAL);
 					minErrorTest_ = minErrorTest_ - (minErrorTest - errorTestAfterFix);
 					if (minErrorTest_ <= 0) {
 						fixedStatus = FixStatus.SUCCESS;
-						attemptedPatches.put(patchedCode,FixStatus.PARTIAL);
+						patchCache.put(patchedCode,FixStatus.PARTIAL);
 						minErrorTest = 0;
 					}
 					log.info("Partially Succeeded to fix the bug " + buggyProject + "====================");

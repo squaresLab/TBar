@@ -75,6 +75,11 @@ public class Main {
 		.desc("File path to failed Test Cases. Dunno if we need this.")
 		.build());
 
+		options.addOption(Option.builder("clearTestCache")
+		.argName("clearTestCache")
+		.desc("clear the cache even if the file exists.  Default: false")
+		.build());
+
 		options.addOption(Option.builder("isTestFixPatterns")
 		.argName("isTestFixPatterns")
 		.desc("Not sure what this is but it exists.")
@@ -120,6 +125,9 @@ public class Main {
 				Configuration.failedTestCasesFilePath = line.getOptionValue("failedTests"); //"/Users/kui.liu/eclipse-fault-localization/FL-VS-APR/data/FailedTestCases/";//
 			}
 	
+			if(line.hasOption("clearTestCache")) {
+				Configuration.clearTestCache = true;
+			}
 			Configuration.defects4j_home = line.getOptionValue("d4jHome");
 			fixer = new TBarFixer(Configuration.bugDataPath, projectName, bugNum, Configuration.defects4j_home);
 			fixer.dataType = "TBar";
@@ -128,7 +136,7 @@ public class Main {
 				System.out.println("Failed to defects4j compile bug " + bugId);
 				return;
 			}
-
+			
 			// FIXME: fix the design here because the data preparer thing is shared weirdly 
 
 			if(line.hasOption("faultLocStrategy") && line.getOptionValue("faultLocStrategy").equals("perfect")) {
@@ -165,6 +173,7 @@ public class Main {
 			System.out.println("Partial succeeded to fix bug " + bugId);
 			break;
 		}
+		AbstractFixer.serializeTestCache();
 	}
 }
 
