@@ -7,3 +7,5 @@ target/classes
 D4J/projects
 .temp
 OUTPUT
+entropy_fl_output
+store_patches
