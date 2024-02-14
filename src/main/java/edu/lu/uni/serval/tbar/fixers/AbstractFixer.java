@@ -323,18 +323,15 @@ public abstract class AbstractFixer {
 			// Output the generated patch.
 			if (errorTestAfterFix == 0 || failedTestsAfterFix.isEmpty()) {
 				fixedStatus = FixStatus.SUCCESS;
-				patchCache.put(patchedFile,FixStatus.SUCCESS);
 				log.info("Succeeded to fix the bug " + buggyProject + "====================");
 			} else if (minErrorTestAfterFix == 0 || errorTestAfterFix <= minErrorTestAfterFix) {
 				minErrorTestAfterFix = errorTestAfterFix;
 				fixedStatus = FixStatus.PARTIAL;
-				patchCache.put(patchedFile,FixStatus.PARTIAL);
 				log.info("Partially Succeeded to fix the bug " + buggyProject + "====================");
 				minErrorTest_ = minErrorTest_ - (minErrorTest - errorTestAfterFix);
 				if (minErrorTest_ <= 0) {
 					log.info("Succeeded to fix the bug " + buggyProject + "====================");
 					fixedStatus = FixStatus.SUCCESS;
-					patchCache.put(patchedFile,FixStatus.SUCCESS);
 					minErrorTest = 0;
 				}
 			}
