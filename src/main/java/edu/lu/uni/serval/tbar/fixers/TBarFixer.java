@@ -50,15 +50,16 @@ public class TBarFixer extends AbstractFixer {
 	}
 	
 	@Override
-	public void fixProcess() {
+	public FixStatus fixProcess() {
 		// Read paths of the buggy project.
-		if (!dp.validPaths) return;
+		if (!dp.validPaths) return FixStatus.FAILURE;
 		
 		// Read suspicious positions.
 		List<SuspiciousPosition> suspiciousCodeList = faultloc.getSuspiciousCodeList();
 
-		if (suspiciousCodeList == null) return;
+		if (suspiciousCodeList == null) return FixStatus.FAILURE;
 		
+		FixStatus status = FixStatus.FAILURE;
 		List<SuspCodeNode> triedSuspNode = new ArrayList<>();
 		log.info("=======TBar: Start to fix suspicious code======");
 		for (SuspiciousPosition suspiciousCode : suspiciousCodeList) {
@@ -81,20 +82,28 @@ public class TBarFixer extends AbstractFixer {
 //				List<Integer> distinctContextInfo = contextInfoList.stream().distinct().collect(Collectors.toList());
 				
 		        // Match fix templates for this suspicious code with its context information.
-				fixWithMatchedFixTemplates(scn, distinctContextInfo);
+				status = fixWithMatchedFixTemplates(scn, distinctContextInfo);
 		        
-				if (!isTestFixPatterns && minErrorTest == 0) break;
+				if (!isTestFixPatterns && minErrorTest == 0) { // FIXME: at some point should figure out this weirdness with this field 
+					status = FixStatus.SUCCESS;
+					break;
+				}
 				if (this.patchId >= 10000) break;
 			}
-			if (!isTestFixPatterns && minErrorTest == 0) break;
+			if (!isTestFixPatterns && minErrorTest == 0) {
+				status = FixStatus.SUCCESS;
+				break;
+			}
 			if (this.patchId >= 10000) break;
         }
 		log.info("=======TBar: Finish off fixing======");
 		
 		FileHelper.deleteDirectory(Configuration.TEMP_FILES_PATH + this.dataType + "/" + this.buggyProject);
+		return status;
+
 	}
 
-	public void fixWithMatchedFixTemplates(SuspCodeNode scn, List<Integer> distinctContextInfo) {
+	public FixStatus fixWithMatchedFixTemplates(SuspCodeNode scn, List<Integer> distinctContextInfo) {
 		// generate patches with fix templates of TBar.
 		List<FixTemplate> fts = new ArrayList<FixTemplate>();
 
@@ -184,8 +193,9 @@ public class TBarFixer extends AbstractFixer {
 		}
 		for(FixTemplate ft : fts) {
 			FixStatus status = generateAndValidatePatches(ft, scn);
-			if(status == FixStatus.SUCCESS) return;
+			if(status == FixStatus.SUCCESS || status == FixStatus.PARTIAL) return FixStatus.SUCCESS;
 		}
+		return FixStatus.FAILURE;
 	}
 	
 	private String readDirectory() {

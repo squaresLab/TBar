@@ -44,7 +44,7 @@ public abstract class AbstractFixer {
 	
 	private static Logger log = LoggerFactory.getLogger(AbstractFixer.class);
 	
-	public abstract void fixProcess();
+	public abstract FixStatus fixProcess();
 	protected String path = "";
 	protected String buggyProject = "";     // The buggy project name.
 	public int minErrorTest;                // Number of failed test cases before fixing.

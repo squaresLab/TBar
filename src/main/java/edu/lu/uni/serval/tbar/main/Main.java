@@ -191,9 +191,9 @@ public class Main {
         }
 		if(fixer != null) {
 
-		fixer.fixProcess();
+		FixStatus status = fixer.fixProcess();
 		
-		switch (fixer.fixedStatus) {
+		switch (status) {
 		case FAILURE:
 			System.out.println("Failed to fix bug " + bugId);
 			break;
@@ -202,6 +202,9 @@ public class Main {
 			break;
 		case PARTIAL:
 			System.out.println("Partial succeeded to fix bug " + bugId);
+			break;
+		case NOCOMPILE:
+			System.out.println("Somehow every patch failed to compile for " + bugId);
 			break;
 		}
 		AbstractFixer.serializeTestCache();
