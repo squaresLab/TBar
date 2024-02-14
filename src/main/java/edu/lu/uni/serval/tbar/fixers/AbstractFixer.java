@@ -150,6 +150,7 @@ public abstract class AbstractFixer {
 	}
 
 	protected List<Patch> triedPatchCandidates = new ArrayList<>();
+	// bigold FIXME: add bug being fixed to the cache.
 	protected static HashMap<String,FixStatus> patchCache = new HashMap<>();
 
 	// FIXME: add some kind of runtime hook to serialize if the process gets killed prematurely.
@@ -246,6 +247,30 @@ public abstract class AbstractFixer {
 		return true;
 	}
 
+	private void postPatchAttemptCleanup(FixStatus status, SuspCodeNode scn, Patch patch, String buggyCode,  String patchCode) {
+		patchCache.put(patchCode,status);
+
+		if((Configuration.recordAllPatches && status != FixStatus.NOCOMPILE) ||
+			(status == FixStatus.PARTIAL) || (status == FixStatus.SUCCESS)) {
+			// output 
+			String patchStr = TestUtils.readPatch(this.fullBuggyProjectPath);
+			System.out.println(patchStr);
+			String outputFolder = fixedStatus == FixStatus.SUCCESS ? "/FixedBugs/" : "/PartiallyFixedBugs";
+			if (patchStr == null || !patchStr.startsWith("diff")) {
+				FileHelper.outputToFile(Configuration.outputPath + this.dataType + outputFolder + buggyProject + "/Patch_" + patchId + "_" + comparablePatches + ".txt",
+						"//**********************************************************\n//" + scn.suspiciousJavaFile + " ------ " + scn.buggyLine
+						+ "\n//**********************************************************\n"
+						+ "===Buggy Code===\n" + buggyCode + "\n\n===Patch Code===\n" + patchCode, false);
+			} else {
+				FileHelper.outputToFile(Configuration.outputPath + this.dataType + outputFolder + buggyProject + "/Patch_" + patchId + "_" + comparablePatches + ".txt", patchStr, false);
+			}
+			if (!isTestFixPatterns) {
+				this.minErrorTest = 0;
+			}
+		}
+	
+		}
+
 	protected FixStatus testGeneratedPatches(List<Patch> patchCandidates, SuspCodeNode scn) {
 		// Testing generated patches.
 		this.fixedStatus = FixStatus.FAILURE;
@@ -269,16 +294,15 @@ public abstract class AbstractFixer {
 
 			log.debug("Compiling");
             Boolean compiled = this.compile(scn);
-			if(recordAllPatches) {
-				// record I guess, if it compiled
-			}
+
             if(compileOnly) {
+				postPatchAttemptCleanup(FixStatus.NOCOMPILE, scn, patch, buggyCode, patchedCode);
 				continue;
 			}
 
             if(!compiled) {
 				log.debug(buggyProject + " ---Fixer: fix fail because of failed compiling! ");
-				patchCache.put(patchedCode,FixStatus.FAILURE);
+				postPatchAttemptCleanup(FixStatus.NOCOMPILE, scn, patch, buggyCode, patchedCode);
 				continue;
 			} 
 			log.debug("Finished compiling.");
@@ -286,7 +310,7 @@ public abstract class AbstractFixer {
 			comparablePatches++;
 			log.debug("Test previously failed test cases.");
 			if(!runtests()) {
-                patchCache.put(patchedCode,FixStatus.FAILURE);
+				postPatchAttemptCleanup(FixStatus.FAILURE, scn, patch, buggyCode, patchedCode);
                 continue;
 			}
 			List<String> failedTestsAfterFix = new ArrayList<>();
@@ -299,7 +323,7 @@ public abstract class AbstractFixer {
 			tmpFailedTestsAfterFix.removeAll(this.failedTestStrList);
 			if (tmpFailedTestsAfterFix.size() > 0) { // Generate new bugs.
 				log.debug(buggyProject + " ---Generated new bugs: " + tmpFailedTestsAfterFix.size());
-				patchCache.put(patchedCode,FixStatus.FAILURE);
+				postPatchAttemptCleanup(FixStatus.FAILURE, scn, patch, buggyCode, patchedCode);
 				continue;
 			}
 			
@@ -321,24 +345,11 @@ public abstract class AbstractFixer {
 					minErrorTest = 0;
 				}
 			}
+			postPatchAttemptCleanup(fixedStatus, scn, patch, buggyCode, patchedCode);
 			if(fixedStatus == FixStatus.SUCCESS || fixedStatus == FixStatus.PARTIAL) {
-				String patchStr = TestUtils.readPatch(this.fullBuggyProjectPath);
-				System.out.println(patchStr);
-				String outputFolder = fixedStatus == FixStatus.SUCCESS ? "/FixedBugs/" : "/PartiallyFixedBugs";
-				if (patchStr == null || !patchStr.startsWith("diff")) {
-					FileHelper.outputToFile(Configuration.outputPath + this.dataType + outputFolder + buggyProject + "/Patch_" + patchId + "_" + comparablePatches + ".txt",
-							"//**********************************************************\n//" + scn.suspiciousJavaFile + " ------ " + scn.buggyLine
-							+ "\n//**********************************************************\n"
-							+ "===Buggy Code===\n" + buggyCode + "\n\n===Patch Code===\n" + patchCode, false);
-				} else {
-					FileHelper.outputToFile(Configuration.outputPath + this.dataType + outputFolder + buggyProject + "/Patch_" + patchId + "_" + comparablePatches + ".txt", patchStr, false);
-				}
-				if (!isTestFixPatterns) {
-					this.minErrorTest = 0;
-				}
 				break;
 			}
-		}
+			}
 		}
 		try {
 			scn.targetJavaFile.delete();
