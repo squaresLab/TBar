@@ -9,7 +9,7 @@ public class TestUtils {
 
 
 	public static int getFailTestNumInProject(String projectName, List<String> failedTests){
-        String testResult = getDefects4jResult(projectName, "test");
+        String testResult = getDefects4jResult(projectName, "test -r");
         if (testResult.equals("")){//error occurs in run
             return Integer.MAX_VALUE;
         }
