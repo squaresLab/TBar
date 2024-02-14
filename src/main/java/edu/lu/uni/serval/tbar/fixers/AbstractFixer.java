@@ -66,7 +66,6 @@ public abstract class AbstractFixer {
 	// The failed test cases after running defects4j command in Java code but not in terminal.
 	private List<String> fakeFailedTestCasesList = new ArrayList<>();
 	
-	// 0: failed to fix the bug, 1: succeeded to fix the bug. 2: partially succeeded to fix the bug.
 	public FixStatus fixedStatus = FixStatus.FAILURE;
 	public String dataType = "";
 	protected int patchId = 0;
@@ -248,7 +247,7 @@ public abstract class AbstractFixer {
 	}
 
 	private void postPatchAttemptCleanup(FixStatus status, SuspCodeNode scn, Patch patch, String buggyCode,  String patchCode) {
-		patchCache.put(patchCode,status);
+		patchCache.put(this.buggyProject + patchCode,status);
 
 		if((Configuration.recordAllPatches && status != FixStatus.NOCOMPILE) ||
 			(status == FixStatus.PARTIAL) || (status == FixStatus.SUCCESS)) {
@@ -277,8 +276,8 @@ public abstract class AbstractFixer {
 		for (Patch patch : patchCandidates) {
 			patch.buggyFileName = scn.suspiciousJavaFile;
 			String patchedCode = addPatchCodeToFile(scn, patch);// Insert the patch.
-			if(patchCache.containsKey(patchedCode)) {
-				this.fixedStatus = patchCache.get(patchedCode);
+			if(patchCache.containsKey(this.buggyProject + patchedCode)) {
+				this.fixedStatus = patchCache.get(this.buggyProject + patchedCode);
 				if(this.fixedStatus == FixStatus.SUCCESS) return FixStatus.SUCCESS;
 				continue;
 			} 
