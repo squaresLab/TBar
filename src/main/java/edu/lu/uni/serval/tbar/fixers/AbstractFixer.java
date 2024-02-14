@@ -109,13 +109,13 @@ public abstract class AbstractFixer {
 		List<String> failed = new ArrayList<>();
 		for (int index = 1, length = failedTestCases.length; index < length; index ++) {
 			// - org.jfree.data.general.junit.DatasetUtilitiesTests::testBug2849731_2
-			String failedTestCase = failedTestCases[index].trim();
+			String failedTestCase = failedTestCases[index].trim(); // actual failed test case, - class::name
 			failed.add(failedTestCase);
-			failedTestCase = failedTestCase.substring(failedTestCase.indexOf("-") + 1).trim();
+			failedTestCase = failedTestCase.substring(failedTestCase.indexOf("-") + 1).trim(); // now that without the leading hyphen
 			failedTestCasesStrList.add(failedTestCase);
 			int colonIndex = failedTestCase.indexOf("::");
 			if (colonIndex > 0) {
-				failedTestCase = failedTestCase.substring(0, colonIndex);
+				failedTestCase = failedTestCase.substring(0, colonIndex); // now it's just the class name, not the individual test
 			}
 			if (!failedTestCasesList.contains(failedTestCase)) {
 				this.failedTestCaseClasses += failedTestCase + " ";
@@ -209,7 +209,7 @@ public abstract class AbstractFixer {
 	}
 
 	// returns false in case of obvious failures, true otherwise, yes this needs additional refactoring.
-	private boolean runtests() {
+	private boolean runInitiallyFailingTests() {
 		try {
 			String results = ShellUtils.shellRun(Arrays.asList("java -cp "
 					+ PathUtils.buildTestClassPath(dp.classPath, dp.testClassPath)
@@ -231,7 +231,7 @@ public abstract class AbstractFixer {
 			}
 		} catch (IOException e) {
 			if (!(this.buggyProject.startsWith("Mockito") || this.buggyProject.startsWith("Closure") || this.buggyProject.startsWith("Time"))) {
-				log.debug(buggyProject + " ---Fixer: fix fail because of faile passing previously failed test cases! ");
+				log.debug(buggyProject + " ---Fixer: fix fail because of failed passing previously failed test cases! ");
 				return false;
 			}
 		}
@@ -301,7 +301,7 @@ public abstract class AbstractFixer {
 			
 			comparablePatches++;
 			log.debug("Test previously failed test cases.");
-			if(!runtests()) {
+			if(!runInitiallyFailingTests()) {
 				postPatchAttemptCleanup(FixStatus.FAILURE, scn, patch, buggyCode, patchCode, patchedFile);
                 continue;
 			}
