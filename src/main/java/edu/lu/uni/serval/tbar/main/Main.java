@@ -80,6 +80,12 @@ public class Main {
 		.desc("clear the cache even if the file exists.  Default: false")
 		.build());
 
+		options.addOption(Option.builder("cacheName")
+		.argName("cacheName")
+		.hasArg()
+		.desc("specify the testcache filename.  Default: testcache.ser")
+		.build());
+
 		options.addOption(Option.builder("isTestFixPatterns")
 		.argName("isTestFixPatterns")
 		.desc("Not sure what this is but it exists.")
@@ -184,6 +190,9 @@ public class Main {
 				Configuration.storePatchJson = true;
 			} else {
 				Configuration.storePatchJson = false;
+			}
+			if(line.hasOption("cacheName")) {
+				Configuration.testcache = line.getOptionValue("cacheName");
 			}
 		
 		} catch (ParseException exp) {

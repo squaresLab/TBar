@@ -155,24 +155,24 @@ public abstract class AbstractFixer {
 	// FIXME: add some kind of runtime hook to serialize if the process gets killed prematurely.
 	public static void serializeTestCache() {
 		try {
-			FileOutputStream fos = new FileOutputStream("testcache.ser");
+			FileOutputStream fos = new FileOutputStream(Configuration.testcache); 
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
 			oos.writeObject(AbstractFixer.patchCache);
 			oos.close();
 			fos.close();
-			log.info("Serialized test cache to file testcache.ser");
+			log.info("Serialized test cache to file " + Configuration.testcache);
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
 		}
 	}
 
 	public static void deserializeTestCache(){
-		File fl = new File("testcache.ser");
+		File fl = new File(Configuration.testcache); 
 		HashMap<String, FixStatus> cache = null; 
 		if(fl.isFile() && !Configuration.clearTestCache){
 			try
 			{
-				FileInputStream fis = new FileInputStream("testcache.ser");
+				FileInputStream fis = new FileInputStream(Configuration.testcache); 
 				ObjectInputStream ois = new ObjectInputStream(fis);
 				cache = (HashMap) ois.readObject();
 				ois.close();
@@ -185,7 +185,7 @@ public abstract class AbstractFixer {
 				System.out.println("Class not found");
 				c.printStackTrace();
 			}
-			System.out.println("Deserialized fitnessCache HashMap");
+			System.out.println("Deserialized testcache HashMap");
 		} else {
 			cache = new HashMap<String, FixStatus>();
 		}

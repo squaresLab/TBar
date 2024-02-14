@@ -14,5 +14,5 @@ public class Configuration {
 	public static boolean storePatchJson = false;
 	public static boolean compileOnly = false;
 	public static boolean recordAllPatches = false;
-
+	public static String testcache = "testcache.ser";
 }
