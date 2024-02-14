@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -13,6 +14,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.HashMap;
+import java.nio.file.Paths;
+import org.json.simple.JSONObject;
 
 import org.apache.commons.lang3.math.NumberUtils;
 import org.slf4j.Logger;
@@ -51,6 +54,9 @@ public abstract class AbstractFixer {
 	public String outputPath = "";          // Output path for the generated patches.
 	protected DataPreparer dp;              // The needed data of buggy program for compiling and testing.
 	protected AbstractFaultLoc faultloc = null;
+	public boolean compileOnly = false;
+	public boolean recordAllPatches = false;
+	public boolean storePatchJson = false;
 
 	private String failedTestCaseClasses = ""; // Classes of the failed test cases before fixing.
 	// All specific failed test cases after testing the buggy project with defects4j command in Java code before fixing.
@@ -262,23 +268,32 @@ public abstract class AbstractFixer {
 			scn.targetClassFile.delete();
 
 			log.debug("Compiling");
-			if(!this.compile(scn)) {
+            Boolean compiled = this.compile(scn);
+			if(recordAllPatches) {
+				// record I guess, if it compiled
+			}
+            if(compileOnly) {
+				continue;
+			}
+
+            if(!compiled) {
 				log.debug(buggyProject + " ---Fixer: fix fail because of failed compiling! ");
 				patchCache.put(patchedCode,FixStatus.FAILURE);
 				continue;
 			} 
 			log.debug("Finished compiling.");
-			comparablePatches++;
 			
+			comparablePatches++;
 			log.debug("Test previously failed test cases.");
 			if(!runtests()) {
-				patchCache.put(patchedCode,FixStatus.FAILURE);
-				continue;
+                patchCache.put(patchedCode,FixStatus.FAILURE);
+                continue;
 			}
 			List<String> failedTestsAfterFix = new ArrayList<>();
 			int errorTestAfterFix = TestUtils.getFailTestNumInProject(fullBuggyProjectPath, failedTestsAfterFix);
 			failedTestsAfterFix.removeAll(this.fakeFailedTestCasesList);
 			
+			if (errorTestAfterFix < minErrorTest) {
 			List<String> tmpFailedTestsAfterFix = new ArrayList<>();
 			tmpFailedTestsAfterFix.addAll(failedTestsAfterFix);
 			tmpFailedTestsAfterFix.removeAll(this.failedTestStrList);
@@ -324,11 +339,7 @@ public abstract class AbstractFixer {
 				break;
 			}
 		}
-			
-			// } else {
-			// 	log.debug("Failed Tests after fixing: " + errorTestAfterFix + " " + buggyProject);
-			// }
-		
+		}
 		try {
 			scn.targetJavaFile.delete();
 			scn.targetClassFile.delete();
@@ -423,6 +434,29 @@ public abstract class AbstractFixer {
 	        patchedJavaFile = javaCode.substring(0, exactBuggyCodeStartPos) + patchCode + javaCode.substring(exactBuggyCodeEndPos);
 	        FileHelper.outputToFile(newFile, patchedJavaFile, false);
 	        newFile.renameTo(scn.targetJavaFile);
+			
+			if (Configuration.storePatchJson){
+				File patch_storage = new File(Paths.get("").toAbsolutePath().toString() + "/stored_patches");
+				patch_storage.mkdir();
+				String patchDir = Paths.get("").toAbsolutePath().toString() + "/stored_patches/" + buggyProject;
+				File toEntropyDir = new File(patchDir);
+				toEntropyDir.mkdir();
+				String patchPath = patchDir + "/" + patchId + ".json";
+				JSONObject jsonObject = new JSONObject();
+				jsonObject.put("patchID", patchId);
+				jsonObject.put("exactBuggyCodeStartPos", exactBuggyCodeStartPos);
+				jsonObject.put("exactBuggyCodeEndPos", exactBuggyCodeEndPos);
+				jsonObject.put("patchCode", patchCode);
+				jsonObject.put("patchedJavaFile", patchedJavaFile);
+				try {
+					FileWriter file = new FileWriter(patchDir + "/" + patchId + ".json");
+					file.write(jsonObject.toJSONString());
+					file.close();
+				 } catch (IOException e) {
+					e.printStackTrace();
+				 }
+			}
+
 		} catch (StringIndexOutOfBoundsException e) {
 			log.debug(exactBuggyCodeStartPos + " ==> " + exactBuggyCodeEndPos + " : " + javaCode.length());
 			e.printStackTrace();
