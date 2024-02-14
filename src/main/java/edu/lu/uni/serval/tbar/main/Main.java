@@ -78,6 +78,21 @@ public class Main {
 		.desc("Not sure what this is but it exists.")
 		.build());
 
+		options.addOption(Option.builder("compileOnly")
+		.argName("compileOnly")
+		.desc("Use tests or not.")
+		.build());
+
+		options.addOption(Option.builder("recordAllPatches")
+		.argName("recordAllPatches")
+		.desc("Does it output all patches.")
+		.build());
+
+		options.addOption(Option.builder("storePatchJson")
+		.argName("storePatchJson")
+		.desc("Store Patches.")
+		.build());
+
         // --help
         options.addOption("help", false, "Prints this help message.");
 		return options;
@@ -145,12 +160,31 @@ public class Main {
 			}
 			fixer.setFaultLoc(faultloc);
 
-
+			if (line.hasOption("compileOnly")) {
+				fixer.compileOnly = true;
+			} else{
+				fixer.compileOnly = false;
+			}
+			if (line.hasOption("recordAllPatches")) {
+				fixer.recordAllPatches = true;
+			} else {
+				fixer.recordAllPatches = false;
+			}
+			if (line.hasOption("storePatchJson")) {
+				fixer.storePatchJson = true;
+			} else {
+				fixer.storePatchJson = false;
+			}
+			System.out.println("compileOnly: " + fixer.compileOnly);
+			System.out.println("recordAllPatches: " + fixer.recordAllPatches);
+			System.out.println("storePatchJson: " + fixer.storePatchJson);
+		
 		} catch (ParseException exp) {
             System.out.println("Unexpected parser exception:" + exp.getMessage());
         }
 		if(fixer != null) {
-		fixer.fixProcess();
+
+		fixer.fixProcess(fixer.compileOnly, fixer.recordAllPatches, fixer.storePatchJson);
 		
 		int fixedStatus = fixer.fixedStatus;
 		switch (fixedStatus) {

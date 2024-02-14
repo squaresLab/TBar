@@ -50,7 +50,7 @@ public class TBarFixer extends AbstractFixer {
 	}
 	
 	@Override
-	public void fixProcess() {
+	public void fixProcess(boolean compileOnly, boolean recordAllPatches, boolean storePatchJson) {
 		// Read paths of the buggy project.
 		if (!dp.validPaths) return;
 		
@@ -331,7 +331,7 @@ public class TBarFixer extends AbstractFixer {
 		
 		// Test generated patches.
 		if (patchCandidates.isEmpty()) return;
-		testGeneratedPatches(patchCandidates, scn);
+		testGeneratedPatches(patchCandidates, scn, compileOnly, recordAllPatches, storePatchJson);
 	}
 	
 	public List<Integer> readAllNodeTypes(ITree suspCodeAstNode) {

@@ -3,11 +3,14 @@ package edu.lu.uni.serval.tbar.fixers;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.nio.file.Paths;
+import org.json.simple.JSONObject;
 
 import org.apache.commons.lang3.math.NumberUtils;
 import org.slf4j.Logger;
@@ -35,7 +38,7 @@ public abstract class AbstractFixer {
 	
 	private static Logger log = LoggerFactory.getLogger(AbstractFixer.class);
 	
-	public abstract void fixProcess();
+	public abstract void fixProcess(boolean compileOnly, boolean recordAllPatches, boolean storePatchJson);
 	protected String path = "";
 	protected String buggyProject = "";     // The buggy project name.
 	protected String defects4jPath;         // The path of local installed defects4j.
@@ -46,6 +49,9 @@ public abstract class AbstractFixer {
 	public String outputPath = "";          // Output path for the generated patches.
 	protected DataPreparer dp;              // The needed data of buggy program for compiling and testing.
 	protected AbstractFaultLoc faultloc = null;
+	public boolean compileOnly = false;
+	public boolean recordAllPatches = false;
+	public boolean storePatchJson = false;
 
 	private String failedTestCaseClasses = ""; // Classes of the failed test cases before fixing.
 	// All specific failed test cases after testing the buggy project with defects4j command in Java code before fixing.
@@ -140,11 +146,11 @@ public abstract class AbstractFixer {
 
 	protected List<Patch> triedPatchCandidates = new ArrayList<>();
 	
-	protected void testGeneratedPatches(List<Patch> patchCandidates, SuspCodeNode scn) {
+	protected void testGeneratedPatches(List<Patch> patchCandidates, SuspCodeNode scn, boolean compileOnly, boolean recordAllPatches, boolean storePatchJson) {
 		// Testing generated patches.
 		for (Patch patch : patchCandidates) {
 			patch.buggyFileName = scn.suspiciousJavaFile;
-			addPatchCodeToFile(scn, patch);// Insert the patch.
+			addPatchCodeToFile(scn, patch, patchId, buggyProject, false);// Insert the patch.
 			if (this.triedPatchCandidates.contains(patch)) continue;
 			patchId++;
 			if (patchId > 10000) return;
@@ -171,15 +177,20 @@ public abstract class AbstractFixer {
 					continue;
 				}
 			}
+			if (storePatchJson) {
+				addPatchCodeToFile(scn, patch, patchId, buggyProject, false);
+			}
+
 			log.debug("Finish of compiling.");
 			comparablePatches++;
-			
 			log.debug("Test previously failed test cases.");
 			try {
-				String results = ShellUtils.shellRun(Arrays.asList("java -cp "
-						+ PathUtils.buildTestClassPath(dp.classPath, dp.testClassPath)
-						+ " org.junit.runner.JUnitCore " + this.failedTestCaseClasses), buggyProject, 2);
-
+				String results = "";
+				if(!compileOnly){
+					results = ShellUtils.shellRun(Arrays.asList("java -cp "
+							+ PathUtils.buildTestClassPath(dp.classPath, dp.testClassPath)
+							+ " org.junit.runner.JUnitCore " + this.failedTestCaseClasses), buggyProject, 2);
+				}
 				if (results.isEmpty()) {
 //					System.err.println(scn.suspiciousJavaFile + "@" + scn.buggyLine);
 //					System.err.println("Bug: " + buggyCode);
@@ -210,7 +221,7 @@ public abstract class AbstractFixer {
 					failedTestsAfterFix);
 			failedTestsAfterFix.removeAll(this.fakeFailedTestCasesList);
 			
-			// if (errorTestAfterFix < minErrorTest) {
+			if (errorTestAfterFix < minErrorTest || recordAllPatches) {
 			List<String> tmpFailedTestsAfterFix = new ArrayList<>();
 			tmpFailedTestsAfterFix.addAll(failedTestsAfterFix);
 			tmpFailedTestsAfterFix.removeAll(this.failedTestStrList);
@@ -260,9 +271,9 @@ public abstract class AbstractFixer {
 					break;
 				}
 			}
-			// } else {
-			// 	log.debug("Failed Tests after fixing: " + errorTestAfterFix + " " + buggyProject);
-			// }
+			} else {
+				log.debug("Failed Tests after fixing: " + errorTestAfterFix + " " + buggyProject);
+			}
 		}
 		
 		try {
@@ -298,7 +309,7 @@ public abstract class AbstractFixer {
 		return failedTeatCases;
 	}
 
-	private void addPatchCodeToFile(SuspCodeNode scn, Patch patch) {
+	private void addPatchCodeToFile(SuspCodeNode scn, Patch patch, int patchId, String buggyProject, boolean storePatchJson) {
         String javaCode = FileHelper.readFile(scn.javaBackup);
         
 		String fixedCodeStr1 = patch.getFixedCodeStr1();
@@ -357,6 +368,27 @@ public abstract class AbstractFixer {
 	        String patchedJavaFile = javaCode.substring(0, exactBuggyCodeStartPos) + patchCode + javaCode.substring(exactBuggyCodeEndPos);
 	        FileHelper.outputToFile(newFile, patchedJavaFile, false);
 	        newFile.renameTo(scn.targetJavaFile);
+			
+			if (storePatchJson){
+				String patchDir = Paths.get("").toAbsolutePath().toString() + "/stored_patches/" + buggyProject;
+				File toEntropyDir = new File(patchDir);
+				toEntropyDir.mkdir();
+				String patchPath = patchDir + "/" + patchId + ".json";
+				JSONObject jsonObject = new JSONObject();
+				jsonObject.put("patchID", patchId);
+				jsonObject.put("exactBuggyCodeStartPos", exactBuggyCodeStartPos);
+				jsonObject.put("exactBuggyCodeEndPos", exactBuggyCodeEndPos);
+				jsonObject.put("patchCode", patchCode);
+				jsonObject.put("patchedJavaFile", patchedJavaFile);
+				try {
+					FileWriter file = new FileWriter(patchDir + "/" + patchId + ".json");
+					file.write(jsonObject.toJSONString());
+					file.close();
+				 } catch (IOException e) {
+					e.printStackTrace();
+				 }
+			}
+
 		} catch (StringIndexOutOfBoundsException e) {
 			log.debug(exactBuggyCodeStartPos + " ==> " + exactBuggyCodeEndPos + " : " + javaCode.length());
 			e.printStackTrace();
