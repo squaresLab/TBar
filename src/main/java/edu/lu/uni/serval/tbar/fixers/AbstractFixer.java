@@ -44,7 +44,6 @@ public abstract class AbstractFixer {
 	public abstract void fixProcess();
 	protected String path = "";
 	protected String buggyProject = "";     // The buggy project name.
-	protected String defects4jPath;         // The path of local installed defects4j.
 	public int minErrorTest;                // Number of failed test cases before fixing.
 	public int minErrorTest_;
 	protected int minErrorTestAfterFix = 0; // Number of failed test cases after fixing
@@ -72,11 +71,10 @@ public abstract class AbstractFixer {
 	public boolean isTestFixPatterns = false;
 	public DataPreparer getDataPreparer() { return this.dp; }
 	public void setFaultLoc(AbstractFaultLoc fl) { this.faultloc = fl; }
-	public AbstractFixer(String path, String projectName, int bugId, String defects4jPath) {
+	public AbstractFixer(String path, String projectName, int bugId) {
 		this.path = path;
 		this.buggyProject = projectName + "_" + bugId;
 		fullBuggyProjectPath = path + "/" + buggyProject;
-		this.defects4jPath = defects4jPath;
 //		int compileResult = TestUtils.compileProjectWithDefects4j(fullBuggyProjectPath, this.defects4jPath);
 //      if (compileResult == 1) {
 //      	log.debug(buggyProject + " ---Fixer: fix fail because of compile fail! ");
@@ -84,12 +82,12 @@ public abstract class AbstractFixer {
 		
 		TestUtils.checkout(this.fullBuggyProjectPath);
 //		if (FileHelper.getAllFiles(fullBuggyProjectPath + PathUtils.getSrcPath(buggyProject).get(0), ".class").isEmpty()) {
-			TestUtils.compileProjectWithDefects4j(fullBuggyProjectPath, defects4jPath);
+			TestUtils.compileProjectWithDefects4j(fullBuggyProjectPath);
 //		}
-		minErrorTest = TestUtils.getFailTestNumInProject(fullBuggyProjectPath, defects4jPath, failedTestStrList);
+		minErrorTest = TestUtils.getFailTestNumInProject(fullBuggyProjectPath, failedTestStrList);
 		if (minErrorTest == Integer.MAX_VALUE) {
-			TestUtils.compileProjectWithDefects4j(fullBuggyProjectPath, defects4jPath);
-			minErrorTest = TestUtils.getFailTestNumInProject(fullBuggyProjectPath, defects4jPath, failedTestStrList);
+			TestUtils.compileProjectWithDefects4j(fullBuggyProjectPath);
+			minErrorTest = TestUtils.getFailTestNumInProject(fullBuggyProjectPath, failedTestStrList);
 		}
 		log.info(buggyProject + " Failed Tests: " + this.minErrorTest);
 		minErrorTest_ = minErrorTest;
@@ -200,7 +198,7 @@ public abstract class AbstractFixer {
 			return false;
 		}
 		if (!scn.targetClassFile.exists()) { // fail to compile
-			int results = (this.buggyProject.startsWith("Mockito") || this.buggyProject.startsWith("Closure") || this.buggyProject.startsWith("Time")) ? TestUtils.compileProjectWithDefects4j(fullBuggyProjectPath, defects4jPath) : 1;
+			int results = (this.buggyProject.startsWith("Mockito") || this.buggyProject.startsWith("Closure") || this.buggyProject.startsWith("Time")) ? TestUtils.compileProjectWithDefects4j(fullBuggyProjectPath) : 1;
 			if (results == 1) {
 				log.debug(buggyProject + " ---Fixer: fix fail because of failed compiling! ");
 				return false;
@@ -278,8 +276,7 @@ public abstract class AbstractFixer {
 				continue;
 			}
 			List<String> failedTestsAfterFix = new ArrayList<>();
-			int errorTestAfterFix = TestUtils.getFailTestNumInProject(fullBuggyProjectPath, this.defects4jPath,
-					failedTestsAfterFix);
+			int errorTestAfterFix = TestUtils.getFailTestNumInProject(fullBuggyProjectPath, failedTestsAfterFix);
 			failedTestsAfterFix.removeAll(this.fakeFailedTestCasesList);
 			
 			List<String> tmpFailedTestsAfterFix = new ArrayList<>();

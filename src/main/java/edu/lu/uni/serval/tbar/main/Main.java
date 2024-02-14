@@ -129,7 +129,7 @@ public class Main {
 				Configuration.clearTestCache = true;
 			}
 			Configuration.defects4j_home = line.getOptionValue("d4jHome");
-			fixer = new TBarFixer(Configuration.bugDataPath, projectName, bugNum, Configuration.defects4j_home);
+			fixer = new TBarFixer(Configuration.bugDataPath, projectName, bugNum);
 			fixer.dataType = "TBar";
 			fixer.isTestFixPatterns = line.hasOption("isTestFixPatterns");
 			if (Integer.MAX_VALUE == fixer.minErrorTest) {
