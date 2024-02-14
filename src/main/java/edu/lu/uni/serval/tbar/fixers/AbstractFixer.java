@@ -170,6 +170,7 @@ public abstract class AbstractFixer {
 		File fl = new File(Configuration.testcache); 
 		HashMap<String, FixStatus> cache = null; 
 		if(fl.isFile() && !Configuration.clearTestCache){
+			System.out.println("DESERIALIZING: " + Configuration.testcache);
 			try
 			{
 				FileInputStream fis = new FileInputStream(Configuration.testcache); 

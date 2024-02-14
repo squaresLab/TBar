@@ -80,8 +80,8 @@ public class Main {
 		.desc("clear the cache even if the file exists.  Default: false")
 		.build());
 
-		options.addOption(Option.builder("cacheName")
-		.argName("cacheName")
+		options.addOption(Option.builder("testCache")
+		.argName("testCache")
 		.hasArg()
 		.desc("specify the testcache filename.  Default: testcache.ser")
 		.build());
@@ -145,7 +145,9 @@ public class Main {
 			if (line.hasOption("failedTests")) {
 				Configuration.failedTestCasesFilePath = line.getOptionValue("failedTests"); //"/Users/kui.liu/eclipse-fault-localization/FL-VS-APR/data/FailedTestCases/";//
 			}
-	
+			if(line.hasOption("testCache")) {
+				Configuration.testcache = line.getOptionValue("testCache");
+			}
 			if(line.hasOption("clearTestCache")) {
 				Configuration.clearTestCache = true;
 			}
@@ -191,9 +193,7 @@ public class Main {
 			} else {
 				Configuration.storePatchJson = false;
 			}
-			if(line.hasOption("cacheName")) {
-				Configuration.testcache = line.getOptionValue("cacheName");
-			}
+
 		
 		} catch (ParseException exp) {
             System.out.println("Unexpected parser exception:" + exp.getMessage());
