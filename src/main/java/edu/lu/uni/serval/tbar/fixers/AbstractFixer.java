@@ -178,7 +178,7 @@ public abstract class AbstractFixer {
 				}
 			}
 			if (storePatchJson) {
-				addPatchCodeToFile(scn, patch, patchId, buggyProject, false);
+				addPatchCodeToFile(scn, patch, patchId, buggyProject, storePatchJson);
 			}
 
 			log.debug("Finish of compiling.");
