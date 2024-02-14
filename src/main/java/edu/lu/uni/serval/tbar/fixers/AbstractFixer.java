@@ -54,7 +54,7 @@ public abstract class AbstractFixer {
 	protected DataPreparer dp;              // The needed data of buggy program for compiling and testing.
 	protected AbstractFaultLoc faultloc = null;
 
-	private String failedTestCaseClasses = ""; // Classes of the failed test cases before fixing.
+	private List<String> failedTestCaseClasses = new ArrayList<>(); // Classes of the failed test cases before fixing.
 	// All specific failed test cases after testing the buggy project with defects4j command in Java code before fixing.
 	protected List<String> failedTestStrList = new ArrayList<>();
 	// All specific failed test cases after testing the buggy project with defects4j command in terminal before fixing.
@@ -118,7 +118,7 @@ public abstract class AbstractFixer {
 				failedTestCase = failedTestCase.substring(0, colonIndex); // now it's just the class name, not the individual test
 			}
 			if (!failedTestCasesList.contains(failedTestCase)) {
-				this.failedTestCaseClasses += failedTestCase + " ";
+				this.failedTestCaseClasses.add(failedTestCase);
 				failedTestCasesList.add(failedTestCase);
 			}
 		}
@@ -210,10 +210,12 @@ public abstract class AbstractFixer {
 
 	// returns false in case of obvious failures, true otherwise, yes this needs additional refactoring.
 	private boolean runInitiallyFailingTests() {
-		try {
+		for(String failedClass : this.failedTestCaseClasses) {
+			try {
+
 			String results = ShellUtils.shellRun(Arrays.asList("java -cp "
 					+ PathUtils.buildTestClassPath(dp.classPath, dp.testClassPath)
-					+ " org.junit.runner.JUnitCore " + this.failedTestCaseClasses), buggyProject, 2);
+					+ " org.junit.runner.JUnitCore " + failedClass), buggyProject, 2);
 			if (results.isEmpty()) {
 				return false;
 			} else {
@@ -235,6 +237,7 @@ public abstract class AbstractFixer {
 				return false;
 			}
 		}
+	}
 		return true;
 	}
 
