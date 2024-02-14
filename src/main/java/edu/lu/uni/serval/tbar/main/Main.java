@@ -180,19 +180,13 @@ public class Main {
 
 			if (line.hasOption("compileOnly")) {
 				Configuration.compileOnly = true;
-			} else{
-				Configuration.compileOnly = false;
-			}
+			} 
 			if (line.hasOption("recordAllPatches")) {
 				Configuration.recordAllPatches = true;
-			} else {
-				fixer.recordAllPatches = false;
-			}
+			} 
 			if (line.hasOption("storePatchJson")) {
 				Configuration.storePatchJson = true;
-			} else {
-				Configuration.storePatchJson = false;
-			}
+			} 
 
 		
 		} catch (ParseException exp) {
