@@ -62,7 +62,6 @@ public abstract class AbstractFixer {
 	// The failed test cases after running defects4j command in Java code but not in terminal.
 	private List<String> fakeFailedTestCasesList = new ArrayList<>();
 	
-	public FixStatus fixedStatus = FixStatus.FAILURE;
 	public String dataType = "";
 	protected int patchId = 0;
 	protected int comparablePatches = 0;
@@ -239,8 +238,8 @@ public abstract class AbstractFixer {
 		return true;
 	}
 
-	private void postPatchAttemptCleanup(FixStatus status, SuspCodeNode scn, Patch patch, String buggyCode,  String patchedFile, String patchCode) {
-		if(Configuration.compileOnly && status == FixStatus.NOCOMPILE)
+	private void postPatchAttemptCleanup(FixStatus status, SuspCodeNode scn, Patch patch, String buggyCode, String patchCode, String patchedFile) {
+		if(!Configuration.compileOnly || (Configuration.compileOnly && status == FixStatus.NOCOMPILE))
 			patchCache.put(this.buggyProject + patchedFile,status);
 
 		if((Configuration.recordAllPatches && status != FixStatus.NOCOMPILE) ||
@@ -248,7 +247,7 @@ public abstract class AbstractFixer {
 			// output 
 			String patchStr = TestUtils.readPatch(this.fullBuggyProjectPath);
 			System.out.println(patchStr);
-			String outputFolder = fixedStatus == FixStatus.SUCCESS ? "/FixedBugs/" : "/PartiallyFixedBugs";
+			String outputFolder = status == FixStatus.SUCCESS ? "/FixedBugs/" : "/PartiallyFixedBugs";
 			if (patchStr == null || !patchStr.startsWith("diff")) {
 				FileHelper.outputToFile(Configuration.outputPath + this.dataType + outputFolder + buggyProject + "/Patch_" + patchId + "_" + comparablePatches + ".txt",
 						"//**********************************************************\n//" + scn.suspiciousJavaFile + " ------ " + scn.buggyLine
@@ -266,13 +265,13 @@ public abstract class AbstractFixer {
 
 	protected FixStatus testGeneratedPatches(List<Patch> patchCandidates, SuspCodeNode scn) {
 		// Testing generated patches.
-		this.fixedStatus = FixStatus.FAILURE;
+		FixStatus fixedStatus = FixStatus.FAILURE;
 		for (Patch patch : patchCandidates) {
 			patch.buggyFileName = scn.suspiciousJavaFile;
 			String patchedFile = addPatchCodeToFile(scn, patch);// Insert the patch.
 			if(patchCache.containsKey(this.buggyProject + patchedFile)) {
-				this.fixedStatus = patchCache.get(this.buggyProject + patchedFile);
-				if(this.fixedStatus == FixStatus.SUCCESS) return FixStatus.SUCCESS;
+				fixedStatus = patchCache.get(this.buggyProject + patchedFile);
+				if(fixedStatus == FixStatus.SUCCESS) return FixStatus.SUCCESS;
 				continue;
 			} 
 			if (this.triedPatchCandidates.contains(patch)) continue;
@@ -349,7 +348,7 @@ public abstract class AbstractFixer {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-		return this.fixedStatus;
+		return fixedStatus;
 	}
 	
 	private List<String> readTestResults(String results) {
