@@ -155,8 +155,8 @@ public class Main {
 			fixer = new TBarFixer(Configuration.bugDataPath, projectName, bugNum);
 			fixer.dataType = "TBar";
 			fixer.isTestFixPatterns = line.hasOption("isTestFixPatterns");
-			if (Integer.MAX_VALUE == fixer.minErrorTest) {
-				System.out.println("Failed to defects4j compile bug " + bugId);
+			if (fixer.numberInitiallyFailingTests() == 0) {
+				System.out.println("No failing tests for " + bugId + " D4J probably failed to compile");
 				return;
 			}
 			

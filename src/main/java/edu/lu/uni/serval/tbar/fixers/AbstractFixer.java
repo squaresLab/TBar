@@ -47,9 +47,9 @@ public abstract class AbstractFixer {
 	public abstract FixStatus fixProcess();
 	protected String path = "";
 	protected String buggyProject = "";     // The buggy project name.
-	public int minErrorTest;                // Number of failed test cases before fixing.
+	private int numberFailingTests;                // Number of failed test cases before fixing.
 	public int minErrorTest_;
-	protected int minErrorTestAfterFix = 0; // Number of failed test cases after fixing
+	protected int minErrorTestAfterFix = 0; // Number of required ?? FIXME failed test cases after fixing
 	protected String fullBuggyProjectPath;  // The full path of the local buggy project.
 	public String outputPath = "";          // Output path for the generated patches.
 	protected DataPreparer dp;              // The needed data of buggy program for compiling and testing.
@@ -84,13 +84,13 @@ public abstract class AbstractFixer {
 			TestUtils.compileProjectWithDefects4j(fullBuggyProjectPath);
 //		}
 		List<String> failedTestsFromD4J = TestUtils.getFailedTestsFromD4J(fullBuggyProjectPath);
-		if (minErrorTest == Integer.MAX_VALUE) {
+		if (numberFailingTests == Integer.MAX_VALUE) {
 			TestUtils.compileProjectWithDefects4j(fullBuggyProjectPath);
 			failedTestsFromD4J = TestUtils.getFailedTestsFromD4J(fullBuggyProjectPath);
 		}
-		minErrorTest = failedTestsFromD4J.size();
-		minErrorTest_ = minErrorTest;
-		log.info(buggyProject + " Failed Tests: " + this.minErrorTest);
+		numberFailingTests = failedTestsFromD4J.size();
+		minErrorTest_ = numberFailingTests;
+		log.info(buggyProject + " Failed Tests: " + this.numberFailingTests);
 		
 		// Read paths of the buggy project.
 		this.dp = new DataPreparer(path);
@@ -101,6 +101,8 @@ public abstract class AbstractFixer {
 
 		//		createDictionary();
 	}
+
+	public int numberInitiallyFailingTests() { return numberFailingTests; }
 
 	private void readPreviouslyFailedTestCases(List<String> failedTestsFromD4J) {
 		// the failedTestsFromD4J are class::testname
@@ -265,7 +267,7 @@ public abstract class AbstractFixer {
 				FileHelper.outputToFile(Configuration.outputPath + this.dataType + outputFolder + buggyProject + "/Patch_" + patchId + "_" + comparablePatches + ".txt", patchStr, false);
 			}
 			if (!isTestFixPatterns) {
-				this.minErrorTest = 0;
+				this.numberFailingTests = 0;
 			}
 		}
 	
@@ -316,7 +318,7 @@ public abstract class AbstractFixer {
 			List<String> failedTestsAfterFix = TestUtils.getFailedTestsFromD4J(fullBuggyProjectPath);
 			failedTestsAfterFix.removeAll(this.fakeFailedTestCasesList);
 			int errorTestAfterFix = failedTestsAfterFix.size();
-			if (errorTestAfterFix < minErrorTest) {
+			if (errorTestAfterFix < numberFailingTests) {
 			List<String> tmpFailedTestsAfterFix = new ArrayList<>();
 			tmpFailedTestsAfterFix.addAll(failedTestsAfterFix);
 
@@ -343,11 +345,11 @@ public abstract class AbstractFixer {
 				minErrorTestAfterFix = errorTestAfterFix;
 				fixedStatus = FixStatus.PARTIAL;
 				log.info("Partially Succeeded to fix the bug " + buggyProject + "====================");
-				minErrorTest_ = minErrorTest_ - (minErrorTest - errorTestAfterFix);
+				minErrorTest_ = minErrorTest_ - (numberFailingTests - errorTestAfterFix);
 				if (minErrorTest_ <= 0) {
 					log.info("Succeeded to fix the bug " + buggyProject + "====================");
 					fixedStatus = FixStatus.SUCCESS;
-					minErrorTest = 0;
+					numberFailingTests = 0;
 				}
 			}
 			postPatchAttemptCleanup(fixedStatus, scn, patch, buggyCode, patchCode, patchedFile);

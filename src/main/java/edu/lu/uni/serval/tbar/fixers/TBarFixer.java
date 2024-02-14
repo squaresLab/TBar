@@ -84,14 +84,12 @@ public class TBarFixer extends AbstractFixer {
 		        // Match fix templates for this suspicious code with its context information.
 				status = fixWithMatchedFixTemplates(scn, distinctContextInfo);
 		        
-				if (!isTestFixPatterns && minErrorTest == 0) { // FIXME: at some point should figure out this weirdness with this field 
-					status = FixStatus.SUCCESS;
+				if (!isTestFixPatterns && status == FixStatus.SUCCESS) { // FIXME: no accounting for PARTIAL success here or elsewhere
 					break;
 				}
 				if (this.patchId >= 10000) break;
 			}
-			if (!isTestFixPatterns && minErrorTest == 0) {
-				status = FixStatus.SUCCESS;
+			if (!isTestFixPatterns && status == FixStatus.SUCCESS) {
 				break;
 			}
 			if (this.patchId >= 10000) break;
