@@ -2,7 +2,11 @@ package edu.lu.uni.serval.tbar.utils;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.ArrayList;
+
 import edu.lu.uni.serval.tbar.config.Configuration;
 
 public class TestUtils {
@@ -10,17 +14,15 @@ public class TestUtils {
 
     public static String cleanTestName(String testName) {
         return testName.trim().substring(testName.indexOf("-"));
-
     }
-    // this adds tests with the "- " at the beginning
-	public static int getFailTestNumInProject(String projectName, List<String> failedTests){
+
+    public static List<String> getFailedTestsFromD4J(String projectName){
         String testResult = getDefects4jResult(projectName, "test -r");
-        if (testResult.equals("")){//error occurs in run
-            return Integer.MAX_VALUE;
+        List<String> failedTests = new ArrayList<String>();
+        if (testResult.equals("") || !testResult.contains("Failing tests:")){
+            return failedTests;
         }
-        if (!testResult.contains("Failing tests:")){
-            return Integer.MAX_VALUE;
-        }
+ 
         int errorNum = 0;
         String[] lines = testResult.trim().split("\n");
         for (String lineString: lines){
@@ -33,7 +35,7 @@ public class TestUtils {
             	failedTests.add(TestUtils.cleanTestName(lineString));
             }
         }
-        return errorNum;
+        return failedTests;
 	}
 	
 //	public static int getFailTestNumInProject(String buggyProject, List<String> failedTests, String classPath,

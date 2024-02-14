@@ -13,6 +13,7 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.HashMap;
 import java.nio.file.Paths;
 import org.json.simple.JSONObject;
@@ -56,10 +57,7 @@ public abstract class AbstractFixer {
 
 	private List<String> failedTestCaseClasses = new ArrayList<>(); // Classes of the failed test cases before fixing. This is the class path, no hyphen
 	// All specific failed test cases after testing the buggy project with defects4j command in Java code before fixing.
-	protected List<String> failedTestStrList = new ArrayList<>(); // this is "- test name"
-	// All specific failed test cases after testing the buggy project with defects4j command in terminal before fixing.
-	protected List<String> failedTestCasesStrList = new ArrayList<>(); // this is no - 
-	// The failed test cases after running defects4j command in Java code but not in terminal.
+	protected Map<String,List<String>> failedTestCases = new HashMap<>();
 	private List<String> fakeFailedTestCasesList = new ArrayList<>(); // also no hyphen
 	
 	public String dataType = "";
@@ -85,55 +83,58 @@ public abstract class AbstractFixer {
 //		if (FileHelper.getAllFiles(fullBuggyProjectPath + PathUtils.getSrcPath(buggyProject).get(0), ".class").isEmpty()) {
 			TestUtils.compileProjectWithDefects4j(fullBuggyProjectPath);
 //		}
-		minErrorTest = TestUtils.getFailTestNumInProject(fullBuggyProjectPath, failedTestStrList);
+		List<String> failedTestsFromD4J = TestUtils.getFailedTestsFromD4J(fullBuggyProjectPath);
 		if (minErrorTest == Integer.MAX_VALUE) {
 			TestUtils.compileProjectWithDefects4j(fullBuggyProjectPath);
-			minErrorTest = TestUtils.getFailTestNumInProject(fullBuggyProjectPath, failedTestStrList);
+			failedTestsFromD4J = TestUtils.getFailedTestsFromD4J(fullBuggyProjectPath);
 		}
-		log.info(buggyProject + " Failed Tests: " + this.minErrorTest);
+		minErrorTest = failedTestsFromD4J.size();
 		minErrorTest_ = minErrorTest;
+		log.info(buggyProject + " Failed Tests: " + this.minErrorTest);
 		
 		// Read paths of the buggy project.
 		this.dp = new DataPreparer(path);
 		dp.prepareData(buggyProject);
 		
-		System.out.println("failedTestStrList --> " + failedTestStrList);
-		readPreviouslyFailedTestCases();
+		readPreviouslyFailedTestCases(failedTestsFromD4J);
 		AbstractFixer.deserializeTestCache();
 
 		//		createDictionary();
 	}
 
-	private void readPreviouslyFailedTestCases() {
-		String[] failedTestCases = FileHelper.readFile(Configuration.failedTestCasesFilePath + "/" + this.buggyProject + ".txt").split("\n");
-		List<String> failedTestCasesList = new ArrayList<>();
-		List<String> failed = new ArrayList<>();
-		for (int index = 1, length = failedTestCases.length; index < length; index ++) {
-			// - org.jfree.data.general.junit.DatasetUtilitiesTests::testBug2849731_2
-			String failedTestCase = TestUtils.cleanTestName(failedTestCases[index]);
-			failed.add(failedTestCase);
-			failedTestCasesStrList.add(failedTestCase);
-			int colonIndex = failedTestCase.indexOf("::");
-			if (colonIndex > 0) {
-				failedTestCase = failedTestCase.substring(0, colonIndex); // now it's just the class name, not the individual test
-			}
-			if (!failedTestCasesList.contains(failedTestCase)) {
-				this.failedTestCaseClasses.add(failedTestCase);
-				failedTestCasesList.add(failedTestCase);
-			}
-		}
+	private void readPreviouslyFailedTestCases(List<String> failedTestsFromD4J) {
+		// the failedTestsFromD4J are class::testname
 		
-		List<String> tempFailed = new ArrayList<>();
-		tempFailed.addAll(this.failedTestStrList);
-		tempFailed.removeAll(failed);
-		// FIXME: Using defects4j command in Java code may generate some new failed-passing test cases.
+		String[] failedTestCasesFromFile = FileHelper.readFile(Configuration.failedTestCasesFilePath + "/" + this.buggyProject + ".txt").split("\n");
+		List<String> failed = new ArrayList<>();
+		for (int index = 1, length = failedTestCasesFromFile.length; index < length; index ++) {
+			// - org.jfree.data.general.junit.DatasetUtilitiesTests::testBug2849731_2
+			failed.add(TestUtils.cleanTestName(failedTestCasesFromFile[index]));
+		}
+		// I want fake failed to only have the tests that failed in d4j but not in the file.
+			// Using defects4j command in Java code may generate some new failed-passing test cases.
 		// We call them as fake failed-passing test cases.
+		List<String> tempFailed = new ArrayList<>();
+		tempFailed.addAll(failedTestsFromD4J);
+		tempFailed.removeAll(failed);
 		this.fakeFailedTestCasesList.addAll(tempFailed);
-		System.out.println("failedTestCaseClasses --> " + failedTestCaseClasses);
-		System.out.println("failedTestStrList --> " + failedTestStrList);
-		System.out.println("failedTestCasesStrList --> " + failedTestCasesStrList);
-		System.out.println("fakeFailedTestCasesList --> " + fakeFailedTestCasesList);
-	
+
+		for(String test : failed) {
+			String className = "";
+			int colonIndex = test.indexOf("::");
+			if (colonIndex > 0) {
+				className = test.substring(0, colonIndex); // now it's just the class name, not the individual test
+			} 
+			if(!this.failedTestCaseClasses.contains(className)) this.failedTestCaseClasses.add(className);
+			List<String> classTests = null;
+			if(this.failedTestCases.containsKey(className)) {
+				classTests = this.failedTestCases.get(className);
+			} else {
+				classTests = new ArrayList<String>();
+				this.failedTestCases.put(className,classTests);
+			}
+			classTests.add(className);
+		}
 	}
 
 	@SuppressWarnings("unused")
@@ -216,6 +217,7 @@ public abstract class AbstractFixer {
 	// returns false in case of obvious failures, true otherwise, yes this needs additional refactoring.
 	private boolean runInitiallyFailingTests() {
 		for(String failedClass : this.failedTestCaseClasses) {
+			List<String> prevFailedTests = this.failedTestCases.get(failedClass); // if this failed things have gone terrifically awry
 			try {
 
 			String results = ShellUtils.shellRun(Arrays.asList("java -cp "
@@ -226,15 +228,12 @@ public abstract class AbstractFixer {
 			} else {
 				if (!results.contains("java.lang.NoClassDefFoundError")) {
 					List<String> tempFailedTestCases = readTestResults(results);
-					System.out.println("tempfailedtestcases: " + tempFailedTestCases);
-					tempFailedTestCases.retainAll(this.fakeFailedTestCasesList);
-					if (!tempFailedTestCases.isEmpty()) {
-						if (this.failedTestCasesStrList.size() == 1) return false;
-
-						// Might be partially fixed.
-						tempFailedTestCases.removeAll(this.failedTestCasesStrList);
-						if (!tempFailedTestCases.isEmpty()) return false; // Generate new bugs.
-					}
+					tempFailedTestCases.removeAll(this.fakeFailedTestCasesList);
+					if(tempFailedTestCases.size() < prevFailedTests.size()) {
+						tempFailedTestCases.removeAll(prevFailedTests);
+						if(tempFailedTestCases.size() > 0) return false; // have generated new bugs
+						else continue; // could be a partial fix
+				} else return false; 
 				}
 			}
 		} catch (IOException e) {
@@ -314,14 +313,22 @@ public abstract class AbstractFixer {
 				postPatchAttemptCleanup(FixStatus.FAILURE, scn, patch, buggyCode, patchCode, patchedFile);
                 continue;
 			}
-			List<String> failedTestsAfterFix = new ArrayList<>();
-			int errorTestAfterFix = TestUtils.getFailTestNumInProject(fullBuggyProjectPath, failedTestsAfterFix);
+			List<String> failedTestsAfterFix = TestUtils.getFailedTestsFromD4J(fullBuggyProjectPath);
 			failedTestsAfterFix.removeAll(this.fakeFailedTestCasesList);
-			
+			int errorTestAfterFix = failedTestsAfterFix.size();
 			if (errorTestAfterFix < minErrorTest) {
 			List<String> tmpFailedTestsAfterFix = new ArrayList<>();
 			tmpFailedTestsAfterFix.addAll(failedTestsAfterFix);
-			tmpFailedTestsAfterFix.removeAll(this.failedTestStrList);
+
+			List<String> originalFailedTests = new ArrayList<String>();
+			// FIXME: this is kind of gross to do here
+			for(Map.Entry<String,List<String>> entry : this.failedTestCases.entrySet()) {
+				for(String testName : entry.getValue()) {
+					originalFailedTests.add(testName);
+				}
+			}
+
+			tmpFailedTestsAfterFix.removeAll(originalFailedTests);
 			if (tmpFailedTestsAfterFix.size() > 0) { // Generate new bugs.
 				log.debug(buggyProject + " ---Generated new bugs: " + tmpFailedTestsAfterFix.size());
 				postPatchAttemptCleanup(FixStatus.FAILURE, scn, patch, buggyCode, patchCode, patchedFile);
@@ -329,7 +336,7 @@ public abstract class AbstractFixer {
 			}
 			
 			// Output the generated patch.
-			if (errorTestAfterFix == 0 || failedTestsAfterFix.isEmpty()) {
+			if (errorTestAfterFix == 0) {
 				fixedStatus = FixStatus.SUCCESS;
 				log.info("Succeeded to fix the bug " + buggyProject + "====================");
 			} else if (minErrorTestAfterFix == 0 || errorTestAfterFix <= minErrorTestAfterFix) {
