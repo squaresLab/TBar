@@ -106,6 +106,12 @@ public class Main {
 		.desc("Store Patches.")
 		.build());
 
+		options.addOption(Option.builder("patchRankFile")
+		.argName("patchRankFile")
+		.hasArg()
+		.desc("Entropy ranked patch file.")
+		.build());
+
         // --help
         options.addOption("help", false, "Prints this help message.");
 		return options;
@@ -131,6 +137,7 @@ public class Main {
             }
 			Configuration.bugDataPath = line.getOptionValue("bugDataPath"); // "/Users/kui.liu/Public/Defects4J_Data/";//
 			bugId = line.getOptionValue("bugId"); //  "Chart_1" 
+			Configuration.bugId = bugId;
 			String[] elements = bugId.split("_"); //FIXME fix this
 			String projectName = elements[0];
 			int bugNum;
@@ -186,6 +193,10 @@ public class Main {
 			} 
 			if (line.hasOption("storePatchJson")) {
 				Configuration.storePatchJson = true;
+			}
+
+			if (line.hasOption("patchRankFile")) {
+				Configuration.patchRankFile = line.getOptionValue("patchRankFile");
 			} 
 
 		

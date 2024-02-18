@@ -1,4 +1,5 @@
 edu/lu/uni/serval/tbar/faultloc/NormalFaultLoc.class
+edu/lu/uni/serval/tbar/main/Main$1.class
 edu/lu/uni/serval/tbar/fixpatterns/OperatorMutator$1.class
 edu/lu/uni/serval/AST/ASTGenerator$1.class
 edu/lu/uni/serval/tbar/fixers/TBarFixer.class

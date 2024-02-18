@@ -6,6 +6,7 @@ public class Configuration {
 	public static String faultLocalizationMetric = "Ochiai";
 	public static String outputPath = "OUTPUT/";
 	public static String bugDataPath = "";
+	public static String  bugId = "";
 	public static String defects4j_home = "";
 	public static final String TEMP_FILES_PATH = ".temp/";
 	public static final long SHELL_RUN_TIMEOUT = 300L;
@@ -15,4 +16,5 @@ public class Configuration {
 	public static boolean compileOnly = false;
 	public static boolean recordAllPatches = false;
 	public static String testcache = "testcache.ser";
+	public static String patchRankFile = "";
 }

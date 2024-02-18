@@ -9,14 +9,21 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.FileNotFoundException;
+import java.io.Reader;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.nio.file.Paths;
+
 import org.json.simple.JSONObject;
+import org.json.simple.JSONArray;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import org.apache.commons.lang3.math.NumberUtils;
 import org.slf4j.Logger;
@@ -272,12 +279,56 @@ public abstract class AbstractFixer {
 				this.numberFailingTests = 0;
 			}
 		}
-	
+	}
+
+	private ArrayList<String> jsonReader() throws ParseException, FileNotFoundException, IOException {
+		JSONParser parser = new JSONParser();
+		Reader reader = new FileReader(Configuration.patchRankFile);
+		Object jsonObj = parser.parse(reader);
+		JSONObject jsonObject = (JSONObject) jsonObj;
+		JSONArray patchRanks = (JSONArray) jsonObject.get(Configuration.bugId);
+		@SuppressWarnings("unchecked")
+		Iterator<JSONObject> it = patchRanks.iterator();
+		// empty array to append each patch_code
+		ArrayList<String> patchCodes = new ArrayList<String>();
+
+		while (it.hasNext()) {
+			String patch_code = (String) it.next().get("patch_code");
+			patchCodes.add(patch_code);
 		}
+		reader.close();
+		return patchCodes;
+	}
+
+
 
 	protected FixStatus testGeneratedPatches(List<Patch> patchCandidates, SuspCodeNode scn) {
 		// Testing generated patches.
 		FixStatus fixedStatus = FixStatus.FAILURE;
+
+
+		if (Configuration.patchRankFile != null) {
+			try{
+				List<Patch> rankedPatchCandidates = new ArrayList<>();
+				ArrayList<String> patchCodes =	jsonReader();
+				for (String patch : patchCodes) {
+					Patch p = new Patch();
+					p.setFixedCodeStr1(patch);
+					rankedPatchCandidates.add(p);
+				}
+				patchCandidates.clear();
+				patchCandidates = new ArrayList<>(rankedPatchCandidates);
+			} catch (ParseException e ) {
+					e.printStackTrace();
+			} catch (FileNotFoundException e) {
+					e.printStackTrace();
+			} catch (IOException e) {
+					e.printStackTrace();
+				}
+		}
+
+		System.out.println("Testing " + patchCandidates.size() + " patches");
+
 		for (Patch patch : patchCandidates) {
 			patch.buggyFileName = scn.suspiciousJavaFile;
 			String patchedFile = addPatchCodeToFile(scn, patch);// Insert the patch.
@@ -360,6 +411,9 @@ public abstract class AbstractFixer {
 			}
 			}
 		}
+
+
+
 		try {
 			scn.targetJavaFile.delete();
 			scn.targetClassFile.delete();

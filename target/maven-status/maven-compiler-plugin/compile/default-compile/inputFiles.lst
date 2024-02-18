@@ -16,6 +16,7 @@
 /home/TBar/src/main/java/edu/lu/uni/serval/tbar/fixtemplate/FixTemplate.java
 /home/TBar/src/main/java/edu/lu/uni/serval/tbar/fixpatterns/ICASTIdivCastToDouble.java
 /home/TBar/src/main/java/edu/lu/uni/serval/tbar/utils/ListSorter.java
+/home/TBar/src/main/java/edu/lu/uni/serval/tbar/fixers/FixStatus.java
 /home/TBar/src/main/java/edu/lu/uni/serval/jdt/tree/ITree.java
 /home/TBar/src/main/java/edu/lu/uni/serval/tbar/faultloc/NormalFaultLoc.java
 /home/TBar/src/main/java/edu/lu/uni/serval/tbar/dataprepare/ClassloaderFinder.java
