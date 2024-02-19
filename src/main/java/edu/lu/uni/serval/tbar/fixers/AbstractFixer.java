@@ -265,8 +265,9 @@ public abstract class AbstractFixer {
 			(status == FixStatus.PARTIAL) || (status == FixStatus.SUCCESS)) {
 			// output 
 			String patchStr = TestUtils.readPatch(this.fullBuggyProjectPath);
-			System.out.println(patchStr);
 			String outputFolder = status == FixStatus.SUCCESS ? "/FixedBugs/" : "/PartiallyFixedBugs";
+			
+			
 			if (patchStr == null || !patchStr.startsWith("diff")) {
 				FileHelper.outputToFile(Configuration.outputPath + this.dataType + outputFolder + buggyProject + "/Patch_" + patchId + "_" + comparablePatches + ".txt",
 						"//**********************************************************\n//" + scn.suspiciousJavaFile + " ------ " + scn.buggyLine
@@ -330,21 +331,28 @@ public abstract class AbstractFixer {
 		System.out.println("Testing " + patchCandidates.size() + " patches");
 
 		for (Patch patch : patchCandidates) {
-			patch.buggyFileName = scn.suspiciousJavaFile;
-			String patchedFile = addPatchCodeToFile(scn, patch);// Insert the patch.
-			if(patchCache.containsKey(this.buggyProject + patchedFile)) {
-				fixedStatus = patchCache.get(this.buggyProject + patchedFile);
-				if(fixedStatus == FixStatus.SUCCESS) return FixStatus.SUCCESS;
-				continue;
-			} 
 			if (this.triedPatchCandidates.contains(patch)) continue;
 			patchId++;
+			patch.buggyFileName = scn.suspiciousJavaFile;
+			String patchedFile = addPatchCodeToFile(scn, patch);// Insert the patch.
+			String buggyCode = patch.getBuggyCodeStr();
+			String patchCode = patch.getFixedCodeStr1();
+
+			if(patchCache.containsKey(this.buggyProject + patchedFile)) {
+				fixedStatus = patchCache.get(this.buggyProject + patchedFile);
+				if(fixedStatus == FixStatus.SUCCESS){ 
+					postPatchAttemptCleanup(fixedStatus, scn, patch, buggyCode, patchCode, patchedFile);
+					return FixStatus.SUCCESS;
+				}
+				continue;
+			} 
+
+			
 			if (patchId > 10000) return FixStatus.FAILURE;
 			this.triedPatchCandidates.add(patch);
 			
-			String buggyCode = patch.getBuggyCodeStr();
+			
 			if ("===StringIndexOutOfBoundsException===".equals(buggyCode)) continue;
-			String patchCode = patch.getFixedCodeStr1();
 			scn.targetClassFile.delete();
 
 			log.debug("Compiling");
@@ -405,14 +413,15 @@ public abstract class AbstractFixer {
 					numberFailingTests = 0;
 				}
 			}
+
+			
+			
 			postPatchAttemptCleanup(fixedStatus, scn, patch, buggyCode, patchCode, patchedFile);
 			if(fixedStatus == FixStatus.SUCCESS || fixedStatus == FixStatus.PARTIAL) {
 				break;
 			}
 			}
 		}
-
-
 
 		try {
 			scn.targetJavaFile.delete();
