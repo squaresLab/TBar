@@ -306,19 +306,18 @@ public abstract class AbstractFixer {
 	protected FixStatus testGeneratedPatches(List<Patch> patchCandidates, SuspCodeNode scn) {
 		// Testing generated patches.
 		FixStatus fixedStatus = FixStatus.FAILURE;
-
-
-		if (Configuration.patchRankFile != null) {
+		if (!Configuration.patchRankFile.isEmpty()) {
 			try{
 				List<Patch> rankedPatchCandidates = new ArrayList<>();
 				ArrayList<String> patchCodes =	jsonReader();
-				for (String patch : patchCodes) {
-					Patch p = new Patch();
-					p.setFixedCodeStr1(patch);
-					rankedPatchCandidates.add(p);
+				for (String fixedCodeStr1 : patchCodes) {
+					Patch patch = new Patch();
+					patch.setFixedCodeStr1(fixedCodeStr1);
+					rankedPatchCandidates.add(patch);
 				}
 				patchCandidates.clear();
 				patchCandidates = new ArrayList<>(rankedPatchCandidates);
+				
 			} catch (ParseException e ) {
 					e.printStackTrace();
 			} catch (FileNotFoundException e) {
@@ -329,9 +328,12 @@ public abstract class AbstractFixer {
 		}
 
 		System.out.println("Testing " + patchCandidates.size() + " patches");
-
 		for (Patch patch : patchCandidates) {
-			if (this.triedPatchCandidates.contains(patch)) continue;
+			try{
+				if (this.triedPatchCandidates.contains(patch)) continue;
+			} catch (NullPointerException e) {
+				continue;
+			}
 			patchId++;
 			patch.buggyFileName = scn.suspiciousJavaFile;
 			String patchedFile = addPatchCodeToFile(scn, patch);// Insert the patch.
@@ -340,7 +342,7 @@ public abstract class AbstractFixer {
 
 			if(patchCache.containsKey(this.buggyProject + patchedFile)) {
 				fixedStatus = patchCache.get(this.buggyProject + patchedFile);
-				if(fixedStatus == FixStatus.SUCCESS){ 
+				if(fixedStatus == FixStatus.SUCCESS){
 					postPatchAttemptCleanup(fixedStatus, scn, patch, buggyCode, patchCode, patchedFile);
 					return FixStatus.SUCCESS;
 				}
