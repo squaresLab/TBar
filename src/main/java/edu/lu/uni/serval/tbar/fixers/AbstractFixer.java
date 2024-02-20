@@ -282,53 +282,17 @@ public abstract class AbstractFixer {
 		}
 	}
 
-	private ArrayList<String> jsonReader() throws ParseException, FileNotFoundException, IOException {
-		JSONParser parser = new JSONParser();
-		Reader reader = new FileReader(Configuration.patchRankFile);
-		Object jsonObj = parser.parse(reader);
-		JSONObject jsonObject = (JSONObject) jsonObj;
-		JSONArray patchRanks = (JSONArray) jsonObject.get(Configuration.bugId);
-		@SuppressWarnings("unchecked")
-		Iterator<JSONObject> it = patchRanks.iterator();
-		// empty array to append each patch_code
-		ArrayList<String> patchCodes = new ArrayList<String>();
 
-		while (it.hasNext()) {
-			String patch_code = (String) it.next().get("patch_code");
-			patchCodes.add(patch_code);
-		}
-		reader.close();
-		return patchCodes;
-	}
-
-
-
-	protected FixStatus testGeneratedPatches(List<Patch> patchCandidates, SuspCodeNode scn) {
+	protected FixStatus testGeneratedPatches(List<Patch> patchCandidates, List<Patch> patchEntropyCandidates, SuspCodeNode scn) {
 		// Testing generated patches.
 		FixStatus fixedStatus = FixStatus.FAILURE;
-		if (!Configuration.patchRankFile.isEmpty()) {
-			try{
-				List<Patch> rankedPatchCandidates = new ArrayList<>();
-				ArrayList<String> patchCodes =	jsonReader();
-				for (String fixedCodeStr1 : patchCodes) {
-					Patch patch = new Patch();
-					patch.setFixedCodeStr1(fixedCodeStr1);
-					rankedPatchCandidates.add(patch);
-				}
-				patchCandidates.clear();
-				patchCandidates = new ArrayList<>(rankedPatchCandidates);
-				
-			} catch (ParseException e ) {
-					e.printStackTrace();
-			} catch (FileNotFoundException e) {
-					e.printStackTrace();
-			} catch (IOException e) {
-					e.printStackTrace();
-				}
+		if (!Configuration.patchRankFile.isEmpty() && !patchEntropyCandidates.isEmpty()) {
+			patchCandidates.clear();
+			patchCandidates = new ArrayList<>(patchEntropyCandidates);
 		}
-
 		System.out.println("Testing " + patchCandidates.size() + " patches");
 		for (Patch patch : patchCandidates) {
+			System.out.println("Printing out patch string " + patch.getFixedCodeStr1());
 			try{
 				if (this.triedPatchCandidates.contains(patch)) continue;
 			} catch (NullPointerException e) {
@@ -528,11 +492,12 @@ public abstract class AbstractFixer {
 				toEntropyDir.mkdir();
 				String patchPath = patchDir + "/" + patchId + ".json";
 				JSONObject jsonObject = new JSONObject();
+				
 				jsonObject.put("patchID", patchId);
 				jsonObject.put("exactBuggyCodeStartPos", exactBuggyCodeStartPos);
 				jsonObject.put("exactBuggyCodeEndPos", exactBuggyCodeEndPos);
-				jsonObject.put("patchCode", patchCode);
-				jsonObject.put("patchedJavaFile", patchedJavaFile);
+				jsonObject.put("patchCode1", fixedCodeStr1);
+				jsonObject.put("patchCode2", fixedCodeStr2);
 				try {
 					FileWriter file = new FileWriter(patchDir + "/" + patchId + ".json");
 					file.write(jsonObject.toJSONString());

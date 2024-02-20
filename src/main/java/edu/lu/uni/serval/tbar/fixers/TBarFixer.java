@@ -2,10 +2,18 @@ package edu.lu.uni.serval.tbar.fixers;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -101,9 +109,54 @@ public class TBarFixer extends AbstractFixer {
 
 	}
 
+	private JSONArray jsonReader() throws ParseException, FileNotFoundException, IOException {
+		JSONParser parser = new JSONParser();
+		Reader reader = new FileReader(Configuration.patchRankFile);
+		Object jsonObj = parser.parse(reader);
+		JSONObject jsonObject = (JSONObject) jsonObj;
+		return (JSONArray) jsonObject.get(Configuration.bugId);
+		// @SuppressWarnings("unchecked")
+		// Iterator<JSONObject> it = patchRanks.iterator();
+		// // empty array to append each patch_code
+		// ArrayList<String> patchCodes = new ArrayList<String>();
+
+		// while (it.hasNext()) {
+		// 	String patch_code1 = (String) it.next().get("patch_code1");
+		// 	String patch_code2 = (String) it.next().get("patch_code2");
+		// 	patchCodes.add(patch_code);
+		// }
+		// reader.close();
+	}
+
 	public FixStatus fixWithMatchedFixTemplates(SuspCodeNode scn, List<Integer> distinctContextInfo) {
 		// generate patches with fix templates of TBar.
 		List<FixTemplate> fts = new ArrayList<FixTemplate>();
+		List<Patch> rankedPatchCandidates = new ArrayList<>();
+		if (!Configuration.patchRankFile.isEmpty()) {
+			try{
+				JSONArray patchCodes =	jsonReader();
+				@SuppressWarnings("unchecked")
+				Iterator<JSONObject> it = patchCodes.iterator();
+				while (it.hasNext()) {
+					String fixedCodeStr1 = (String) it.next().get("patch_code1");
+					String fixedCodeStr2 = (String) it.next().get("patch_code2");
+					Patch patch = new Patch();
+					patch.setFixedCodeStr1(fixedCodeStr1);
+					if (fixedCodeStr2 != null) {
+						patch.setFixedCodeStr2(fixedCodeStr2);
+					}
+					patch.setBuggyCodeStartPos((int) it.next().get("exactBuggyCodeStartPos"));
+					patch.setBuggyCodeEndPos((int) it.next().get("exactBuggyCodeEndPos"));
+					rankedPatchCandidates.add(patch);
+				}	
+			} catch (ParseException e ) {
+					e.printStackTrace();
+			} catch (FileNotFoundException e) {
+					e.printStackTrace();
+			} catch (IOException e) {
+					e.printStackTrace();
+			}
+		}
 
 		if (!Checker.isMethodDeclaration(scn.suspCodeAstNode.getType())) {
 			boolean nullChecked = false;
@@ -190,7 +243,7 @@ public class TBarFixer extends AbstractFixer {
 			fts.add(new StatementRemover());
 		}
 		for(FixTemplate ft : fts) {
-			FixStatus status = generateAndValidatePatches(ft, scn);
+			FixStatus status = generateAndValidatePatches(ft, scn, rankedPatchCandidates);
 			if(status == FixStatus.SUCCESS || status == FixStatus.PARTIAL) return FixStatus.SUCCESS;
 		}
 		return FixStatus.FAILURE;
@@ -202,7 +255,7 @@ public class TBarFixer extends AbstractFixer {
 		return dataType;
 	}
 	
-	protected FixStatus generateAndValidatePatches(FixTemplate ft, SuspCodeNode scn) {
+	protected FixStatus generateAndValidatePatches(FixTemplate ft, SuspCodeNode scn, List<Patch> rankedPatchCandidates) {
 		ft.setSuspiciousCodeStr(scn.suspCodeStr);
 		ft.setSuspiciousCodeTree(scn.suspCodeAstNode);
 		if (scn.javaBackup == null) ft.setSourceCodePath(dp.srcPath);
@@ -214,7 +267,7 @@ public class TBarFixer extends AbstractFixer {
 		
 		// Test generated patches.
 		if (patchCandidates.isEmpty()) return FixStatus.FAILURE;
-		return testGeneratedPatches(patchCandidates, scn);
+		return testGeneratedPatches(patchCandidates, rankedPatchCandidates, scn);
 	}
 	
 	public List<Integer> readAllNodeTypes(ITree suspCodeAstNode) {
