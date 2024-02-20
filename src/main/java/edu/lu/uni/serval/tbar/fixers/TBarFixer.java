@@ -56,6 +56,14 @@ public class TBarFixer extends AbstractFixer {
 	public TBarFixer(String path, String projectName, int bugId) {
 		super(path, projectName, bugId);
 	}
+
+	private JSONArray jsonReader() throws ParseException, FileNotFoundException, IOException {
+		JSONParser parser = new JSONParser();
+		Reader reader = new FileReader(Configuration.patchRankFile);
+		Object jsonObj = parser.parse(reader);
+		JSONObject jsonObject = (JSONObject) jsonObj;
+		return (JSONArray) jsonObject.get(Configuration.bugId);
+	}
 	
 	@Override
 	public FixStatus fixProcess() {
@@ -70,6 +78,41 @@ public class TBarFixer extends AbstractFixer {
 		FixStatus status = FixStatus.FAILURE;
 		List<SuspCodeNode> triedSuspNode = new ArrayList<>();
 		log.info("=======TBar: Start to fix suspicious code======");
+
+
+		List<Patch> rankedPatchCandidates = new ArrayList<>();
+		if (!Configuration.patchRankFile.isEmpty()) {
+			try{
+				JSONArray patchCodes =	jsonReader();
+				@SuppressWarnings("unchecked")
+				Iterator<JSONObject> it = patchCodes.iterator();
+				while (it.hasNext()) {
+					JSONObject temp_patch = it.next();
+					String fixedCodeStr1 = (String) temp_patch.get("patch_code1");
+					String fixedCodeStr2 = (String) temp_patch.get("patch_code2");
+					Patch patch = new Patch();
+					patch.setFixedCodeStr1(fixedCodeStr1);
+					if (fixedCodeStr2 != null) {
+						patch.setFixedCodeStr2(fixedCodeStr2);
+					}
+					Long exactBuggyCodeStartPos = (Long) temp_patch.get("exactBuggyCodeStartPos");
+					Long exactBuggyCodeEndPos = (Long) temp_patch.get("exactBuggyCodeEndPos");
+					Integer exactBuggyCodeStartPosInt = exactBuggyCodeStartPos.intValue();
+					Integer exactBuggyCodeEndPosInt = exactBuggyCodeEndPos.intValue();
+					patch.setBuggyCodeStartPos(exactBuggyCodeStartPosInt);
+					patch.setBuggyCodeEndPos(exactBuggyCodeEndPosInt);
+					rankedPatchCandidates.add(patch);
+				}	
+			} catch (ParseException e ) {
+					e.printStackTrace();
+			} catch (FileNotFoundException e) {
+					e.printStackTrace();
+			} catch (IOException e) {
+					e.printStackTrace();
+			}
+		}
+
+
 		for (SuspiciousPosition suspiciousCode : suspiciousCodeList) {
 			List<SuspCodeNode> scns = faultloc.getSuspiciousCode(suspiciousCode);
 			if (scns == null) continue;
@@ -90,7 +133,7 @@ public class TBarFixer extends AbstractFixer {
 //				List<Integer> distinctContextInfo = contextInfoList.stream().distinct().collect(Collectors.toList());
 				
 		        // Match fix templates for this suspicious code with its context information.
-				status = fixWithMatchedFixTemplates(scn, distinctContextInfo);
+				status = fixWithMatchedFixTemplates(scn, distinctContextInfo, rankedPatchCandidates);
 		        
 				if (!isTestFixPatterns && status == FixStatus.SUCCESS) { // FIXME: no accounting for PARTIAL success here or elsewhere
 					break;
@@ -109,54 +152,12 @@ public class TBarFixer extends AbstractFixer {
 
 	}
 
-	private JSONArray jsonReader() throws ParseException, FileNotFoundException, IOException {
-		JSONParser parser = new JSONParser();
-		Reader reader = new FileReader(Configuration.patchRankFile);
-		Object jsonObj = parser.parse(reader);
-		JSONObject jsonObject = (JSONObject) jsonObj;
-		return (JSONArray) jsonObject.get(Configuration.bugId);
-		// @SuppressWarnings("unchecked")
-		// Iterator<JSONObject> it = patchRanks.iterator();
-		// // empty array to append each patch_code
-		// ArrayList<String> patchCodes = new ArrayList<String>();
+	
 
-		// while (it.hasNext()) {
-		// 	String patch_code1 = (String) it.next().get("patch_code1");
-		// 	String patch_code2 = (String) it.next().get("patch_code2");
-		// 	patchCodes.add(patch_code);
-		// }
-		// reader.close();
-	}
-
-	public FixStatus fixWithMatchedFixTemplates(SuspCodeNode scn, List<Integer> distinctContextInfo) {
+	public FixStatus fixWithMatchedFixTemplates(SuspCodeNode scn, List<Integer> distinctContextInfo, List<Patch> rankedPatchCandidates) {
 		// generate patches with fix templates of TBar.
 		List<FixTemplate> fts = new ArrayList<FixTemplate>();
-		List<Patch> rankedPatchCandidates = new ArrayList<>();
-		if (!Configuration.patchRankFile.isEmpty()) {
-			try{
-				JSONArray patchCodes =	jsonReader();
-				@SuppressWarnings("unchecked")
-				Iterator<JSONObject> it = patchCodes.iterator();
-				while (it.hasNext()) {
-					String fixedCodeStr1 = (String) it.next().get("patch_code1");
-					String fixedCodeStr2 = (String) it.next().get("patch_code2");
-					Patch patch = new Patch();
-					patch.setFixedCodeStr1(fixedCodeStr1);
-					if (fixedCodeStr2 != null) {
-						patch.setFixedCodeStr2(fixedCodeStr2);
-					}
-					patch.setBuggyCodeStartPos((int) it.next().get("exactBuggyCodeStartPos"));
-					patch.setBuggyCodeEndPos((int) it.next().get("exactBuggyCodeEndPos"));
-					rankedPatchCandidates.add(patch);
-				}	
-			} catch (ParseException e ) {
-					e.printStackTrace();
-			} catch (FileNotFoundException e) {
-					e.printStackTrace();
-			} catch (IOException e) {
-					e.printStackTrace();
-			}
-		}
+		
 
 		if (!Checker.isMethodDeclaration(scn.suspCodeAstNode.getType())) {
 			boolean nullChecked = false;
