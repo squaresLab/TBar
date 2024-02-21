@@ -430,6 +430,7 @@ public abstract class AbstractFixer {
 		String fixedCodeStr2 = patch.getFixedCodeStr2();
 		int exactBuggyCodeStartPos = patch.getBuggyCodeStartPos();
 		int exactBuggyCodeEndPos = patch.getBuggyCodeEndPos();
+		System.out.println("tofile exact start " + exactBuggyCodeStartPos + " end " + exactBuggyCodeEndPos);
 		String patchCode = fixedCodeStr1;
 		boolean needBuggyCode = false;
 		String patchedJavaFile = "";
@@ -483,6 +484,8 @@ public abstract class AbstractFixer {
 	        patchedJavaFile = javaCode.substring(0, exactBuggyCodeStartPos) + patchCode + javaCode.substring(exactBuggyCodeEndPos);
 	        FileHelper.outputToFile(newFile, patchedJavaFile, false);
 	        newFile.renameTo(scn.targetJavaFile);
+
+			// System.out.println("patched java file " + patchedJavaFile);
 			
 			if (Configuration.storePatchJson){
 				File patch_storage = new File(Paths.get("").toAbsolutePath().toString() + "/stored_patches");
@@ -501,6 +504,13 @@ public abstract class AbstractFixer {
 				try {
 					FileWriter file = new FileWriter(patchDir + "/" + patchId + ".json");
 					file.write(jsonObject.toJSONString());
+					file.close();
+				 } catch (IOException e) {
+					e.printStackTrace();
+				 }
+				 try {
+					FileWriter file = new FileWriter("debug_file_correct.txt");
+					file.write(patchedJavaFile);
 					file.close();
 				 } catch (IOException e) {
 					e.printStackTrace();
