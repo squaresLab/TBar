@@ -106,6 +106,11 @@ public class Main {
 		.desc("Store Patches.")
 		.build());
 
+		options.addOption(Option.builder("noTestCache")
+		.argName("noTestCache")
+		.desc("Do not use test caching.")
+		.build());
+
 		options.addOption(Option.builder("patchRankFile")
 		.argName("patchRankFile")
 		.hasArg()
@@ -198,6 +203,10 @@ public class Main {
 			if (line.hasOption("patchRankFile")) {
 				Configuration.patchRankFile = line.getOptionValue("patchRankFile");
 			} 
+
+			if (line.hasOption("noTestCache")) {
+				Configuration.useTestCache = false;
+			}
 
 		
 		} catch (ParseException exp) {

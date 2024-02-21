@@ -230,7 +230,6 @@ public abstract class AbstractFixer {
 		for(String failedClass : this.failedTestCaseClasses) {
 			List<String> prevFailedTests = this.failedTestCases.get(failedClass); // if this failed things have gone terrifically awry
 			try {
-
 			String results = ShellUtils.shellRun(Arrays.asList("java -cp "
 					+ PathUtils.buildTestClassPath(dp.classPath, dp.testClassPath)
 					+ " org.junit.runner.JUnitCore " + failedClass), buggyProject, 2);
@@ -304,7 +303,8 @@ public abstract class AbstractFixer {
 			String buggyCode = patch.getBuggyCodeStr();
 			String patchCode = patch.getFixedCodeStr1();
 
-			if(patchCache.containsKey(this.buggyProject + patchedFile)) {
+			
+			if(patchCache.containsKey(this.buggyProject + patchedFile) && Configuration.useTestCache) {
 				fixedStatus = patchCache.get(this.buggyProject + patchedFile);
 				if(fixedStatus == FixStatus.SUCCESS){
 					postPatchAttemptCleanup(fixedStatus, scn, patch, buggyCode, patchCode, patchedFile);
