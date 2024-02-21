@@ -508,13 +508,6 @@ public abstract class AbstractFixer {
 				 } catch (IOException e) {
 					e.printStackTrace();
 				 }
-				 try {
-					FileWriter file = new FileWriter("debug_file_correct.txt");
-					file.write(patchedJavaFile);
-					file.close();
-				 } catch (IOException e) {
-					e.printStackTrace();
-				 }
 			}
 
 		} catch (StringIndexOutOfBoundsException e) {

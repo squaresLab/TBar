@@ -99,8 +99,8 @@ public class TBarFixer extends AbstractFixer {
 					Long exactBuggyCodeEndPos = (Long) temp_patch.get("exactBuggyCodeEndPos");
 					Integer exactBuggyCodeStartPosInt = exactBuggyCodeStartPos.intValue();
 					Integer exactBuggyCodeEndPosInt = exactBuggyCodeEndPos.intValue();
-					patch.setBuggyCodeStartPos(exactBuggyCodeStartPosInt);
-					patch.setBuggyCodeEndPos(exactBuggyCodeEndPosInt);
+					// patch.setBuggyCodeStartPos(exactBuggyCodeStartPosInt);
+					// patch.setBuggyCodeEndPos(exactBuggyCodeEndPosInt);
 					rankedPatchCandidates.add(patch);
 				}	
 			} catch (ParseException e ) {
