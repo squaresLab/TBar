@@ -264,7 +264,7 @@ public abstract class AbstractFixer {
 			(status == FixStatus.PARTIAL) || (status == FixStatus.SUCCESS)) {
 			// output 
 			String patchStr = TestUtils.readPatch(this.fullBuggyProjectPath);
-			String outputFolder = status == FixStatus.SUCCESS ? "/FixedBugs/" : "/PartiallyFixedBugs";
+			String outputFolder = status == FixStatus.SUCCESS ? "/FixedBugs/" : "/PartiallyFixedBugs/";
 			
 			
 			if (patchStr == null || !patchStr.startsWith("diff")) {
