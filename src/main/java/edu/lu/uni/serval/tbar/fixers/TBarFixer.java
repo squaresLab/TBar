@@ -84,24 +84,20 @@ public class TBarFixer extends AbstractFixer {
 		if (!Configuration.patchRankFile.isEmpty()) {
 			try{
 				JSONArray patchCodes =	jsonReader();
-				@SuppressWarnings("unchecked")
-				Iterator<JSONObject> it = patchCodes.iterator();
-				while (it.hasNext()) {
-					JSONObject temp_patch = it.next();
-					String fixedCodeStr1 = (String) temp_patch.get("patch_code1");
-					String fixedCodeStr2 = (String) temp_patch.get("patch_code2");
-					Patch patch = new Patch();
-					patch.setFixedCodeStr1(fixedCodeStr1);
-					if (fixedCodeStr2 != null) {
-						patch.setFixedCodeStr2(fixedCodeStr2);
-					}
-					Long exactBuggyCodeStartPos = (Long) temp_patch.get("exactBuggyCodeStartPos");
-					Long exactBuggyCodeEndPos = (Long) temp_patch.get("exactBuggyCodeEndPos");
-					Integer exactBuggyCodeStartPosInt = exactBuggyCodeStartPos.intValue();
-					Integer exactBuggyCodeEndPosInt = exactBuggyCodeEndPos.intValue();
-					// patch.setBuggyCodeStartPos(exactBuggyCodeStartPosInt);
-					// patch.setBuggyCodeEndPos(exactBuggyCodeEndPosInt);
-					rankedPatchCandidates.add(patch);
+				if (patchCodes != null) {
+					@SuppressWarnings("unchecked")
+					Iterator<JSONObject> it = patchCodes.iterator();
+					while (it.hasNext()) {
+						JSONObject temp_patch = it.next();
+						String fixedCodeStr1 = (String) temp_patch.get("patch_code1");
+						String fixedCodeStr2 = (String) temp_patch.get("patch_code2");
+						Patch patch = new Patch();
+						patch.setFixedCodeStr1(fixedCodeStr1);
+						if (fixedCodeStr2 != null) {
+							patch.setFixedCodeStr2(fixedCodeStr2);
+						}
+						rankedPatchCandidates.add(patch);
+					}				
 				}	
 			} catch (ParseException e ) {
 					e.printStackTrace();
