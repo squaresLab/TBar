@@ -230,6 +230,7 @@ public class Main {
 			System.out.println("Somehow every patch failed to compile for " + bugId);
 			break;
 		}
+		System.out.println("Final patch ID " + Configuration.finalPatchNumber);
 		AbstractFixer.serializeTestCache();
 	}
 }

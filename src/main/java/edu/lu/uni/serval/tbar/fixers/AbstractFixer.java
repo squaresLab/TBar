@@ -257,6 +257,7 @@ public abstract class AbstractFixer {
 	}
 
 	private void postPatchAttemptCleanup(FixStatus status, SuspCodeNode scn, Patch patch, String buggyCode, String patchCode, String patchedFile) {
+		Configuration.finalPatchNumber = patchId;
 		if(!Configuration.compileOnly || (Configuration.compileOnly && status == FixStatus.NOCOMPILE))
 			patchCache.put(this.buggyProject + patchedFile,status);
 
@@ -368,9 +369,10 @@ public abstract class AbstractFixer {
 			if (errorTestAfterFix == 0) {
 				fixedStatus = FixStatus.SUCCESS;
 				log.info("Succeeded to fix the bug " + buggyProject + "====================");
-				log.info("Final patch number: " + patchId);
+				Configuration.finalPatchNumber = patchId;
 			} else if (minErrorTestAfterFix == 0 || errorTestAfterFix <= minErrorTestAfterFix) {
 				log.info("Final patch number: " + patchId);
+				Configuration.finalPatchNumber = patchId;
 				minErrorTestAfterFix = errorTestAfterFix;
 				fixedStatus = FixStatus.PARTIAL;
 				log.info("Partially Succeeded to fix the bug " + buggyProject + "====================");

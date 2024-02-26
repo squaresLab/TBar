@@ -18,4 +18,5 @@ public class Configuration {
 	public static boolean useTestCache = true;
 	public static String testcache = "testcache.ser";
 	public static String patchRankFile = "";
+	public static Integer finalPatchNumber = 0;
 }
