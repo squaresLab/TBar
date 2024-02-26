@@ -311,7 +311,7 @@ public abstract class AbstractFixer {
 					return FixStatus.SUCCESS;
 				}
 				continue;
-			} 
+			}
 
 			
 			if (patchId > 10000) return FixStatus.FAILURE;
@@ -368,7 +368,9 @@ public abstract class AbstractFixer {
 			if (errorTestAfterFix == 0) {
 				fixedStatus = FixStatus.SUCCESS;
 				log.info("Succeeded to fix the bug " + buggyProject + "====================");
+				log.info("Final patch number: " + patchId);
 			} else if (minErrorTestAfterFix == 0 || errorTestAfterFix <= minErrorTestAfterFix) {
+				log.info("Final patch number: " + patchId);
 				minErrorTestAfterFix = errorTestAfterFix;
 				fixedStatus = FixStatus.PARTIAL;
 				log.info("Partially Succeeded to fix the bug " + buggyProject + "====================");
